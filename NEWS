@@ -1,3 +1,12 @@
+libiptcdata 0.1.1
+=================
+Released March 7, 2005
+
+* Added date/time manipulation functions iptc_dataset_get_date(),
+iptc_dataset_get_time(), iptc_dataset_set_date(), and iptc_dataset_set_time().
+* Fixed parsing error for some jpeg files.
+
+
 libiptcdata 0.1.0
 =================
 Released February 28, 2005

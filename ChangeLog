@@ -2,6 +2,7 @@
 
 	* iptc-jpeg.c (iptc_jpeg_seek_to_ps3): Fixed parsing error for some
 	jpeg files.
+	* NEWS: Updated for new release
 
 2005-03-06  David Moore  <dcm@acm.org>
 
