@@ -1,0 +1,9 @@
+Makefile.in
+Makefile
+.libs
+.deps
+*.la
+*.o
+*.lo
+libiptcdata.pc
+_stdint.h

@@ -1,0 +1,10 @@
+*.gmo
+libiptcdata-*.pot
+Makevars
+Makefile
+Makefile.in
+Makefile.in.in
+POTFILES
+Rules-quot
+remove-potcdate.sed
+stamp-po

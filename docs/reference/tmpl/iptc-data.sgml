@@ -1,0 +1,230 @@
+<!-- ##### SECTION Title ##### -->
+IPTC Data
+
+<!-- ##### SECTION Short_Description ##### -->
+creating, loading, saving, and editing a collection of IPTC datasets
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The #IptcData object is the top-level container for a collection of IPTC metadata tags.
+Each of these tags is stored in an #IptcDataSet object.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT IptcData ##### -->
+<para>
+Represents the collection of datasets that make up a IPTC data block.
+</para>
+
+@datasets: array of pointers to the datasets in the collection
+@count: the number of datasets in the collection
+@priv: private data
+
+<!-- ##### FUNCTION iptc_data_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_new_mem ##### -->
+<para>
+
+</para>
+
+@mem: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@Param1: 
+
+
+<!-- ##### FUNCTION iptc_data_ref ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION iptc_data_unref ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION iptc_data_free ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION iptc_data_new_from_jpeg ##### -->
+<para>
+
+</para>
+
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_new_from_data ##### -->
+<para>
+
+</para>
+
+@buf: 
+@size: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@data: 
+
+
+<!-- ##### FUNCTION iptc_data_load ##### -->
+<para>
+
+</para>
+
+@data: 
+@buf: 
+@size: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@d: 
+
+
+<!-- ##### FUNCTION iptc_data_save ##### -->
+<para>
+
+</para>
+
+@data: 
+@buf: 
+@size: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@d: 
+
+
+<!-- ##### FUNCTION iptc_data_free_buf ##### -->
+<para>
+
+</para>
+
+@data: 
+@buf: 
+<!-- # Unused Parameters # -->
+@d: 
+
+
+<!-- ##### FUNCTION iptc_data_get_dataset ##### -->
+<para>
+
+</para>
+
+@data: 
+@record: 
+@tag: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_get_next_dataset ##### -->
+<para>
+
+</para>
+
+@data: 
+@ds: 
+@record: 
+@tag: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_add_dataset ##### -->
+<para>
+
+</para>
+
+@data: 
+@ds: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_add_dataset_before ##### -->
+<para>
+
+</para>
+
+@data: 
+@ds: 
+@newds: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_add_dataset_after ##### -->
+<para>
+
+</para>
+
+@data: 
+@ds: 
+@newds: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_remove_dataset ##### -->
+<para>
+
+</para>
+
+@data: 
+@ds: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION IptcDataForeachDataSetFunc ##### -->
+<para>
+Application callback executed for each dataset from
+iptc_data_foreach_dataset().
+</para>
+
+@dataset: the dataset
+@user_data: the same @user_data passed to iptc_data_foreach_dataset()
+
+
+<!-- ##### FUNCTION iptc_data_foreach_dataset ##### -->
+<para>
+
+</para>
+
+@data: 
+@func: 
+@user_data: 
+
+
+<!-- ##### FUNCTION iptc_data_dump ##### -->
+<para>
+
+</para>
+
+@data: 
+@indent: 
+
+
+<!-- ##### FUNCTION iptc_data_log ##### -->
+<para>
+
+</para>
+
+@data: 
+@log: 
+
+
