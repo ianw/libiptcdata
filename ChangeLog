@@ -1,3 +1,11 @@
+2005-03-06  David Moore  <dcm@acm.org>
+
+	* iptc-dataset.c, iptc-dataset.h: added date/time manipulation
+	functions iptc_dataset_get_date(), iptc_dataset_get_time(),
+	iptc_dataset_set_date(), and iptc_dataset_set_time().
+	* configure.in: bumped version number to 0.1.1 and library
+	current:revision:age to 1:0:1.
+
 2005-03-02  David Moore  <dcm@acm.org>
 
 	* iptc-dataset.h: Fixed copyright notice

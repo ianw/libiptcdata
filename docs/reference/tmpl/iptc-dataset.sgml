@@ -105,6 +105,35 @@ if it is not contained
 @Returns: 
 
 
+<!-- ##### FUNCTION iptc_dataset_get_date ##### -->
+<para>
+
+</para>
+
+@dataset: 
+@year: 
+@month: 
+@day: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@e: 
+
+
+<!-- ##### FUNCTION iptc_dataset_get_time ##### -->
+<para>
+
+</para>
+
+@dataset: 
+@hour: 
+@min: 
+@sec: 
+@tz: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@e: 
+
+
 <!-- ##### FUNCTION iptc_dataset_set_tag ##### -->
 <para>
 
@@ -145,6 +174,37 @@ IIM specification.
 
 @dataset: 
 @value: 
+@validate: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@e: 
+
+
+<!-- ##### FUNCTION iptc_dataset_set_date ##### -->
+<para>
+
+</para>
+
+@dataset: 
+@year: 
+@month: 
+@day: 
+@validate: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@e: 
+
+
+<!-- ##### FUNCTION iptc_dataset_set_time ##### -->
+<para>
+
+</para>
+
+@dataset: 
+@hour: 
+@min: 
+@sec: 
+@tz: 
 @validate: 
 @Returns: 
 <!-- # Unused Parameters # -->

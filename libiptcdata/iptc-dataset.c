@@ -290,6 +290,98 @@ iptc_dataset_set_value (IptcDataSet *e, unsigned int value,
 }
 
 /**
+ * iptc_dataset_set_date:
+ * @dataset: pointer to an #IptcDataSet
+ * @year: the year (0-9999)
+ * @month: the month (1-12)
+ * @day: the day of the month (1-31)
+ * @validate: if set to %IPTC_VALIDATE, the dataset date will only be set if
+ * the IPTC specification says it is of type date.
+ *
+ * Sets the contents of the dataset to be a date with the specified value.
+ * IPTC dates are stored as a string in the format YYYYMMDD.
+ *
+ * Returns: the number of bytes written on success (always 8 in this case); 0
+ * if validation fails; -1 for other failures
+ */
+int
+iptc_dataset_set_date (IptcDataSet *e, int year, int month, int day,
+		IptcValidate validate)
+{
+	char str[9];
+
+	if (!e)
+		return -1;
+	if (year < 0 || month < 1 || day < 1)
+		return -1;
+	if (year > 9999 || month > 12 || day > 31)
+		return -1;
+	if (validate && e->info && e->info->format != IPTC_FORMAT_DATE)
+		return 0;
+
+	if (e->data)
+		iptc_mem_free (e->priv->mem, e->data);
+
+	e->size = 0;
+	e->data = iptc_mem_alloc (e->priv->mem, 8);
+	if (!e->data)
+		return -1;
+	
+	e->size = 8;
+	sprintf (str, "%04d%02d%02d", year, month, day);
+	memcpy (e->data, str, 8);
+
+	return 8;
+}
+
+/**
+ * iptc_dataset_set_time:
+ * @dataset: pointer to an #IptcDataSet
+ * @hour: the hour (0-23)
+ * @min: the minutes (0-59)
+ * @sec: the seconds (0-61)
+ * @tz: the timezone expressed as the number of minutes offset from GMT.
+ * For example, EST is -300 (-5 hours).
+ * @validate: if set to %IPTC_VALIDATE, the dataset time will only be set if
+ * the IPTC specification says it is of type time.
+ *
+ * Sets the contents of the dataset to be a time with the specified value.
+ * IPTC times are stored as a string in the format HHMMSS&plusmn;HHMM.
+ *
+ * Returns: the number of bytes written on success (always 11 in this case); 0
+ * if validation fails; -1 for other failures
+ */
+int
+iptc_dataset_set_time (IptcDataSet *e, int hour, int min, int sec, int tz,
+		IptcValidate validate)
+{
+	char str[12];
+
+	if (!e)
+		return -1;
+	if (hour < 0 || min < 0 || sec < 0 || tz < -1439)
+		return -1;
+	if (hour > 23 || min > 59 || sec > 61 || tz > 1439)
+		return -1;
+	if (validate && e->info && e->info->format != IPTC_FORMAT_TIME)
+		return 0;
+
+	if (e->data)
+		iptc_mem_free (e->priv->mem, e->data);
+
+	e->size = 0;
+	e->data = iptc_mem_alloc (e->priv->mem, 11);
+	if (!e->data)
+		return -1;
+	
+	e->size = 11;
+	sprintf (str, "%02d%02d%02d%+03d%02d", hour, min, sec, tz / 60, abs (tz % 60));
+	memcpy (e->data, str, 11);
+
+	return 11;
+}
+
+/**
  * iptc_dataset_get_format:
  * @dataset: pointer to an #IptcDataSet
  *
@@ -361,6 +453,86 @@ iptc_dataset_get_value (IptcDataSet *e)
 			return iptc_get_long (e->data, IPTC_BYTE_ORDER_MOTOROLA);
 	}
 }
+
+/**
+ * iptc_dataset_get_date:
+ * @dataset: pointer to an #IptcDataSet
+ * @year: output variable to store the year (0-9999)
+ * @month: output variable to store the month (1-12)
+ * @day: output variable to store the day of the month (1-31)
+ *
+ * Interprets the contents of the dataset as an IPTC date and parses
+ * the year, month, and day into the given output variables.  If any
+ * variable is NULL, that value is skipped.  IPTC dates are stored as
+ * a string in the format YYYYMMDD.
+ *
+ * Returns: 0 on success; -1 on failure
+ */
+int
+iptc_dataset_get_date (IptcDataSet *e, int *year, int *month, int *day)
+{
+	if (!e || !e->data || e->size < 8)
+		return -1;
+
+	if (year) {
+		*year = (e->data[0]-'0')*1000 + (e->data[1]-'0')*100 +
+			(e->data[2]-'0')*10 + (e->data[3]-'0');
+	}
+
+	if (month) {
+		*month = (e->data[4]-'0')*10 + (e->data[5]-'0');
+	}
+
+	if (day) {
+		*day = (e->data[6]-'0')*10 + (e->data[7]-'0');
+	}
+
+	return 0;
+}
+
+/**
+ * iptc_dataset_get_time:
+ * @dataset: pointer to an #IptcDataSet
+ * @hour: output variable to store the hour (0-23)
+ * @min: output variable to store the minute (0-59)
+ * @sec: output variable to store the second (0-59)
+ * @tz: output variable to store the timezone (offset in minutes from GMT)
+ *
+ * Interprets the contents of the dataset as an IPTC time and parses
+ * the hour, minute, second, and timezone into the given output variables.
+ * If any variable is NULL, that value is skipped.  IPTC times are stored as
+ * a string in the format HHMMSS&plusmn;HHMM.
+ *
+ * Returns: 0 on success; -1 on failure
+ */
+int
+iptc_dataset_get_time (IptcDataSet *e, int *hour, int *min, int *sec, int *tz)
+{
+	if (!e || !e->data || e->size < 11)
+		return -1;
+
+	if (hour) {
+		*hour = (e->data[0]-'0')*10 + (e->data[1]-'0');
+	}
+
+	if (min) {
+		*min = (e->data[2]-'0')*10 + (e->data[3]-'0');
+	}
+
+	if (sec) {
+		*sec = (e->data[4]-'0')*10 + (e->data[5]-'0');
+	}
+
+	if (tz) {
+		*tz = (e->data[7]-'0')*600 + (e->data[8]-'0')*60 +
+			(e->data[9]-'0')*10 + (e->data[10]-'0');
+		if (e->data[6] == '-')
+			*tz = -*tz;
+	}
+
+	return 0;
+}
+
 
 /**
  * iptc_dataset_dump:

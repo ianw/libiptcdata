@@ -64,10 +64,18 @@ IptcFormat  iptc_dataset_get_format (IptcDataSet *dataset);
 int         iptc_dataset_get_data (IptcDataSet *dataset, char * buf,
 				unsigned int size);
 unsigned int iptc_dataset_get_value (IptcDataSet *dataset);
+int	    iptc_dataset_get_date (IptcDataSet *dataset, int *year, int *month, int *day);
+int	    iptc_dataset_get_time (IptcDataSet *dataset, int *hour, int *min, int *sec,
+				int *tz);
+
 int         iptc_dataset_set_data (IptcDataSet *dataset, const char * buf,
 				unsigned int size, IptcValidate validate);
 int         iptc_dataset_set_value (IptcDataSet *dataset, unsigned int value,
 				IptcValidate validate);
+int	    iptc_dataset_set_date (IptcDataSet *dataset, int year, int month, int day,
+				IptcValidate validate);
+int	    iptc_dataset_set_time (IptcDataSet *dataset, int hour, int min, int sec,
+				int tz, IptcValidate validate);
 
 
 /* For your convenience */

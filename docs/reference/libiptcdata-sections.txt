@@ -89,12 +89,16 @@ iptc_dataset_free
 iptc_dataset_get_format
 iptc_dataset_get_data
 iptc_dataset_get_value
+iptc_dataset_get_date
+iptc_dataset_get_time
 
 <SUBSECTION>
 iptc_dataset_set_tag
 IptcValidate
 iptc_dataset_set_data
 iptc_dataset_set_value
+iptc_dataset_set_date
+iptc_dataset_set_time
 
 <SUBSECTION>
 iptc_dataset_get_as_str
