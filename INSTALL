@@ -1,0 +1,23 @@
+libiptcdata
+===========
+
+    David Moore <dcm@acm.org>
+
+
+REQUIREMENTS
+------------
+
+libiptcdata is written in portable C code and has no prerequisite
+libraries.  It has been tested under GNU/Linux.
+
+INSTALLATION
+------------
+
+first run:
+
+  ./configure
+  make
+
+and as root:
+
+  make install

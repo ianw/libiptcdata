@@ -1,0 +1,68 @@
+Name: @PACKAGE@
+Summary: IPTC tag library
+Version: @VERSION@
+Release: 1
+License: LGPL
+Group: Development/Libraries
+Source: %{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+URL: http://sourceforge.net/projects/libiptcdata/
+
+%description
+libiptcdata is a library for parsing, editing, and saving IPTC data.
+
+%package devel
+Summary: The files needed for libiptcdata application development
+Group: Development/Libraries
+Requires: %{name} = %{version}
+
+%description devel
+The libiptcdata-devel package contains the libraries and include files
+that you can use to develop libiptcdata applications.
+
+%prep
+%setup
+
+%build
+CFLAGS="$RPM_OPT_FLAGS"
+./configure --prefix=%{_prefix} \
+    --bindir=%{_bindir} --mandir=%{_mandir} \
+    --localstatedir=%{_localstatedir} --libdir=%{_libdir} \
+    --datadir=%{_datadir} --includedir=%{_includedir} \
+    --sysconfdir=%{_sysconfdir} --disable-gtk-doc
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+make prefix=$RPM_BUILD_ROOT%{_prefix} bindir=$RPM_BUILD_ROOT%{_bindir} \
+    mandir=$RPM_BUILD_ROOT%{_mandir} libdir=$RPM_BUILD_ROOT%{_libdir} \
+    localstatedir=$RPM_BUILD_ROOT%{_localstatedir} \
+    datadir=$RPM_BUILD_ROOT%{_datadir} \
+    includedir=$RPM_BUILD_ROOT%{_includedir} \
+    sysconfdir=$RPM_BUILD_ROOT%{_sysconfdir} install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
+%files
+%defattr(-,root,root)
+%doc AUTHORS COPYING ChangeLog NEWS README INSTALL TODO
+%{_libdir}/lib*.so.*
+%{_datadir}/locale/*/LC_MESSAGES/*.mo
+
+%files devel
+%defattr(-,root,root)
+%{_libdir}/lib*.so
+%{_libdir}/*a
+%{_libdir}/pkgconfig/*.pc
+%{_includedir}/libiptcdata
+%{_datadir}/gtk-doc/html/libiptcdata
+
+%changelog
+* Mon Feb 28 2005 David Moore <dcm@acm.org>
+- Initial version

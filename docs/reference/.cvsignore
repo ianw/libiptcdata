@@ -1,0 +1,15 @@
+Makefile
+Makefile.in
+libiptcdata-decl-list.txt
+libiptcdata-decl.txt
+libiptcdata-unused.txt
+libiptcdata-undocumented.txt
+html
+xml
+*.stamp
+libiptcdata.args
+libiptcdata.hierarchy
+libiptcdata.signals
+libiptcdata.interfaces
+libiptcdata.prerequisites
+version.xml
