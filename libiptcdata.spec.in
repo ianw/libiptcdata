@@ -52,6 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc AUTHORS COPYING ChangeLog NEWS README INSTALL TODO
+%{_bindir}/*
 %{_libdir}/lib*.so.*
 %{_datadir}/locale/*/LC_MESSAGES/*.mo
 

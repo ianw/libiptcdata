@@ -14,7 +14,7 @@ libiptcdata_la_SOURCES =		\
 	iptc-log.c		\
 	iptc-mem.c		\
 	iptc-tag.c		\
-	iptc-utils.c		\
+	iptc-utils.c
 
 libiptcdataincludedir = $(includedir)/libiptcdata
 libiptcdatainclude_HEADERS = 	\
