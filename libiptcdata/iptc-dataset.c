@@ -416,7 +416,7 @@ int
 iptc_dataset_get_data (IptcDataSet *e, char *val, unsigned int size)
 {
 	int s;
-	if (!e || !val || !size || !e->data)
+	if (!e || !val || !size)
 		return -1;
 	s = MIN(e->size+1, size);
 	memcpy (val, e->data, MIN(e->size, size));
@@ -439,7 +439,7 @@ iptc_dataset_get_data (IptcDataSet *e, char *val, unsigned int size)
 unsigned int
 iptc_dataset_get_value (IptcDataSet *e)
 {
-	if (!e)
+	if (!e || !e->data || !e->size)
 		return 0;
 	switch (e->size) {
 		case 1:
@@ -589,14 +589,14 @@ iptc_dataset_get_as_str (IptcDataSet *e, char *val, unsigned int maxlen)
 	IptcLong v_long;
 	IptcFormat format = IPTC_FORMAT_BINARY;
 
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	bindtextdomain (GETTEXT_PACKAGE, LIBIPTCDATA_LOCALEDIR);
-
 	if (!e || !val || !maxlen)
 		return NULL;
 
 	if (e->info)
 		format = e->info->format;
+
+	if (!e->size)
+		format = IPTC_FORMAT_STRING;
 
 	switch (TAG_ID(e->record, e->tag)) {
 	default:

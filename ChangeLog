@@ -1,3 +1,8 @@
+2005-03-09  David Moore  <dcm@acm.org>
+
+	* iptc-dataset.c: Improved the handling of datasets with zero-length
+	data.
+
 2005-03-07  David Moore  <dcm@acm.org>
 
 	* iptc-jpeg.c (iptc_jpeg_seek_to_ps3): Fixed parsing error for some
