@@ -37,7 +37,7 @@ iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile)
 				return -1;
 			if (s-i > 0)
 				memmove (buf, buf+i, s-i);
-			s = fread (buf+s-i, 1, sizeof(buf)-(s-i), infile);
+			s = s-i+fread (buf+s-i, 1, sizeof(buf)-(s-i), infile);
 			i = 0;
 		}
 		
