@@ -1,10 +1,12 @@
 *.gmo
-libiptcdata-*.pot
-Makevars
+*.header
+*.sin
+*.sed
+libiptcdata.pot
+Makevars.template
 Makefile
 Makefile.in
 Makefile.in.in
 POTFILES
 Rules-quot
-remove-potcdate.sed
 stamp-po
