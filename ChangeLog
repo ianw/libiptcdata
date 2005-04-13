@@ -1,3 +1,8 @@
+2005-04-13  David Moore  <dcm@acm.org>
+
+	* TODO: Updated
+	* iptc-*.c: Removed some unnecessary header references.
+
 2005-03-09  David Moore  <dcm@acm.org>
 
 	* iptc-dataset.c: Improved the handling of datasets with zero-length
