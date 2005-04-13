@@ -1,6 +1,6 @@
 #include <iptc-mem.h>
-
 #include <stdlib.h>
+
 
 struct _IptcMem {
 	unsigned int ref_count;

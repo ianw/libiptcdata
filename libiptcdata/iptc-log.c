@@ -22,7 +22,6 @@
 #include <libiptcdata/iptc-log.h>
 #include <libiptcdata/i18n.h>
 
-#include <stdlib.h>
 #include <string.h>
 
 struct _IptcLog {

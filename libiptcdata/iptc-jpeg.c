@@ -1,7 +1,6 @@
 #include <config.h>
 #include "iptc-jpeg.h"
 
-#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 

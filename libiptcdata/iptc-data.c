@@ -22,7 +22,6 @@
 #include "iptc-data.h"
 #include "iptc-jpeg.h"
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 

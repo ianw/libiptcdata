@@ -22,7 +22,6 @@
 #include "iptc-tag.h"
 #include "i18n.h"
 
-#include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 
