@@ -17,6 +17,7 @@ typedef enum {
 #define JPEG_MARKER_APP0	0xe0
 #define JPEG_MARKER_APP13	0xed
 #define JPEG_MARKER_APP15	0xef
+#define JPEG_MARKER_SOS		0xda
 
 #define JPEG_PS3_ID		"Photoshop 3.0"
 #define JPEG_BIM_ID		"8BIM"
@@ -71,16 +72,18 @@ iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile)
 				fseek (infile, -s+i, SEEK_CUR);
 				return seek - 2;
 			}
-			else if (buf[i+1] >= JPEG_MARKER_APP0 &&
-					buf[i+1] <= JPEG_MARKER_APP15) {
+			else if (buf[i+1] == JPEG_MARKER_SOS) {
+				/* No more headers to search, abort */
+				fseek (infile, -s+i, SEEK_CUR);
+				return 0;
+			}
+			else {
+				/* Uninteresting header, skip it */
 				state = IL_JPEG_SKIP_BYTES;
 				seek = iptc_get_short(buf+i+2,
 						IPTC_BYTE_ORDER_MOTOROLA);
 			}
-			else {
-				fseek (infile, -s+i, SEEK_CUR);
-				return 0;
-			}
+
 			if (outfile)
 				if (fwrite (buf + i, 1, 2, outfile) < 2)
 					return -1;
