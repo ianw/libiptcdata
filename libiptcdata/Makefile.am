@@ -25,7 +25,6 @@ libiptcdatainclude_HEADERS = 	\
 	iptc-mem.h		\
 	iptc-tag.h		\
 	iptc-utils.h		\
-	_stdint.h		\
 	i18n.h
 
 pkgconfigdir = $(libdir)/pkgconfig

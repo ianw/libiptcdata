@@ -22,8 +22,8 @@
 #include "iptc-tag.h"
 #include "i18n.h"
 
-#include <stdint.h>
 #include <string.h>
+#include <libiptcdata/_stdint.h>
 
 static IptcTagInfo IptcTagTable[] = {
 	{ IPTC_RECORD_OBJECT_ENV,	IPTC_TAG_MODEL_VERSION,
