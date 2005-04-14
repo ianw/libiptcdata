@@ -73,6 +73,8 @@ AC_OUTPUT([
   docs/reference/version.xml
   intl/Makefile
   po/Makefile.in
+  win/Makefile
+  win/iptctool/Makefile
 ])
 
 echo "

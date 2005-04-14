@@ -1,3 +1,9 @@
+2005-04-14  David Moore  <dcm@acm.org>
+
+	* win: Added new Visual Studio project and changes necessary to build
+	libiptcdata in Windows.
+	Contributed by Luka Renko <luka.renko@gmail.com>
+
 2005-04-13  David Moore  <dcm@acm.org>
 
 	* iptc-jpeg.c: Skip over all headers in search of APP13 to improve

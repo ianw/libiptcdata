@@ -141,7 +141,7 @@ iptc_data_load_dataset (IptcData *data, IptcDataSet *dataset,
 
 	doff = 5;
 	if (count & (1 << 15)) {
-		int i;
+		unsigned int i;
 		dataset->size = 0;
 		count &= ~(1 << 15);
 		if (size < count + doff)
@@ -273,7 +273,7 @@ iptc_data_load (IptcData *data, const unsigned char *buf,
 int
 iptc_data_save (IptcData *data, unsigned char **buf, unsigned int *size)
 {
-	int j;
+	unsigned int j;
 
 	if (!data || !buf || !size)
 		return -1;
@@ -468,7 +468,7 @@ iptc_data_dump (IptcData *data, unsigned int indent)
 static int
 iptc_data_dataset_index (IptcData *data, IptcDataSet *ds)
 {
-	int i;
+	unsigned int i;
 
 	if (!data || !ds)
 		return -1;
@@ -482,7 +482,7 @@ iptc_data_dataset_index (IptcData *data, IptcDataSet *ds)
 }
 
 static int
-iptc_data_add_dataset_index (IptcData *data, IptcDataSet *dataset, int index)
+iptc_data_add_dataset_index (IptcData *data, IptcDataSet *dataset, unsigned int index)
 {
 	if (!data || !data->priv || !dataset || dataset->parent ||
 			index < 0 || index > data->count)
@@ -636,7 +636,7 @@ IptcDataSet *
 iptc_data_get_next_dataset (IptcData *data, IptcDataSet *ds,
 	IptcRecord record, IptcTag tag)
 {
-	int i = 0;
+	unsigned int i = 0;
 
 	if (!data)
 		return NULL;

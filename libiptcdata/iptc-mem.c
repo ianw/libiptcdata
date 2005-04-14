@@ -1,4 +1,4 @@
-#include <iptc-mem.h>
+#include <libiptcdata/iptc-mem.h>
 #include <stdlib.h>
 
 

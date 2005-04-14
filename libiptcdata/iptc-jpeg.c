@@ -168,7 +168,7 @@ iptc_jpeg_read_ps3 (FILE * infile, char * ps3, unsigned int size)
 int iptc_jpeg_ps3_find_iptc (const char * ps3,
 		unsigned int ps3_size, unsigned int * iptc_len)
 {
-	int i, s;
+	unsigned int i, s;
 	unsigned short bim_type;
 	unsigned int bim_size;
 
@@ -254,7 +254,7 @@ int iptc_jpeg_ps3_save_iptc (const char * ps3, unsigned int ps3_size,
 		const char * iptc, unsigned int iptc_size,
 		char * buf, unsigned int size)
 {
-	int i, j, s;
+	unsigned int i, j, s;
 	unsigned short bim_type;
 	unsigned int bim_size;
 	int wrote_iptc = 0;

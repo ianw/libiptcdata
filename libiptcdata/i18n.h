@@ -35,7 +35,7 @@
 #  define gettext(String) (String)
 #  define dgettext(Domain,Message) (Message)
 #  define dcgettext(Domain,Message,Type) (Message)
-#ifdef __WATCOMC__
+#if defined(__WATCOMC__) || defined(WIN32)
 #    define bind_textdomain_codeset(Domain,Codeset)
 #    define bindtextdomain(Domain,Directory)
 #else
