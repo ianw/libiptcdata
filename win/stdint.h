@@ -18,10 +18,9 @@
  * Boston, MA 02111-1307, USA.
  */
 #include <config.h>
-#include <limits.h>
 
-typedef WORD	uint16_t;         /* 2 bytes */
-typedef DWORD	uint32_t;         /* 4 bytes */
-typedef int     int32_t;         /* 4 bytes */
+typedef short int	uint16_t;	/* 2 bytes */
+typedef unsigned	uint32_t;	/* 4 bytes */
+typedef int			int32_t;	/* 4 bytes */
 
-#define UINT32_MAX	ULONG_MAX
+#define UINT32_MAX	0xffffffff

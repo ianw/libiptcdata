@@ -3,6 +3,7 @@
 	* win: Added new Visual Studio project and changes necessary to build
 	libiptcdata in Windows.
 	Contributed by Luka Renko <luka.renko@gmail.com>
+	* win: Windows build fixes
 
 2005-04-13  David Moore  <dcm@acm.org>
 

@@ -37,7 +37,7 @@ iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile)
 				return -1;
 			if (s-i > 0)
 				memmove (buf, buf+i, s-i);
-			s = s-i+fread (buf+s-i, 1, sizeof(buf)-(s-i), infile);
+			s = s-i+(int)fread (buf+s-i, 1, sizeof(buf)-(s-i), infile);
 			i = 0;
 		}
 		
@@ -45,14 +45,14 @@ iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile)
 		case IL_JPEG_SKIP_BYTES:
 			if (seek > s - i) {
 				if (outfile)
-					if (fwrite (buf + i, 1, s - i, outfile) < s-i)
+					if ((int)fwrite (buf + i, 1, s - i, outfile) < s-i)
 						return -1;
 				seek -= s - i;
 				i = s;
 			}
 			else {
 				if (outfile)
-					if (fwrite (buf + i, 1, seek, outfile) < seek)
+					if ((int)fwrite (buf + i, 1, seek, outfile) < seek)
 						return -1;
 				state = IL_JPEG_MARKER;
 				i += seek;
@@ -105,8 +105,8 @@ iptc_jpeg_seek_to_end (FILE * infile, FILE * outfile)
 	if (!outfile)
 		fseek (infile, 0, SEEK_END);
 
-	while ((s = fread (buf, 1, sizeof(buf), infile))) {
-		if (fwrite (buf, 1, s, outfile) < s)
+	while ((s = (int)fread (buf, 1, sizeof(buf), infile))) {
+		if ((int)fwrite (buf, 1, s, outfile) < s)
 			return -1;
 	}
 
@@ -145,10 +145,10 @@ iptc_jpeg_read_ps3 (FILE * infile, char * ps3, unsigned int size)
 	if (fseek (infile, 4, SEEK_CUR) < 0)
 		return -1;
 
-	if (size < s)
+	if ((int)size < s)
 		return -1;
 
-	if (fread (ps3, 1, s, infile) < s)
+	if ((int)fread (ps3, 1, s, infile) < s)
 		return -1;
 
 	return s;

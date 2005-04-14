@@ -485,7 +485,7 @@ static int
 iptc_data_add_dataset_index (IptcData *data, IptcDataSet *dataset, unsigned int index)
 {
 	if (!data || !data->priv || !dataset || dataset->parent ||
-			index < 0 || index > data->count)
+			index > data->count)
 		return -1;
 
 	dataset->parent = data;
@@ -636,7 +636,7 @@ IptcDataSet *
 iptc_data_get_next_dataset (IptcData *data, IptcDataSet *ds,
 	IptcRecord record, IptcTag tag)
 {
-	unsigned int i = 0;
+	int i = 0;
 
 	if (!data)
 		return NULL;
@@ -648,7 +648,7 @@ iptc_data_get_next_dataset (IptcData *data, IptcDataSet *ds,
 		i++;
 	}
 
-	for (; i < data->count; i++)
+	for (; (unsigned)i < data->count; i++)
 		if (data->datasets[i]->record == record && 
 				data->datasets[i]->tag == tag) {
 			iptc_dataset_ref (data->datasets[i]);
