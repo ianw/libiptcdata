@@ -1,3 +1,7 @@
+2005-05-31  David Moore  <dcm@acm.org>
+
+	* NEWS, configure.in: Updated for release 0.1.2.
+
 2005-04-14  David Moore  <dcm@acm.org>
 
 	* win: Added new Visual Studio project and changes necessary to build

@@ -1,3 +1,13 @@
+libiptcdata 0.1.2
+=================
+Released May 31, 2005
+
+* Added new Visual Studio project and changes necessary to build
+libiptcdata in Windows.  Contributed by Luka Renko <luka.renko@gmail.com>
+* Be more tolerant of JPEG headers in unexpected orderings.
+* Improved handling of datasets with zero-length data.
+
+
 libiptcdata 0.1.1
 =================
 Released March 7, 2005

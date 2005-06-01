@@ -1,7 +1,7 @@
 AC_PREREQ(2.50)
 AC_INIT(libiptcdata/iptc-data.h)
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(libiptcdata, 0.1.1)
+AM_INIT_AUTOMAKE(libiptcdata, 0.1.2)
 AM_MAINTAINER_MODE
 
 dnl ---------------------------------------------------------------------------
@@ -14,7 +14,7 @@ dnl  3. If the interface changes consist solely of additions, increment AGE.
 dnl  4. If the interface has removed elements, set AGE to 0.
 dnl ---------------------------------------------------------------------------
 LIBIPTCDATA_AGE=1
-LIBIPTCDATA_REVISION=0
+LIBIPTCDATA_REVISION=1
 LIBIPTCDATA_CURRENT=1
 AC_SUBST(LIBIPTCDATA_AGE)
 AC_SUBST(LIBIPTCDATA_REVISION)
