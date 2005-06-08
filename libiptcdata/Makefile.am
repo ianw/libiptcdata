@@ -27,6 +27,8 @@ libiptcdatainclude_HEADERS = 	\
 	iptc-utils.h		\
 	i18n.h
 
+nodist_libiptcdatainclude_HEADERS = _stdint.h
+
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libiptcdata.pc
 EXTRA_DIST = libiptcdata.pc.in

@@ -1,3 +1,8 @@
+2005-06-07  David Moore  <dcm@acm.org>
+
+	* TODO: added new desired features
+	* libiptcdata/Makefile.am: make sure _stdint.h gets installed
+
 2005-05-31  David Moore  <dcm@acm.org>
 
 	* NEWS, configure.in: Updated for release 0.1.2.
