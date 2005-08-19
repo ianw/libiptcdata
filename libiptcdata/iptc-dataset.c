@@ -196,7 +196,7 @@ iptc_dataset_set_tag (IptcDataSet *e, IptcRecord record, IptcTag tag)
  * on success
  */
 int
-iptc_dataset_set_data (IptcDataSet *e, const char * buf, unsigned int size,
+iptc_dataset_set_data (IptcDataSet *e, const unsigned char * buf, unsigned int size,
 		IptcValidate validate)
 {
 	if (!e || !buf || !size)
@@ -413,7 +413,7 @@ iptc_dataset_get_format (IptcDataSet *e)
  * Returns: the number of bytes copied, or -1 on failure
  */
 int
-iptc_dataset_get_data (IptcDataSet *e, char *val, unsigned int size)
+iptc_dataset_get_data (IptcDataSet *e, unsigned char *val, unsigned int size)
 {
 	int s;
 	if (!e || !val || !size)
@@ -545,7 +545,7 @@ iptc_dataset_get_time (IptcDataSet *e, int *hour, int *min, int *sec, int *tz)
 void
 iptc_dataset_dump (IptcDataSet *e, unsigned int indent)
 {
-	char buf[1024];
+	unsigned char buf[1024];
 	char value[1024];
 	unsigned int i;
 
@@ -617,7 +617,7 @@ iptc_dataset_get_as_str (IptcDataSet *e, char *val, unsigned int maxlen)
 		case IPTC_FORMAT_NUMERIC_STRING:
 		case IPTC_FORMAT_DATE:
 		case IPTC_FORMAT_TIME:
-			strncpy (val, e->data, MIN (maxlen, e->size));
+			strncpy (val, (char *)e->data, MIN (maxlen, e->size));
 			if (maxlen > e->size)
 				val[e->size] = '\0';
 			break;

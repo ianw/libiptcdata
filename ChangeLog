@@ -1,3 +1,8 @@
+2005-08-18  David Moore  <dcm@acm.org>
+
+	* iptc/main.c: fields longer than 256 bytes will print correctly
+	* various files: fixed compile warnings with gcc 4.0
+
 2005-06-07  David Moore  <dcm@acm.org>
 
 	* TODO: added new desired features

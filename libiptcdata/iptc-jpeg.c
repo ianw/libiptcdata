@@ -132,7 +132,7 @@ iptc_jpeg_seek_to_end (FILE * infile, FILE * outfile)
  * not found, or -1 if an error occurred.
  */
 int
-iptc_jpeg_read_ps3 (FILE * infile, char * ps3, unsigned int size)
+iptc_jpeg_read_ps3 (FILE * infile, unsigned char * ps3, unsigned int size)
 {
 	int s;
 
@@ -165,7 +165,7 @@ iptc_jpeg_read_ps3 (FILE * infile, char * ps3, unsigned int size)
  * Returns: the offset in bytes from the start of @ps3 where a block
  * of IPTC metadata begins, 0 if no IPTC metadata was found, -1 on error.
  */
-int iptc_jpeg_ps3_find_iptc (const char * ps3,
+int iptc_jpeg_ps3_find_iptc (const unsigned char * ps3,
 		unsigned int ps3_size, unsigned int * iptc_len)
 {
 	unsigned int i, s;
@@ -205,7 +205,7 @@ int iptc_jpeg_ps3_find_iptc (const char * ps3,
 }
 
 static int
-iptc_jpeg_write_iptc_bim (char * buf, const char * iptc,
+iptc_jpeg_write_iptc_bim (unsigned char * buf, const unsigned char * iptc,
 		unsigned int iptc_size)
 {
 	int j = 0;
@@ -250,9 +250,9 @@ iptc_jpeg_write_iptc_bim (char * buf, const char * iptc,
  *
  * Returns: the number of bytes written to @buf; -1 on error.
  */
-int iptc_jpeg_ps3_save_iptc (const char * ps3, unsigned int ps3_size,
-		const char * iptc, unsigned int iptc_size,
-		char * buf, unsigned int size)
+int iptc_jpeg_ps3_save_iptc (const unsigned char * ps3, unsigned int ps3_size,
+		const unsigned char * iptc, unsigned int iptc_size,
+		unsigned char * buf, unsigned int size)
 {
 	unsigned int i, j, s;
 	unsigned short bim_type;
@@ -263,7 +263,7 @@ int iptc_jpeg_ps3_save_iptc (const char * ps3, unsigned int ps3_size,
 		return -1;
 
 	if (!ps3 || ps3_size == 0) {
-		ps3 = JPEG_PS3_ID;
+		ps3 = (unsigned char *) JPEG_PS3_ID;
 		ps3_size = 14;
 	}
 	if (!iptc || iptc_size == 0) {
@@ -343,7 +343,7 @@ int iptc_jpeg_ps3_save_iptc (const char * ps3, unsigned int ps3_size,
  */
 int
 iptc_jpeg_save_with_ps3 (FILE * infile, FILE * outfile,
-		const char * ps3, unsigned int ps3_size)
+		const unsigned char * ps3, unsigned int ps3_size)
 {
 	int s;
 

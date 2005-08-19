@@ -61,14 +61,14 @@ void        iptc_dataset_free  (IptcDataSet *dataset);
 void        iptc_dataset_set_tag (IptcDataSet *dataset, IptcRecord record, IptcTag tag);
 IptcFormat  iptc_dataset_get_format (IptcDataSet *dataset);
 
-int         iptc_dataset_get_data (IptcDataSet *dataset, char * buf,
+int         iptc_dataset_get_data (IptcDataSet *dataset, unsigned char * buf,
 				unsigned int size);
 unsigned int iptc_dataset_get_value (IptcDataSet *dataset);
 int	    iptc_dataset_get_date (IptcDataSet *dataset, int *year, int *month, int *day);
 int	    iptc_dataset_get_time (IptcDataSet *dataset, int *hour, int *min, int *sec,
 				int *tz);
 
-int         iptc_dataset_set_data (IptcDataSet *dataset, const char * buf,
+int         iptc_dataset_set_data (IptcDataSet *dataset, const unsigned char * buf,
 				unsigned int size, IptcValidate validate);
 int         iptc_dataset_set_value (IptcDataSet *dataset, unsigned int value,
 				IptcValidate validate);

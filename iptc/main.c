@@ -63,7 +63,7 @@ print_iptc_data (IptcData * d)
 	
 	for (i=0; i < d->count; i++) {
 		IptcDataSet * e = d->datasets[i];
-		char buf[256];
+		unsigned char * buf;
 
 		printf("%2d:%03d %-20.20s %-9.9s %6d  ",
 				e->record, e->tag,
@@ -77,12 +77,16 @@ print_iptc_data (IptcData * d)
 				printf("%d\n", iptc_dataset_get_value (e));
 				break;
 			case IPTC_FORMAT_BINARY:
-				iptc_dataset_get_as_str (e, buf, sizeof(buf));
+                                buf = malloc (3 * e->size + 1);
+				iptc_dataset_get_as_str (e, (char *)buf, 3*e->size+1);
 				printf("%s\n", buf);
+                                free (buf);
 				break;
 			default:
-				iptc_dataset_get_data (e, buf, sizeof(buf));
+                                buf = malloc (e->size + 1);
+				iptc_dataset_get_data (e, buf, e->size+1);
 				printf("%s\n", buf);
+                                free (buf);
 				break;
 		}
 	}
@@ -166,7 +170,7 @@ perform_operations (IptcData * d, OpList * list)
 			iptc_data_remove_dataset (d, ds);
 		}
 		else if (op->op == OP_PRINT) {
-			unsigned char buf[256];
+			char buf[256];
 			if (!ds)
 				return -1;
 			iptc_dataset_get_as_str (ds, buf, sizeof(buf));
@@ -189,7 +193,8 @@ main (int argc, char ** argv)
 	FILE * infile, * outfile;
 	IptcData * d = NULL;
 	IptcDataSet * ds = NULL;
-	int ps3_len, iptc_len, iptc_off;
+	int ps3_len, iptc_off;
+        unsigned int iptc_len;
 	IptcRecord record;
 	IptcTag tag;
 	const IptcTagInfo * tag_info;
@@ -300,7 +305,7 @@ invalid_tag:
 							IPTC_DONT_VALIDATE);
 					break;
 				default:
-					iptc_dataset_set_data (ds, optarg,
+					iptc_dataset_set_data (ds, (unsigned char *) optarg,
 							strlen (optarg),
 							IPTC_DONT_VALIDATE);
 					break;

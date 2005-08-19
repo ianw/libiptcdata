@@ -28,15 +28,15 @@ extern "C" {
 #include <stdio.h>
 #include <libiptcdata/iptc-data.h>
 
-int iptc_jpeg_read_ps3 (FILE * infile, char * buf, unsigned int size);
-int iptc_jpeg_ps3_find_iptc (const char * ps3,
+int iptc_jpeg_read_ps3 (FILE * infile, unsigned char * buf, unsigned int size);
+int iptc_jpeg_ps3_find_iptc (const unsigned char * ps3,
 		unsigned int ps3_size, unsigned int * iptc_len);
 
-int iptc_jpeg_ps3_save_iptc (const char * ps3, unsigned int ps3_size,
-		const char * iptc, unsigned int iptc_size,
-		char * buf, unsigned int size);
+int iptc_jpeg_ps3_save_iptc (const unsigned char * ps3, unsigned int ps3_size,
+		const unsigned char * iptc, unsigned int iptc_size,
+		unsigned char * buf, unsigned int size);
 int iptc_jpeg_save_with_ps3 (FILE * infile, FILE * outfile,
-		const char * ps3, unsigned int ps3_size);
+		const unsigned char * ps3, unsigned int ps3_size);
 
 #ifdef __cplusplus
 }
