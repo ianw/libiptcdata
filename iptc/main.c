@@ -28,8 +28,10 @@ Options:\n\
   -s, --sort           sort tags before displaying or saving\n\
 \n\
 Informative output:\n\
+  -l, --list           list the names of all known tags (i.e. Caption, etc.)\n\
+  -L, --list-desc      list the names and descriptions of all known tags\n\
       --help           print this help, then exit\n\
-      --version        print iptc program version number\n\
+      --version        print iptc program version number, then exit\n\
 ";
 
 unsigned char buf[256*256];
@@ -49,6 +51,57 @@ print_version()
 {
 	printf("iptc %s\n%s\n", VERSION,
 			"Written by David Moore <dcm@acm.org>");
+}
+
+static void
+print_text_block (int indent, const char * text)
+{
+	int cols = 80;
+	int size = cols - indent;
+	char str[size];
+	const char * a = text;
+
+	while (*a != '\0') {
+		int len;
+		strncpy (str, a, size);
+		str[size-1] = '\0';
+		len = strlen (str);
+		if (len == size - 1) {
+			char * b = strrchr (str, ' ');
+			if (b)
+				*b = '\0';
+			len = b - str + 1;
+		}
+		a += len;
+		printf ("%*s%s\n", indent, "", str);
+	}
+}
+
+static void
+print_tag_list (int verbose)
+{
+	int r, t;
+
+	printf("%6.6s %s\n", "Tag", "Name");
+	printf(" ----- --------------------\n");
+
+	for (r = 1; r <= 9; r++) {
+		for (t = 0; t < 256; t++) {
+			const char * name = iptc_tag_get_name (r, t);
+			const char * desc;
+			if (!name)
+				continue;
+
+			printf ("%2d:%03d %s\n", r, t, name);
+
+			if (!verbose)
+				continue;
+
+			desc = iptc_tag_get_description (r, t);
+			if (desc)
+				print_text_block (10, desc);
+		}
+	}
 }
 
 static void
@@ -213,6 +266,8 @@ main (int argc, char ** argv)
 		{ "quiet", no_argument, NULL, 'q' },
 		{ "backup", no_argument, NULL, 'b' },
 		{ "sort", no_argument, NULL, 's' },
+		{ "list", no_argument, NULL, 'l' },
+		{ "list-desc", no_argument, NULL, 'L' },
 		{ "add", required_argument, NULL, 'a' },
 		{ "modify", required_argument, NULL, 'm' },
 		{ "delete", required_argument, NULL, 'd' },
@@ -223,7 +278,7 @@ main (int argc, char ** argv)
 		{ 0, 0, 0, 0 }
 	};
 
-	while ((c = getopt_long (argc, argv, "qsba:m:d:p:v:", longopts, NULL)) >= 0) {
+	while ((c = getopt_long (argc, argv, "qsblLa:m:d:p:v:", longopts, NULL)) >= 0) {
 		switch (c) {
 			case 'q':
 				is_quiet = 1;
@@ -234,6 +289,12 @@ main (int argc, char ** argv)
 			case 's':
 				do_sort = 1;
 				break;
+			case 'l':
+				print_tag_list (0);
+				return 0;
+			case 'L':
+				print_tag_list (1);
+				return 0;
 			case 'a':
 			case 'm':
 			case 'd':

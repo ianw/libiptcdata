@@ -1,5 +1,6 @@
 2005-08-23  David Moore  <dcm@acm.org>
 
+	* iptc/main.c: added -l and -L arguments to list tag names
 	* iptc-data.c, iptc-data.h: added iptc_data_sort() function
 	* iptc/main.c: added -s argument to sort datasets
 
