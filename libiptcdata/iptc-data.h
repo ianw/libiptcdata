@@ -73,6 +73,7 @@ typedef void (* IptcDataForeachDataSetFunc) (IptcDataSet *dataset,
 void         iptc_data_foreach_dataset (IptcData *data,
 					 IptcDataForeachDataSetFunc func,
 					 void *user_data);
+void         iptc_data_sort (IptcData *data);
 
 void iptc_data_dump  (IptcData *data, unsigned int indent);
 void iptc_data_log  (IptcData *data, IptcLog *log);

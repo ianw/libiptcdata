@@ -25,6 +25,7 @@ Operations:\n\
 Options:\n\
   -q, --quiet          produce less verbose output\n\
   -b, --backup         backup any modified files\n\
+  -s, --sort           sort tags before displaying or saving\n\
 \n\
 Informative output:\n\
       --help           print this help, then exit\n\
@@ -203,6 +204,7 @@ main (int argc, char ** argv)
 	int modified = 0;
 	int is_quiet = 0;
 	int do_backup = 0;
+	int do_sort = 0;
 	int add_tag = 0;
 	int modify_tag = 0;
 	OpList oplist = { 0, 0 };
@@ -210,6 +212,7 @@ main (int argc, char ** argv)
 	struct option longopts[] = {
 		{ "quiet", no_argument, NULL, 'q' },
 		{ "backup", no_argument, NULL, 'b' },
+		{ "sort", no_argument, NULL, 's' },
 		{ "add", required_argument, NULL, 'a' },
 		{ "modify", required_argument, NULL, 'm' },
 		{ "delete", required_argument, NULL, 'd' },
@@ -220,13 +223,16 @@ main (int argc, char ** argv)
 		{ 0, 0, 0, 0 }
 	};
 
-	while ((c = getopt_long (argc, argv, "qba:m:d:p:v:", longopts, NULL)) >= 0) {
+	while ((c = getopt_long (argc, argv, "qsba:m:d:p:v:", longopts, NULL)) >= 0) {
 		switch (c) {
 			case 'q':
 				is_quiet = 1;
 				break;
 			case 'b':
 				do_backup = 1;
+				break;
+			case 's':
+				do_sort = 1;
 				break;
 			case 'a':
 			case 'm':
@@ -380,6 +386,9 @@ invalid_tag:
 
 	if (perform_operations (d, &oplist) < 0)
 		return 1;
+
+	if (do_sort)
+		iptc_data_sort (d);
 
 	if (!is_quiet) {
 		if (d)

@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct _IptcDataPrivate
 {
@@ -696,6 +697,37 @@ iptc_data_foreach_dataset (IptcData *data,
 
 	for (i = 0; i < data->count; i++)
 		func (data->datasets[i], user);
+}
+
+static
+int dataset_compare (const void * d1, const void * d2)
+{
+	IptcDataSet * set1 = *(IptcDataSet **)d1;
+	IptcDataSet * set2 = *(IptcDataSet **)d2;
+
+	if (set1->record != set2->record)
+		return set1->record - set2->record;
+
+	return set1->tag - set2->tag;
+}
+
+/**
+ * iptc_data_sort:
+ * @data: collection of datasets to sort
+ *
+ * Sorts a collection of datasets in ascending order first by record
+ * number and second by tag number.  It can be useful to call this
+ * function before saving IPTC data in order to maintain a more
+ * organized file.
+ */
+void
+iptc_data_sort (IptcData *data)
+{
+	if (!data)
+		return;
+
+	qsort (data->datasets, data->count, sizeof (IptcDataSet *),
+			dataset_compare);
 }
 
 /**

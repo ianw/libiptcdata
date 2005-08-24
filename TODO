@@ -2,7 +2,7 @@
 - Allow iptc to operate on multiple files at once.
 - --modify option should add tag if not already present.
 - Add --append option to append text to existing tag
-
-- Sorting tags
-- Additional file formats
 - iptc should preserve file permissions
+
+- Additional file formats
+- character set setting and getting functions
