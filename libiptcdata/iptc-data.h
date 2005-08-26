@@ -33,6 +33,12 @@ typedef struct _IptcDataPrivate IptcDataPrivate;
 #include <libiptcdata/iptc-mem.h>
 #include <libiptcdata/iptc-log.h>
 
+typedef enum _IptcEncoding {
+	IPTC_ENCODING_UNKNOWN = 0,
+	IPTC_ENCODING_UNSPECIFIED = 1,
+	IPTC_ENCODING_UTF8 = 2
+} IptcEncoding;
+
 struct _IptcData
 {
         IptcDataSet **datasets;
@@ -74,6 +80,9 @@ void         iptc_data_foreach_dataset (IptcData *data,
 					 IptcDataForeachDataSetFunc func,
 					 void *user_data);
 void         iptc_data_sort (IptcData *data);
+IptcEncoding iptc_data_get_encoding (IptcData *data);
+int          iptc_data_set_encoding_utf8 (IptcData *data);
+
 
 void iptc_data_dump  (IptcData *data, unsigned int indent);
 void iptc_data_log  (IptcData *data, IptcLog *log);

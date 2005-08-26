@@ -255,6 +255,7 @@ main (int argc, char ** argv)
 	IptcFormat format;
 	char c;
 	int modified = 0;
+	int added_string = 0;
 	int is_quiet = 0;
 	int do_backup = 0;
 	int do_sort = 0;
@@ -371,6 +372,12 @@ invalid_tag:
 							strtoul (optarg, NULL, 10),
 							IPTC_DONT_VALIDATE);
 					break;
+				case IPTC_FORMAT_STRING:
+					added_string = 1;
+					iptc_dataset_set_data (ds, (unsigned char *) optarg,
+							strlen (optarg),
+							IPTC_DONT_VALIDATE);
+					break;
 				default:
 					iptc_dataset_set_data (ds, (unsigned char *) optarg,
 							strlen (optarg),
@@ -447,6 +454,20 @@ invalid_tag:
 
 	if (perform_operations (d, &oplist) < 0)
 		return 1;
+	
+	/* Make sure we specify the text encoding for the data */
+	if (added_string) {
+		IptcEncoding enc = iptc_data_get_encoding (d);
+		if (enc == IPTC_ENCODING_UNSPECIFIED) {
+			iptc_data_set_encoding_utf8 (d);
+		}
+		else if (enc != IPTC_ENCODING_UTF8) {
+			fprintf (stderr, "Warning: Strings encoded in UTF-8 "
+				"have been added to the IPTC data, but\n"
+				"pre-existing data may have been encoded "
+				"with a different character set.\n");
+		}
+	}
 
 	if (do_sort)
 		iptc_data_sort (d);

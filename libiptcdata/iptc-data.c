@@ -731,6 +731,89 @@ iptc_data_sort (IptcData *data)
 }
 
 /**
+ * iptc_data_get_encoding:
+ * @data: collection of datasets
+ *
+ * Identifies the character encoding of the collection of datasets as
+ * specified by the "character set" dataset (1:90).  The specification
+ * allows this dataset to contain control sequences from the ISO 2022
+ * standard.  Unfortunately, this standard is very complicated and
+ * generally not used by application writers.  Thus, rather than
+ * attempt to decode any possible any possible control sequence, this
+ * function only attempts to recognize the control sequence that identifies
+ * the UTF-8 character set.  If found, this function will return
+ * #IPTC_ENCODING_UTF8.  All character-based datasets in record 2 and
+ * higher are then expected to contain data encoded in the UTF-8
+ * character set.  Otherwise, this function will return
+ * #IPTC_ENCODING_UNKNOWN, meaning that any other character set
+ * might be used, including ISO 2022 control sequences that have not
+ * been decoded.  If dataset 1:90 is not present, this function returns
+ * #IPTC_ENCODING_UNSPECIFIED, in which case character-based datasets
+ * will usually be plain ASCII, although broken applications may have
+ * used some other encoding.
+ *
+ * Returns: #IPTC_ENCODING_UTF8, #IPTC_ENCODING_UNKNOWN, or
+ * #IPTC_ENCODING_UNSPECIFIED.
+ */
+static unsigned char utf8_invocation[] = "\x1b\x25\x47";
+
+IptcEncoding
+iptc_data_get_encoding (IptcData *data)
+{
+	IptcDataSet * ds;
+	IptcEncoding enc = IPTC_ENCODING_UNKNOWN;
+
+	ds = iptc_data_get_dataset (data, IPTC_RECORD_OBJECT_ENV,
+			IPTC_TAG_CHARACTER_SET);
+	if (!ds)
+		return IPTC_ENCODING_UNSPECIFIED;
+
+	if (ds->size == 3 && !memcmp (ds->data, utf8_invocation, 3))
+		enc = IPTC_ENCODING_UTF8;
+
+	iptc_dataset_unref (ds);
+
+	return enc;
+}
+
+/**
+ * iptc_data_set_encoding_utf8:
+ * @data: collection of datasets for which to specify the encoding
+ *
+ * Sets the contents of the "character set" dataset (1:90) to contain
+ * the control sequence that indicates UTF-8 as the character encoding
+ * for any character-based datasets in record 2 or higher.  If dataset
+ * 1:90 is not present, it will be added to the collection.  Any prior
+ * value of dataset 1:90 will be overwritten by this function.
+ *
+ * Returns: 0 on success, -1 on failure.
+ */
+int
+iptc_data_set_encoding_utf8 (IptcData *data)
+{
+	IptcDataSet * ds;
+
+	ds = iptc_data_get_dataset (data, IPTC_RECORD_OBJECT_ENV,
+			IPTC_TAG_CHARACTER_SET);
+	if (!ds) {
+		ds = iptc_dataset_new();
+		if (!ds)
+			return -1;
+		iptc_dataset_set_tag (ds, IPTC_RECORD_OBJECT_ENV,
+				IPTC_TAG_CHARACTER_SET);
+		if (iptc_data_add_dataset (data, ds) < 0) {
+			iptc_dataset_unref (ds);
+			return -1;
+		}
+	}
+	
+	iptc_dataset_set_data (ds, utf8_invocation, 3,
+			IPTC_DONT_VALIDATE);
+	iptc_dataset_unref (ds);
+	return 0;
+}
+
+/**
  * iptc_data_log:
  * @data: collection for which the log object should be changed.
  * @log: log object to use for the collection

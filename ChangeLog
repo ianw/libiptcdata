@@ -1,3 +1,9 @@
+2005-08-25  David Moore  <dcm@acm.org>
+
+	* iptc-data.c, iptc-data.h: added iptc_data_get_encoding() and
+	iptc_data_set_encoding_utf8() functions.
+	* iptc/main.c: character encoding is saved when strings added
+
 2005-08-23  David Moore  <dcm@acm.org>
 
 	* iptc/main.c: added -l and -L arguments to list tag names

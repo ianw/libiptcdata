@@ -2,6 +2,7 @@
 - --modify option should add tag if not already present.
 - Add --append option to append text to existing tag
 - iptc should preserve file permissions
+- convert UTF-8 text to console encoding
 
 - Additional file formats
-- character set setting and getting functions
+- use dgettext for internationalization
