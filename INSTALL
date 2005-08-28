@@ -26,6 +26,6 @@ and as root:
 Note: On Mac OS X, it has been reported that internationalization support
 in libiptcdata is often disabled at configure time because the libintl
 library cannot be found.  However, this can usually be remedied by pointing
-the configure script at the true location of libintl by invocing it like
+the configure script at the true location of libintl by invoking it like
 this:
   ./configure --with-libintl-prefix=/sw --with-libiconv-prefix=/sw

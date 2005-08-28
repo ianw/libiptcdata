@@ -210,6 +210,41 @@ iptc_data_foreach_dataset().
 @user_data: 
 
 
+<!-- ##### FUNCTION iptc_data_sort ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### ENUM IptcEncoding ##### -->
+<para>
+
+</para>
+
+@IPTC_ENCODING_UNKNOWN: 
+@IPTC_ENCODING_UNSPECIFIED: 
+@IPTC_ENCODING_UTF8: 
+
+<!-- ##### FUNCTION iptc_data_get_encoding ##### -->
+<para>
+
+</para>
+
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_set_encoding_utf8 ##### -->
+<para>
+
+</para>
+
+@data: 
+@Returns: 
+
+
 <!-- ##### FUNCTION iptc_data_dump ##### -->
 <para>
 

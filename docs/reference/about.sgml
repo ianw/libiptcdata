@@ -1,4 +1,4 @@
-<refentry id="iptc-about" revision="28 Feb 2005">
+<refentry id="iptc-about" revision="28 Aug 2005">
 <refmeta>
 	<refentrytitle>About libiptcdata</refentrytitle>
 	<manvolnum>3</manvolnum>
@@ -48,6 +48,20 @@
           <userinput>make install</userinput>
         </literallayout>
       </para>
+
+      <note>
+        <title>Compiling on Mac OS X</title>
+	<para>
+	  On Mac OS X, it has been reported that internationalization support
+	  in libiptcdata is often disabled at configure time because the
+	  libintl library cannot be found.  However, this can usually be
+	  remedied by pointing the configure script at the true location of
+	  libintl by invoking it like this:
+	  <literallayout>
+	    <userinput>./configure --with-libintl-prefix=/sw --with-libiconv-prefix=/sw</userinput>
+	  </literallayout>
+	</para>
+      </note>
 
 </refsect1>
 

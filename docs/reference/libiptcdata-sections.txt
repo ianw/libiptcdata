@@ -140,6 +140,14 @@ IptcDataForeachDataSetFunc
 iptc_data_foreach_dataset
 
 <SUBSECTION>
+iptc_data_sort
+
+<SUBSECTION>
+IptcEncoding
+iptc_data_get_encoding
+iptc_data_set_encoding_utf8
+
+<SUBSECTION>
 iptc_data_dump
 iptc_data_log
 

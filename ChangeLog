@@ -1,5 +1,6 @@
 2005-08-28  David Moore  <dcm@acm.org>
 
+	* docs/reference: documentation updates
 	* configure.in, iptc/main.c: Mac OS X compile fixes
 
 2005-08-27  David Moore  <dcm@acm.org>

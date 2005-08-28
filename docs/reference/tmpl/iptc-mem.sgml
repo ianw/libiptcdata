@@ -20,6 +20,7 @@ hooks for defining your own memory managment functions
 </para>
 
 @Param1: 
+@Returns: 
 
 
 <!-- ##### USER_FUNCTION IptcMemReallocFunc ##### -->
@@ -29,6 +30,7 @@ hooks for defining your own memory managment functions
 
 @Param1: 
 @Param2: 
+@Returns: 
 
 
 <!-- ##### USER_FUNCTION IptcMemFreeFunc ##### -->
@@ -79,6 +81,7 @@ hooks for defining your own memory managment functions
 
 @Param1: 
 @Param2: 
+@Returns: 
 
 
 <!-- ##### FUNCTION iptc_mem_realloc ##### -->
@@ -89,6 +92,7 @@ hooks for defining your own memory managment functions
 @Param1: 
 @Param2: 
 @Param3: 
+@Returns: 
 
 
 <!-- ##### FUNCTION iptc_mem_free ##### -->
