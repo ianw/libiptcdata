@@ -28,6 +28,9 @@ dnl Create a stdint.h-like file containing size-specific integer definitions
 dnl that will always be available
 AC_NEED_STDINT_H(libiptcdata/_stdint.h)
 
+dnl Check for getopt.h (Mac OSX doesn't usually have it for example)
+AC_CHECK_HEADERS([getopt.h])
+
 dnl ---------------------------------------------------------------------------
 dnl i18n support
 dnl ---------------------------------------------------------------------------

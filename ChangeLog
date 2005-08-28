@@ -1,3 +1,7 @@
+2005-08-28  David Moore  <dcm@acm.org>
+
+	* configure.in, iptc/main.c: Mac OS X compile fixes
+
 2005-08-27  David Moore  <dcm@acm.org>
 
 	* various files: removed included libintl, added po/ directory for the

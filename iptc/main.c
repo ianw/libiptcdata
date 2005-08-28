@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <getopt.h>
-#include <locale.h>
-
 #include <config.h>
+
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#else
+#define getopt_long(a,b,c,d,e) getopt(a,b,c)
+#endif
+
+#include <locale.h>
 
 #include "i18n.h"
 #include <libiptcdata/iptc-data.h>
@@ -266,6 +271,7 @@ main (int argc, char ** argv)
 	int modify_tag = 0;
 	OpList oplist = { 0, 0 };
 
+#ifdef HAVE_GETOPT_H
 	struct option longopts[] = {
 		{ "quiet", no_argument, NULL, 'q' },
 		{ "backup", no_argument, NULL, 'b' },
@@ -281,6 +287,7 @@ main (int argc, char ** argv)
 		{ "version", no_argument, NULL, 'V' },
 		{ 0, 0, 0, 0 }
 	};
+#endif
 
 	setlocale (LC_ALL, "");
 	textdomain (IPTC_GETTEXT_PACKAGE);
@@ -414,8 +421,7 @@ invalid_tag:
 				return 0;
 
 			default:
-				fprintf(stderr, "Try '%s --help' for more information.\n",
-						argv[0]);
+				print_help(argv);
 				return 1;
 		}
 	}
