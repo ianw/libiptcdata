@@ -20,7 +20,7 @@
 
 #include <config.h>
 #include <libiptcdata/iptc-log.h>
-#include <libiptcdata/i18n.h>
+#include "i18n.h"
 
 #include <string.h>
 

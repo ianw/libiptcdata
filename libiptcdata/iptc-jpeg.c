@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <libiptcdata/i18n.h>
+#include "i18n.h"
 
 
 typedef enum {

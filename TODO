@@ -5,4 +5,3 @@
 - convert UTF-8 text to console encoding
 
 - Additional file formats
-- use dgettext for internationalization

@@ -32,10 +32,15 @@ dnl ---------------------------------------------------------------------------
 dnl i18n support
 dnl ---------------------------------------------------------------------------
 ALL_LINGUAS=""
-# EVIL HACKS
-#AC_MSG_CHECKING([for po/Makevars requiring evil hack])
-GETTEXT_PACKAGE=${PACKAGE}-${LIBIPTCDATA_CURRENT}
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The gettext domain we're using])
+
+dnl The gettext domain of the command-line utility
+IPTC_GETTEXT_PACKAGE=iptc
+AC_DEFINE_UNQUOTED(IPTC_GETTEXT_PACKAGE,"$IPTC_GETTEXT_PACKAGE",[The gettext domain for the command-line utility])
+AC_SUBST(IPTC_GETTEXT_PACKAGE)
+
+dnl The gettext domain of the library
+GETTEXT_PACKAGE=${PACKAGE}
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The gettext domain for the library])
 AC_SUBST(GETTEXT_PACKAGE)
 #if test -f po/Makevars.template
 #then
@@ -44,7 +49,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 #else
 #	AC_MSG_RESULT([no])
 #fi
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION(0.13.1)
 
 
@@ -71,8 +76,8 @@ AC_OUTPUT([
   docs/Makefile
   docs/reference/Makefile
   docs/reference/version.xml
-  intl/Makefile
   po/Makefile.in
+  iptc/po/Makefile.in
   win/Makefile
   win/iptctool/Makefile
 ])

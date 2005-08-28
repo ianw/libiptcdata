@@ -56,14 +56,6 @@ else
 	DIE=1
 fi
 
-(autopoint --version) < /dev/null > /dev/null 2>&1 || {
-    echo
-    echo "You must have autopoint installed to compile $PROJECT."
-    echo "Download the appropriate package for your distribution,"
-    echo "or get the source tarball at ftp://ftp.gnu.org/gnu/gettext/"
-    DIE=1
-}
-
 
 if test "$DIE" -eq 1; then
 	exit 1
@@ -84,9 +76,6 @@ fi
 ACLOCAL_FLAGS="-I m4"
 
 rm -rf autom4te.cache
-rm -rf intl po/Makefile.in.in ABOUT-NLS
-
-autopoint || exit $?
 
 $ACLOCAL $ACLOCAL_FLAGS || exit $?
 

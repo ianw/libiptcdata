@@ -1,3 +1,8 @@
+2005-08-27  David Moore  <dcm@acm.org>
+
+	* various files: removed included libintl, added po/ directory for the
+	iptc utility, eliminated autopoint from build scripts
+
 2005-08-25  David Moore  <dcm@acm.org>
 
 	* iptc-data.c, iptc-data.h: added iptc_data_get_encoding() and

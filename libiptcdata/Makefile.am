@@ -1,7 +1,6 @@
 INCLUDES =              				\
 	-DLIBIPTCDATA_LOCALEDIR=\""$(datadir)/locale"\"	\
 	-I$(top_srcdir)/libiptcdata			\
-	-I$(top_srcdir)/intl				\
 	-I$(top_srcdir)
 
 lib_LTLIBRARIES = libiptcdata.la
@@ -14,7 +13,8 @@ libiptcdata_la_SOURCES =		\
 	iptc-log.c		\
 	iptc-mem.c		\
 	iptc-tag.c		\
-	iptc-utils.c
+	iptc-utils.c		\
+	i18n.h
 
 libiptcdataincludedir = $(includedir)/libiptcdata
 libiptcdatainclude_HEADERS = 	\
@@ -24,8 +24,7 @@ libiptcdatainclude_HEADERS = 	\
 	iptc-log.h		\
 	iptc-mem.h		\
 	iptc-tag.h		\
-	iptc-utils.h		\
-	i18n.h
+	iptc-utils.h
 
 nodist_libiptcdatainclude_HEADERS = _stdint.h
 

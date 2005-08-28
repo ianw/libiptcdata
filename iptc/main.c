@@ -4,8 +4,11 @@
 #include <ctype.h>
 #include <string.h>
 #include <getopt.h>
+#include <locale.h>
 
 #include <config.h>
+
+#include "i18n.h"
 #include <libiptcdata/iptc-data.h>
 #include <libiptcdata/iptc-jpeg.h>
 
@@ -278,6 +281,10 @@ main (int argc, char ** argv)
 		{ "version", no_argument, NULL, 'V' },
 		{ 0, 0, 0, 0 }
 	};
+
+	setlocale (LC_ALL, "");
+	textdomain (IPTC_GETTEXT_PACKAGE);
+	bindtextdomain (IPTC_GETTEXT_PACKAGE, IPTC_LOCALEDIR);
 
 	while ((c = getopt_long (argc, argv, "qsblLa:m:d:p:v:", longopts, NULL)) >= 0) {
 		switch (c) {
