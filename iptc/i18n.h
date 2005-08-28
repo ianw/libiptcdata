@@ -24,7 +24,7 @@
 #ifdef ENABLE_NLS
 #  include <libintl.h>
 #  undef _
-#  define _(String) gettext (IPTC_GETTEXT_PACKAGE)
+#  define _(String) gettext (String)
 #  ifdef gettext_noop
 #    define N_(String) gettext_noop (String)
 #  else

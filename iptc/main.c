@@ -17,7 +17,7 @@
 #include <libiptcdata/iptc-data.h>
 #include <libiptcdata/iptc-jpeg.h>
 
-static char help_str[] = "\
+static char help_str[] = N_("\
 Examples:\n\
   iptc image.jpg       # display the IPTC metadata contained in image.jpg\n\
   iptc -a Caption -v \"Foo\" image.jpg\n\
@@ -40,7 +40,7 @@ Informative output:\n\
   -L, --list-desc      list the names and descriptions of all known tags\n\
       --help           print this help, then exit\n\
       --version        print iptc program version number, then exit\n\
-";
+");
 
 unsigned char buf[256*256];
 unsigned char outbuf[256*256];
@@ -48,17 +48,18 @@ unsigned char outbuf[256*256];
 static void
 print_help(char ** argv)
 {
-	printf("%s\n\nUsage: %s [OPTION]... [FILE]\n\n%s",
-			"Utility for viewing and modifying the contents of \
-IPTC metadata in images",
-			argv[0], help_str);
+	printf("%s\n\n%s: %s [%s]... [%s]\n\n%s",
+			_("Utility for viewing and modifying the contents of \
+IPTC metadata in images"),
+			_("Usage"), argv[0], _("OPTION"), _("FILE"),
+			_(help_str));
 }
 
 static void
 print_version()
 {
 	printf("iptc %s\n%s\n", VERSION,
-			"Written by David Moore <dcm@acm.org>");
+			_("Written by David Moore <dcm@acm.org>"));
 }
 
 static void
@@ -90,7 +91,7 @@ print_tag_list (int verbose)
 {
 	int r, t;
 
-	printf("%6.6s %s\n", "Tag", "Name");
+	printf("%6.6s %s\n", _("Tag"), _("Name"));
 	printf(" ----- --------------------\n");
 
 	for (r = 1; r <= 9; r++) {
@@ -118,8 +119,8 @@ print_iptc_data (IptcData * d)
 	int i;
 
 	if (d->count) {
-		printf("%6.6s %-20.20s %-9.9s %6s  %s\n", "Tag", "Name", "Type",
-				"Size", "Value");
+		printf("%6.6s %-20.20s %-9.9s %6s  %s\n", _("Tag"), _("Name"),
+				_("Type"), _("Size"), _("Value"));
 		printf(" ----- -------------------- --------- ------  -----\n");
 	}
 	
@@ -214,7 +215,7 @@ perform_operations (IptcData * d, OpList * list)
 						op->record, op->tag);
 			}
 			if (!ds) {
-				fprintf(stderr, "Could not find dataset %d:%d\n", op->record, op->tag);
+				fprintf(stderr, _("Could not find dataset %d:%d\n"), op->record, op->tag);
 				return -1;
 			}
 		}
@@ -315,7 +316,7 @@ main (int argc, char ** argv)
 			case 'd':
 			case 'p':
 				if (add_tag || modify_tag) {
-					fprintf(stderr, "Must specify value for add/modify operation\n");
+					fprintf(stderr, _("Must specify value for add/modify operation\n"));
 					return 1;
 				}
 				if (isdigit (*optarg)) {
@@ -354,16 +355,16 @@ main (int argc, char ** argv)
 					
 				break;
 invalid_tag:
-				fprintf(stderr, "\"%s\" is not a known tag\n", optarg);
+				fprintf(stderr, _("\"%s\" is not a known tag\n"), optarg);
 				return 1;
 
 			case 'v':
 				if (!add_tag && !modify_tag) {
-					fprintf(stderr, "Must specify tag to add or modify\n");
+					fprintf(stderr, _("Must specify tag to add or modify\n"));
 					return 1;
 				}
 				if (add_tag && modify_tag) {
-					fprintf(stderr, "Must specify value for add/modify operation\n");
+					fprintf(stderr, _("Must specify value for add/modify operation\n"));
 					return 1;
 				}
 				tag_info = iptc_tag_get_info (record, tag);
@@ -378,7 +379,7 @@ invalid_tag:
 				case IPTC_FORMAT_SHORT:
 				case IPTC_FORMAT_LONG:
 					if (!isdigit (*optarg)) {
-						fprintf(stderr, "Value must be an integer\n");
+						fprintf(stderr, _("Value must be an integer\n"));
 						iptc_dataset_unref (ds);
 						return 1;
 					}
@@ -426,34 +427,34 @@ invalid_tag:
 		}
 	}
 	if (add_tag || modify_tag) {
-		fprintf(stderr, "Error: Must specify value for add/modify operation\n");
+		fprintf(stderr, _("Error: Must specify value for add/modify operation\n"));
 		print_help (argv);
 		return 1;
 	}
 
 	if (argc != optind + 1) {
-		fprintf(stderr, "Error: Must specify one file\n");
+		fprintf(stderr, _("Error: Must specify one file\n"));
 		print_help (argv);
 		return 1;
 	}
 
 	infile = fopen(argv[optind], "r");
 	if (!infile) {
-		fprintf(stderr, "Error opening %s\n", argv[1]);
+		fprintf(stderr, _("Error opening %s\n"), argv[1]);
 		return 1;
 	}
 
 	ps3_len = iptc_jpeg_read_ps3 (infile, buf, sizeof(buf));
 	fclose (infile);
 	if (ps3_len < 0) {
-		fprintf(stderr, "Error reading file\n");
+		fprintf(stderr, _("Error reading file\n"));
 		return 1;
 	}
 
 	if (ps3_len) {
 		iptc_off = iptc_jpeg_ps3_find_iptc (buf, ps3_len, &iptc_len);
 		if (iptc_off < 0) {
-			fprintf(stderr, "Error reading file\n");
+			fprintf(stderr, _("Error reading file\n"));
 			return 1;
 		}
 		if (iptc_off)
@@ -473,10 +474,10 @@ invalid_tag:
 			iptc_data_set_encoding_utf8 (d);
 		}
 		else if (enc != IPTC_ENCODING_UTF8) {
-			fprintf (stderr, "Warning: Strings encoded in UTF-8 "
+			fprintf (stderr, _("Warning: Strings encoded in UTF-8 "
 				"have been added to the IPTC data, but\n"
 				"pre-existing data may have been encoded "
-				"with a different character set.\n");
+				"with a different character set.\n"));
 		}
 	}
 
@@ -487,7 +488,7 @@ invalid_tag:
 		if (d)
 			print_iptc_data (d);
 		else
-			printf("No IPTC data found\n");
+			printf(_("No IPTC data found\n"));
 	}
 
 
@@ -498,26 +499,26 @@ invalid_tag:
 		int v;
 		
 		if (iptc_data_save (d, &iptc_buf, &iptc_len) < 0) {
-			fprintf(stderr, "Failed to generate IPTC bytestream\n");
+			fprintf(stderr, _("Failed to generate IPTC bytestream\n"));
 			return 1;
 		}
 		ps3_len = iptc_jpeg_ps3_save_iptc (buf, ps3_len,
 				iptc_buf, iptc_len, outbuf, sizeof(outbuf));
 		iptc_data_free_buf (d, iptc_buf);
 		if (ps3_len < 0) {
-			fprintf(stderr, "Failed to generate PS3 header\n");
+			fprintf(stderr, _("Failed to generate PS3 header\n"));
 			return 1;
 		}
 
 		infile = fopen (argv[optind], "r");
 		if (!infile) {
-			fprintf(stderr, "Can't reopen input file\n");
+			fprintf(stderr, _("Can't reopen input file\n"));
 			return 1;
 		}
 		sprintf(tmpfile, "%s.%d", argv[optind], getpid());
 		outfile = fopen (tmpfile, "w");
 		if (!outfile) {
-			fprintf(stderr, "Can't open temporary file for writing\n");
+			fprintf(stderr, _("Can't open temporary file for writing\n"));
 			return 1;
 		}
 		
@@ -530,21 +531,21 @@ invalid_tag:
 				sprintf (bakfile, "%s~", argv[optind]);
 				unlink (bakfile);
 				if (link (argv[optind], bakfile) < 0) {
-					fprintf (stderr, "Failed to create backup file, aborting\n");
+					fprintf (stderr, _("Failed to create backup file, aborting\n"));
 					unlink (tmpfile);
 					return 1;
 				}
 			}
 			if (rename (tmpfile, argv[optind]) < 0) {
-				fprintf(stderr, "Failed to save image\n");
+				fprintf(stderr, _("Failed to save image\n"));
 				unlink (tmpfile);
 				return 1;
 			}
-			fprintf(stderr, "Image saved\n");
+			fprintf(stderr, _("Image saved\n"));
 		}
 		else {
 			unlink (tmpfile);
-			fprintf(stderr, "Failed to save image\n");
+			fprintf(stderr, _("Failed to save image\n"));
 		}
 	}
 	

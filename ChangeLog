@@ -1,5 +1,6 @@
 2005-08-28  David Moore  <dcm@acm.org>
 
+	* iptc/main.c, iptc/i18n.h: marked up sources for translation
 	* docs/reference: documentation updates
 	* configure.in, iptc/main.c: Mac OS X compile fixes
 
