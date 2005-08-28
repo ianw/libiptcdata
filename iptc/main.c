@@ -426,16 +426,14 @@ invalid_tag:
 		}
 	}
 	if (add_tag || modify_tag) {
-		fprintf(stderr, "Must specify value for add/modify operation\n");
-		fprintf(stderr, "Try '%s --help' for more information.\n",
-				argv[0]);
+		fprintf(stderr, "Error: Must specify value for add/modify operation\n");
+		print_help (argv);
 		return 1;
 	}
 
 	if (argc != optind + 1) {
-		fprintf(stderr, "Must specify one file\n");
-		fprintf(stderr, "Try '%s --help' for more information.\n",
-				argv[0]);
+		fprintf(stderr, "Error: Must specify one file\n");
+		print_help (argv);
 		return 1;
 	}
 
