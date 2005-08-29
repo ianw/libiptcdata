@@ -81,6 +81,7 @@ iptc_tag_find_by_name
 IptcDataSet
 iptc_dataset_new
 iptc_dataset_new_mem
+iptc_dataset_copy
 iptc_dataset_ref
 iptc_dataset_unref
 iptc_dataset_free

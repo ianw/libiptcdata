@@ -90,6 +90,38 @@ iptc_dataset_new_mem (IptcMem *mem)
 }
 
 /**
+ * iptc_dataset_copy:
+ * @dataset: the dataset to duplicate
+ *
+ * Allocates a new dataset and copies the contents of an existing dataset
+ * into the new one.  Copied data includes record, tag, and the data payload.
+ * This is a "deep copy" so that a new copy of the data payload is created,
+ * not just a pointer duplication.  The new dataset has no parent collection,
+ * regardless of the parent of the copied dataset.  This allocation will set
+ * the #IptcDataSet refcount to 1, so use iptc_dataset_unref() when finished
+ * with the pointer.
+ *
+ * Returns: pointer to the new #IptcDataSet object, NULL on error
+ */
+IptcDataSet *
+iptc_dataset_copy (IptcDataSet *e)
+{
+	IptcDataSet * copy;
+	if (!e)
+		return NULL;
+
+	copy = iptc_dataset_new_mem (e->priv->mem);
+
+	copy->record = e->record;
+	copy->tag = e->tag;
+	copy->info = e->info;
+	copy->parent = NULL;
+	iptc_dataset_set_data (copy, e->data, e->size, IPTC_DONT_VALIDATE);
+
+	return copy;
+}
+
+/**
  * iptc_dataset_ref:
  * @dataset: the referenced pointer
  *

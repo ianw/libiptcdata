@@ -50,6 +50,15 @@ if it is not contained
 @Param1: 
 
 
+<!-- ##### FUNCTION iptc_dataset_copy ##### -->
+<para>
+
+</para>
+
+@dataset: 
+@Returns: 
+
+
 <!-- ##### FUNCTION iptc_dataset_ref ##### -->
 <para>
 

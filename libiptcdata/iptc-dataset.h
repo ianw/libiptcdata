@@ -54,6 +54,7 @@ typedef enum {
 /* Lifecycle */
 IptcDataSet  *iptc_dataset_new     (void);
 IptcDataSet  *iptc_dataset_new_mem (IptcMem * mem);
+IptcDataSet  *iptc_dataset_copy    (IptcDataSet *dataset);
 void        iptc_dataset_ref     (IptcDataSet *dataset);
 void        iptc_dataset_unref   (IptcDataSet *dataset);
 void        iptc_dataset_free  (IptcDataSet *dataset);
