@@ -42,8 +42,8 @@
 #    define bind_textdomain_codeset(Domain,Codeset) (Codeset)
 #    define bindtextdomain(Domain,Directory) (Domain)
 #endif
-#  define _(String) (String)
-#  define N_(String) (String)
+#  define _(String) ((char *)String)
+#  define N_(String) ((char *)String)
 #endif
 
 #endif /* __I18N_H__ */

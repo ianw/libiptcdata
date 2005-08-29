@@ -454,7 +454,7 @@ iptc_tag_get_name (IptcRecord record, IptcTag tag)
  * Returns: a static string containing the tag title, empty string
  * if none found
  */
-const char *
+char *
 iptc_tag_get_title (IptcRecord record, IptcTag tag)
 {
 	unsigned int i;
@@ -485,7 +485,7 @@ iptc_tag_get_title (IptcRecord record, IptcTag tag)
  * Returns: a static string containing the tag desciption, empty
  * string if none found
  */
-const char *
+char *
 iptc_tag_get_description (IptcRecord record, IptcTag tag)
 {
 	unsigned int i;
@@ -572,9 +572,12 @@ iptc_tag_find_by_name (const char * name, IptcRecord * record, IptcTag * tag)
  *
  * Returns: a static string in the native locale
  */
-const char *
+char *
 iptc_format_get_name (IptcFormat format)
 {
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	bindtextdomain (GETTEXT_PACKAGE, LIBIPTCDATA_LOCALEDIR);
+
 	switch (format) {
 		case IPTC_FORMAT_BINARY:
 			return _("Binary");

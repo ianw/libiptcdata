@@ -157,10 +157,10 @@ struct _IptcTagInfo {
 };
 
 const char     *iptc_tag_get_name        (IptcRecord record, IptcTag tag);
-const char     *iptc_tag_get_title       (IptcRecord record, IptcTag tag);
-const char     *iptc_tag_get_description (IptcRecord record, IptcTag tag);
+char           *iptc_tag_get_title       (IptcRecord record, IptcTag tag);
+char           *iptc_tag_get_description (IptcRecord record, IptcTag tag);
 const IptcTagInfo *iptc_tag_get_info     (IptcRecord record, IptcTag tag);
-const char     *iptc_format_get_name	 (IptcFormat format);
+char           *iptc_format_get_name	 (IptcFormat format);
 
 int iptc_tag_find_by_name (const char * name, IptcRecord * record, IptcTag * tag);
 

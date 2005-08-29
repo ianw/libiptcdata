@@ -13,6 +13,12 @@
 
 #include <locale.h>
 
+#if defined(HAVE_ICONV_H) && defined(HAVE_WCHAR_H)
+#include <iconv.h>
+#include <wchar.h>
+#include <langinfo.h>
+#endif
+
 #include "i18n.h"
 #include <libiptcdata/iptc-data.h>
 #include <libiptcdata/iptc-jpeg.h>
@@ -37,7 +43,7 @@ Options:\n\
 \n\
 Informative output:\n\
   -l, --list           list the names of all known tags (i.e. Caption, etc.)\n\
-  -L, --list-desc      list the names and descriptions of all known tags\n\
+  -L, --list-desc=TAG  print the name and description of TAG\n\
       --help           print this help, then exit\n\
       --version        print iptc program version number, then exit\n\
 ");
@@ -62,32 +68,143 @@ print_version()
 			_("Written by David Moore <dcm@acm.org>"));
 }
 
-static void
-print_text_block (int indent, const char * text)
-{
-	int cols = 80;
-	int size = cols - indent;
-	char str[size];
-	const char * a = text;
+#if defined(HAVE_ICONV_H) && defined(HAVE_WCHAR_H)
 
-	while (*a != '\0') {
-		int len;
-		strncpy (str, a, size);
-		str[size-1] = '\0';
-		len = strlen (str);
-		if (len == size - 1) {
-			char * b = strrchr (str, ' ');
-			if (b)
-				*b = '\0';
-			len = b - str + 1;
-		}
-		a += len;
-		printf ("%*s%s\n", indent, "", str);
+static char *
+locale_to_utf8 (char * str)
+{
+	unsigned int in_len = strlen (str);
+	int out_size = strlen (str) * 4 + 1;
+	unsigned int out_left = out_size;
+	char * a;
+	char * outstr;
+	iconv_t ic;
+
+	ic = iconv_open ("UTF-8", nl_langinfo (CODESET));
+	if (ic == (iconv_t) -1)
+		return strdup (str);
+
+	outstr = malloc (out_size);
+	if (!outstr)
+		return NULL;
+	
+	a = (char *) outstr;
+	iconv (ic, &str, &in_len, &a, &out_left);
+	outstr[out_size - out_left] = '\0';
+	iconv_close (ic);
+
+	return outstr;
+}
+
+static char *
+str_to_locale (char * str, char * charset, int * len)
+{
+	unsigned int in_len = strlen (str);
+	unsigned int w_size = (in_len+1) * 4;
+	unsigned int w_left = w_size;
+	unsigned int w_len;
+	unsigned int out_len;
+	wchar_t * wstr;
+	char * a;
+	char * outstr;
+	int i, j;
+	iconv_t ic;
+	mbstate_t ps;
+
+	ic = iconv_open ("WCHAR_T", charset);
+	if (ic == (iconv_t) -1)
+		return strdup (str);
+
+	wstr = malloc (w_size);
+	if (!wstr)
+		return NULL;
+	
+	a = (char *) wstr;
+	iconv (ic, &str, &in_len, &a, &w_left);
+	w_len = (w_size - w_left) / 4;
+	iconv_close (ic);
+
+	out_len = 2 * w_len + MB_CUR_MAX;
+	outstr = malloc (out_len);
+
+	memset (&ps, '\0', sizeof (ps));
+
+	if (len) {
+		if (*len < w_len)
+			w_len = *len;
+		*len = w_len;
 	}
+	j = 0;
+	for (i = 0; i < w_len; i++) {
+		int n;
+		while (out_len - j < MB_CUR_MAX + 1) {
+			out_len *= 2;
+			outstr = realloc (outstr, out_len);
+			if (!outstr)
+				return NULL;
+		}
+		n = wcrtomb (outstr + j, wstr[i], &ps);
+		if (n == -1) {
+			outstr[j] = '?';
+			n = 1;
+		}
+		j += n;
+	}
+	outstr[j] = '\0';
+
+	free (wstr);
+	return outstr;
+}
+
+#else /* defined(HAVE_ICONV_H) && defined(HAVE_WCHAR_H) */
+
+static char *
+locale_to_utf8 (char * str)
+{
+	return strdup (str);
+}
+
+static char *
+str_to_locale (char * str, char * charset, int * len)
+{
+	int in_len = strlen (str);
+
+	if (len) {
+		if (*len < in_len)
+			in_len = *len;
+		*len = in_len;
+	}
+
+	return strndup (str, in_len);
+}
+
+#endif
+
+static int
+print_tag_info (IptcRecord r, IptcTag t, int verbose)
+{
+	const char * name = iptc_tag_get_name (r, t);
+	char * desc;
+	if (!name)
+		return -1;
+
+	printf ("%2d:%03d %s\n", r, t, name);
+
+	if (!verbose)
+		return 0;
+
+	desc = iptc_tag_get_description (r, t);
+	if (desc) {
+		char * convbuf;
+		convbuf = str_to_locale (desc, "UTF-8", NULL);
+		printf ("\n%s\n", convbuf);
+		free (convbuf);
+	}
+	return 0;
 }
 
 static void
-print_tag_list (int verbose)
+print_tag_list ()
 {
 	int r, t;
 
@@ -96,19 +213,7 @@ print_tag_list (int verbose)
 
 	for (r = 1; r <= 9; r++) {
 		for (t = 0; t < 256; t++) {
-			const char * name = iptc_tag_get_name (r, t);
-			const char * desc;
-			if (!name)
-				continue;
-
-			printf ("%2d:%03d %s\n", r, t, name);
-
-			if (!verbose)
-				continue;
-
-			desc = iptc_tag_get_description (r, t);
-			if (desc)
-				print_text_block (10, desc);
+			print_tag_info (r, t, 0);
 		}
 	}
 }
@@ -117,6 +222,7 @@ static void
 print_iptc_data (IptcData * d)
 {
 	int i;
+	char * charset;
 
 	if (d->count) {
 		printf("%6.6s %-20.20s %-9.9s %6s  %s\n", _("Tag"), _("Name"),
@@ -124,15 +230,34 @@ print_iptc_data (IptcData * d)
 		printf(" ----- -------------------- --------- ------  -----\n");
 	}
 	
+	if (iptc_data_get_encoding (d) == IPTC_ENCODING_UTF8) {
+		charset = "UTF-8";
+	}
+	else {
+		/* technically this violates the IPTC IIM spec, but most
+		 * other applications are broken. */
+		charset = "ISO-8859-1";
+	}
+
 	for (i=0; i < d->count; i++) {
 		IptcDataSet * e = d->datasets[i];
 		unsigned char * buf;
+		char * convbuf;
+		int len;
 
-		printf("%2d:%03d %-20.20s %-9.9s %6d  ",
-				e->record, e->tag,
-				iptc_tag_get_title (e->record, e->tag),
-				iptc_format_get_name (iptc_dataset_get_format (e)),
-				e->size);
+		printf("%2d:%03d ", e->record, e->tag);
+		len = 20;
+		convbuf = str_to_locale (iptc_tag_get_title (e->record, e->tag),
+				"UTF-8", &len);
+		printf("%s%*s ", convbuf, 20 - len, "");
+		free (convbuf);
+		len = 9;
+		convbuf = str_to_locale (iptc_format_get_name (iptc_dataset_get_format (e)),
+				"UTF-8", &len);
+		printf("%s%*s ", convbuf, 9 - len, "");
+		free (convbuf);
+		printf("%6d  ", e->size);
+
 		switch (iptc_dataset_get_format (e)) {
 			case IPTC_FORMAT_BYTE:
 			case IPTC_FORMAT_SHORT:
@@ -148,8 +273,10 @@ print_iptc_data (IptcData * d)
 			default:
                                 buf = malloc (e->size + 1);
 				iptc_dataset_get_data (e, buf, e->size+1);
-				printf("%s\n", buf);
+				convbuf = str_to_locale ((char *)buf, charset, NULL);
                                 free (buf);
+				printf("%s\n", convbuf);
+                                free (convbuf);
 				break;
 		}
 	}
@@ -233,11 +360,9 @@ perform_operations (IptcData * d, OpList * list)
 			iptc_data_remove_dataset (d, ds);
 		}
 		else if (op->op == OP_PRINT) {
-			char buf[256];
 			if (!ds)
 				return -1;
-			iptc_dataset_get_as_str (ds, buf, sizeof(buf));
-			printf("%s\n", buf);
+			fwrite (ds->data, 1, ds->size, stdout);
 		}
 
 		if (ds)
@@ -247,6 +372,25 @@ perform_operations (IptcData * d, OpList * list)
 		free (list->ops);
 	list->count = 0;
 
+	return 0;
+}
+
+static int
+parse_tag_id (char * str, IptcRecord *r, IptcTag *t)
+{
+	if (isdigit (str[0])) {
+		char * a;
+		*r = strtoul (str, &a, 10);
+		if (a[0] != ':' || !isdigit (a[1]))
+			return -1;
+		*t = strtoul (a + 1, NULL, 10);
+		if (*r < 1 || *r > 9 || *t < 0 || *t > 255)
+			return -1;
+	}
+	else {
+		if (iptc_tag_find_by_name (str, r, t) < 0)
+			return -1;
+	}
 	return 0;
 }
 
@@ -278,7 +422,7 @@ main (int argc, char ** argv)
 		{ "backup", no_argument, NULL, 'b' },
 		{ "sort", no_argument, NULL, 's' },
 		{ "list", no_argument, NULL, 'l' },
-		{ "list-desc", no_argument, NULL, 'L' },
+		{ "list-desc", required_argument, NULL, 'L' },
 		{ "add", required_argument, NULL, 'a' },
 		{ "modify", required_argument, NULL, 'm' },
 		{ "delete", required_argument, NULL, 'd' },
@@ -294,7 +438,8 @@ main (int argc, char ** argv)
 	textdomain (IPTC_GETTEXT_PACKAGE);
 	bindtextdomain (IPTC_GETTEXT_PACKAGE, IPTC_LOCALEDIR);
 
-	while ((c = getopt_long (argc, argv, "qsblLa:m:d:p:v:", longopts, NULL)) >= 0) {
+	while ((c = getopt_long (argc, argv, "qsblL:a:m:d:p:v:", longopts, NULL)) >= 0) {
+		char * convbuf;
 		switch (c) {
 			case 'q':
 				is_quiet = 1;
@@ -306,10 +451,16 @@ main (int argc, char ** argv)
 				do_sort = 1;
 				break;
 			case 'l':
-				print_tag_list (0);
+				print_tag_list ();
 				return 0;
 			case 'L':
-				print_tag_list (1);
+				if (parse_tag_id (optarg, &record, &tag) < 0) {
+					fprintf(stderr, _("\"%s\" is not a known tag\n"), optarg);
+					return 1;
+				}
+				if (print_tag_info (record, tag, 1) < 0) {
+					fprintf(stderr, _("No information about tag\n"));
+				}
 				return 0;
 			case 'a':
 			case 'm':
@@ -319,20 +470,9 @@ main (int argc, char ** argv)
 					fprintf(stderr, _("Must specify value for add/modify operation\n"));
 					return 1;
 				}
-				if (isdigit (*optarg)) {
-					char * a;
-					record = strtoul (optarg, &a, 10);
-					if (a[0] != ':' || !isdigit (a[1]))
-						goto invalid_tag;
-					tag = strtoul (a + 1, NULL, 10);
-					if (record < 1 || record > 9 ||
-							tag < 0 || tag > 255)
-						goto invalid_tag;
-				}
-				else {
-					if (iptc_tag_find_by_name (optarg,
-								&record, &tag) < 0)
-						goto invalid_tag;
+				if (parse_tag_id (optarg, &record, &tag) < 0) {
+					fprintf(stderr, _("\"%s\" is not a known tag\n"), optarg);
+					return 1;
 				}
 				if (c == 'a') {
 					add_tag = 1;
@@ -354,9 +494,6 @@ main (int argc, char ** argv)
 				}
 					
 				break;
-invalid_tag:
-				fprintf(stderr, _("\"%s\" is not a known tag\n"), optarg);
-				return 1;
 
 			case 'v':
 				if (!add_tag && !modify_tag) {
@@ -389,9 +526,11 @@ invalid_tag:
 					break;
 				case IPTC_FORMAT_STRING:
 					added_string = 1;
-					iptc_dataset_set_data (ds, (unsigned char *) optarg,
-							strlen (optarg),
+					convbuf = locale_to_utf8 (optarg);
+					iptc_dataset_set_data (ds, (unsigned char *) convbuf,
+							strlen (convbuf),
 							IPTC_DONT_VALIDATE);
+					free (convbuf);
 					break;
 				default:
 					iptc_dataset_set_data (ds, (unsigned char *) optarg,
