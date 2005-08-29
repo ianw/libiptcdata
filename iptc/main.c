@@ -19,6 +19,9 @@
 #include <langinfo.h>
 #endif
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "i18n.h"
 #include <libiptcdata/iptc-data.h>
 #include <libiptcdata/iptc-jpeg.h>
@@ -666,6 +669,7 @@ main (int argc, char ** argv)
 		fclose (outfile);
 
 		if (v >= 0) {
+			struct stat statinfo;
 			if (do_backup) {
 				sprintf (bakfile, "%s~", argv[optind]);
 				unlink (bakfile);
@@ -675,10 +679,15 @@ main (int argc, char ** argv)
 					return 1;
 				}
 			}
+			stat (argv[optind], &statinfo);
 			if (rename (tmpfile, argv[optind]) < 0) {
 				fprintf(stderr, _("Failed to save image\n"));
 				unlink (tmpfile);
 				return 1;
+			}
+			else {
+				chown (argv[optind], -1, statinfo.st_gid);
+				chmod (argv[optind], statinfo.st_mode);
 			}
 			fprintf(stderr, _("Image saved\n"));
 		}

@@ -1,5 +1,6 @@
 2005-08-28  David Moore  <dcm@acm.org>
 
+	* iptc/main.c: preserve file permissions when saving
 	* iptc/main.c: added character set conversion depending on locale
 	* iptc/main.c, iptc/i18n.h: marked up sources for translation
 	* docs/reference: documentation updates
