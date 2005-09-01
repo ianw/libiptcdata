@@ -51,9 +51,6 @@ Informative output:\n\
       --version        print iptc program version number, then exit\n\
 ");
 
-unsigned char buf[256*256];
-unsigned char outbuf[256*256];
-
 static void
 print_help(char ** argv)
 {
@@ -171,6 +168,7 @@ static char *
 str_to_locale (char * str, char * charset, int * len)
 {
 	int in_len = strlen (str);
+	char * out_str;
 
 	if (len) {
 		if (*len < in_len)
@@ -178,7 +176,9 @@ str_to_locale (char * str, char * charset, int * len)
 		*len = in_len;
 	}
 
-	return strndup (str, in_len);
+	out_str = strdup (str);
+	out_str[in_len] = '\0';
+	return out_str;
 }
 
 #endif
@@ -326,7 +326,7 @@ new_operation (OpList * list, OpType op, IptcRecord record,
 }
 
 static int
-perform_operations (IptcData * d, OpList * list)
+perform_operations (IptcData * d, OpList * list, char * filename)
 {
 	int i, j;
 
@@ -345,17 +345,19 @@ perform_operations (IptcData * d, OpList * list)
 						op->record, op->tag);
 			}
 			if (!ds) {
-				fprintf(stderr, _("Could not find dataset %d:%d\n"), op->record, op->tag);
+				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
 				return -1;
 			}
 		}
 		
 		if (op->op == OP_ADD) {
+			IptcDataSet * ds_add;
+			ds_add = iptc_dataset_copy (op->ds);
 			if (ds)
-				iptc_data_add_dataset_before (d, ds, op->ds);
+				iptc_data_add_dataset_before (d, ds, ds_add);
 			else
-				iptc_data_add_dataset (d, op->ds);
-			iptc_dataset_unref (op->ds);
+				iptc_data_add_dataset (d, ds_add);
+			iptc_dataset_unref (ds_add);
 		}
 		else if (op->op == OP_DELETE) {
 			if (!ds)
@@ -366,16 +368,33 @@ perform_operations (IptcData * d, OpList * list)
 			if (!ds)
 				return -1;
 			fwrite (ds->data, 1, ds->size, stdout);
+			printf ("\n");
 		}
 
 		if (ds)
 			iptc_dataset_unref (ds);
 	}
+
+	return 0;
+}
+
+static void
+free_operations (OpList * list)
+{
+	int i;
+
+	if (!list)
+		return;
+
+	for (i = 0; i < list->count; i++) {
+		Operation * op = list->ops + i;
+		if (op->op == OP_ADD) {
+			iptc_dataset_unref (op->ds);
+		}
+	}
 	if (list->ops)
 		free (list->ops);
 	list->count = 0;
-
-	return 0;
 }
 
 static int
@@ -400,14 +419,14 @@ parse_tag_id (char * str, IptcRecord *r, IptcTag *t)
 int
 main (int argc, char ** argv)
 {
-	FILE * infile, * outfile;
-	IptcData * d = NULL;
 	IptcDataSet * ds = NULL;
-	int ps3_len, iptc_off;
-        unsigned int iptc_len;
+	int i;
 	IptcRecord record;
 	IptcTag tag;
 	const IptcTagInfo * tag_info;
+	unsigned char * buf;
+	unsigned char * outbuf;
+	int buflen = 256 * 256;
 	IptcFormat format;
 	char c;
 	int modified = 0;
@@ -574,131 +593,163 @@ main (int argc, char ** argv)
 		return 1;
 	}
 
-	if (argc != optind + 1) {
-		fprintf(stderr, _("Error: Must specify one file\n"));
+	if (argc < optind + 1) {
+		fprintf(stderr, _("Error: Must specify a file\n"));
 		print_help (argv);
 		return 1;
 	}
 
-	infile = fopen(argv[optind], "r");
-	if (!infile) {
-		fprintf(stderr, _("Error opening %s\n"), argv[1]);
-		return 1;
-	}
+	buf = malloc (buflen);
+	outbuf = malloc (buflen);
 
-	ps3_len = iptc_jpeg_read_ps3 (infile, buf, sizeof(buf));
-	fclose (infile);
-	if (ps3_len < 0) {
-		fprintf(stderr, _("Error reading file\n"));
-		return 1;
-	}
+	for (i = optind; i < argc; i++) {
+		char * filename = argv[i];
+		FILE * infile, * outfile;
+		IptcData * d = NULL;
+		int ps3_len, iptc_off;
+		unsigned int iptc_len;
 
-	if (ps3_len) {
-		iptc_off = iptc_jpeg_ps3_find_iptc (buf, ps3_len, &iptc_len);
-		if (iptc_off < 0) {
-			fprintf(stderr, _("Error reading file\n"));
-			return 1;
-		}
-		if (iptc_off)
-			d = iptc_data_new_from_data (buf + iptc_off, iptc_len);
-	}
-
-	if (modified && !d)
-		d = iptc_data_new ();
-
-	if (perform_operations (d, &oplist) < 0)
-		return 1;
-	
-	/* Make sure we specify the text encoding for the data */
-	if (added_string) {
-		IptcEncoding enc = iptc_data_get_encoding (d);
-		if (enc == IPTC_ENCODING_UNSPECIFIED) {
-			iptc_data_set_encoding_utf8 (d);
-		}
-		else if (enc != IPTC_ENCODING_UTF8) {
-			fprintf (stderr, _("Warning: Strings encoded in UTF-8 "
-				"have been added to the IPTC data, but\n"
-				"pre-existing data may have been encoded "
-				"with a different character set.\n"));
-		}
-	}
-
-	if (do_sort)
-		iptc_data_sort (d);
-
-	if (!is_quiet) {
-		if (d)
-			print_iptc_data (d);
-		else
-			printf(_("No IPTC data found\n"));
-	}
-
-
-	if (modified) {
-		unsigned char * iptc_buf = NULL;
-		char tmpfile[strlen(argv[optind])+8];
-		char bakfile[strlen(argv[optind])+8];
-		int v;
-		
-		if (iptc_data_save (d, &iptc_buf, &iptc_len) < 0) {
-			fprintf(stderr, _("Failed to generate IPTC bytestream\n"));
-			return 1;
-		}
-		ps3_len = iptc_jpeg_ps3_save_iptc (buf, ps3_len,
-				iptc_buf, iptc_len, outbuf, sizeof(outbuf));
-		iptc_data_free_buf (d, iptc_buf);
-		if (ps3_len < 0) {
-			fprintf(stderr, _("Failed to generate PS3 header\n"));
-			return 1;
-		}
-
-		infile = fopen (argv[optind], "r");
+		infile = fopen(filename, "r");
 		if (!infile) {
-			fprintf(stderr, _("Can't reopen input file\n"));
-			return 1;
+			fprintf(stderr, _("Error opening %s\n"), filename);
+			continue;
 		}
-		sprintf(tmpfile, "%s.%d", argv[optind], getpid());
-		outfile = fopen (tmpfile, "w");
-		if (!outfile) {
-			fprintf(stderr, _("Can't open temporary file for writing\n"));
-			return 1;
+
+		ps3_len = iptc_jpeg_read_ps3 (infile, buf, buflen);
+		fclose (infile);
+		if (ps3_len < 0) {
+			fprintf(stderr, _("Error parsing %s\n"), filename);
+			continue;
+		}
+
+		if (ps3_len) {
+			iptc_off = iptc_jpeg_ps3_find_iptc (buf, ps3_len, &iptc_len);
+			if (iptc_off < 0) {
+				fprintf(stderr, _("Error parsing headers of %s\n"), filename);
+				continue;
+			}
+			if (iptc_off)
+				d = iptc_data_new_from_data (buf + iptc_off, iptc_len);
+		}
+
+		if (modified && !d)
+			d = iptc_data_new ();
+
+		if (perform_operations (d, &oplist, filename) < 0) {
+			iptc_data_unref (d);
+			continue;
 		}
 		
-		v = iptc_jpeg_save_with_ps3 (infile, outfile, outbuf, ps3_len);
-		fclose (infile);
-		fclose (outfile);
-
-		if (v >= 0) {
-			struct stat statinfo;
-			if (do_backup) {
-				sprintf (bakfile, "%s~", argv[optind]);
-				unlink (bakfile);
-				if (link (argv[optind], bakfile) < 0) {
-					fprintf (stderr, _("Failed to create backup file, aborting\n"));
-					unlink (tmpfile);
-					return 1;
-				}
+		/* Make sure we specify the text encoding for the data */
+		if (added_string) {
+			IptcEncoding enc = iptc_data_get_encoding (d);
+			if (enc == IPTC_ENCODING_UNSPECIFIED) {
+				iptc_data_set_encoding_utf8 (d);
 			}
-			stat (argv[optind], &statinfo);
-			if (rename (tmpfile, argv[optind]) < 0) {
-				fprintf(stderr, _("Failed to save image\n"));
-				unlink (tmpfile);
-				return 1;
+			else if (enc != IPTC_ENCODING_UTF8) {
+				fprintf (stderr, "%s:\n", filename);
+				fprintf (stderr, _("Warning: Strings encoded in UTF-8 "
+					"have been added to the IPTC data, but\n"
+					"pre-existing data may have been encoded "
+					"with a different character set.\n"));
+			}
+		}
+
+		if (do_sort)
+			iptc_data_sort (d);
+
+		if (!is_quiet && ((optind+1) == argc || !modified)) {
+			if (d) {
+				printf ("%s:\n", filename);
+				print_iptc_data (d);
+				if (i + 1 < argc)
+					printf ("\n");
 			}
 			else {
-				chown (argv[optind], -1, statinfo.st_gid);
-				chmod (argv[optind], statinfo.st_mode);
+				printf ("%s: %s\n", filename, _("No IPTC data found"));
 			}
-			fprintf(stderr, _("Image saved\n"));
 		}
-		else {
-			unlink (tmpfile);
-			fprintf(stderr, _("Failed to save image\n"));
+
+
+		if (modified) {
+			unsigned char * iptc_buf = NULL;
+			char tmpfile[strlen(filename)+8];
+			char bakfile[strlen(filename)+8];
+			int v;
+			
+			if (iptc_data_save (d, &iptc_buf, &iptc_len) < 0) {
+				fprintf(stderr, "%s: %s\n", filename, _("Failed to generate IPTC bytestream"));
+				iptc_data_unref (d);
+				
+				continue;
+			}
+			ps3_len = iptc_jpeg_ps3_save_iptc (buf, ps3_len,
+					iptc_buf, iptc_len, outbuf, buflen);
+			iptc_data_free_buf (d, iptc_buf);
+			if (ps3_len < 0) {
+				fprintf(stderr, "%s: %s\n", filename, _("Failed to generate PS3 header"));
+				iptc_data_unref (d);
+				continue;
+			}
+
+			infile = fopen (filename, "r");
+			if (!infile) {
+				fprintf(stderr, "%s: %s\n", filename, _("Failed to reopen file"));
+				iptc_data_unref (d);
+				continue;
+			}
+			sprintf(tmpfile, "%s.%d", filename, getpid());
+			outfile = fopen (tmpfile, "w");
+			if (!outfile) {
+				fprintf(stderr, "%s: %s\n", filename, _("Can't open temporary file for writing"));
+				fclose (infile);
+				iptc_data_unref (d);
+				return 1;
+			}
+			
+			v = iptc_jpeg_save_with_ps3 (infile, outfile, outbuf, ps3_len);
+			fclose (infile);
+			fclose (outfile);
+
+			if (v >= 0) {
+				struct stat statinfo;
+				if (do_backup) {
+					sprintf (bakfile, "%s~", filename);
+					unlink (bakfile);
+					if (link (filename, bakfile) < 0) {
+						fprintf (stderr, "%s: %s\n", filename, _("Failed to create backup file, aborting"));
+						unlink (tmpfile);
+						iptc_data_unref (d);
+						continue;
+					}
+				}
+				stat (filename, &statinfo);
+				if (rename (tmpfile, filename) < 0) {
+					fprintf(stderr, "%s: %s\n", filename, _("Failed to save image"));
+					unlink (tmpfile);
+					iptc_data_unref (d);
+					continue;
+				}
+				else {
+					chown (filename, -1, statinfo.st_gid);
+					chmod (filename, statinfo.st_mode);
+				}
+				if (!is_quiet)
+					fprintf(stderr, _("%s: saved\n"), filename);
+			}
+			else {
+				unlink (tmpfile);
+				fprintf(stderr, "%s: %s\n", filename, _("Failed to save image"));
+			}
 		}
+		
+		if (d)
+			iptc_data_unref(d);
 	}
-	
-	if (d)
-		iptc_data_unref(d);
+
+	free (buf);
+	free (outbuf);
+	free_operations (&oplist);
 
 	return 0;
 }

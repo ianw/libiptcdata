@@ -1,4 +1,3 @@
-- Allow iptc to operate on multiple files at once.
 - --modify option should add tag if not already present.
 - Add --append option to append text to existing tag
 

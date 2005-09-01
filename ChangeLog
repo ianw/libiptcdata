@@ -1,3 +1,7 @@
+2005-08-29  David Moore  <dcm@acm.org>
+
+	* iptc/main.c: allow running on multiple files at once
+
 2005-08-28  David Moore  <dcm@acm.org>
 
 	* iptc-dataset.[ch]: added new function iptc_dataset_copy()
