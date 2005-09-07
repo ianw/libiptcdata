@@ -1,4 +1,3 @@
-- --modify option should add tag if not already present.
 - Add --append option to append text to existing tag
 
 - Additional file formats

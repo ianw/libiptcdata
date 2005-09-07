@@ -29,12 +29,14 @@
 static char help_str[] = N_("\
 Examples:\n\
   iptc image.jpg       # display the IPTC metadata contained in image.jpg\n\
-  iptc -a Caption -v \"Foo\" image.jpg\n\
-                       # add caption \"Foo\" to the IPTC data in image.jpg\n\
+  iptc -m Caption -v \"Foo\" *.jpg\n\
+                       # set caption \"Foo\" in all jpegs of the curr. dir.\n\
+  iptc -a Keywords -v \"vacation\" *.jpg\n\
+                       # add keyword \"vacation\" to all jpegs\n\
 \n\
 Operations:\n\
   -a, --add=TAG        add new tag with identifier TAG\n\
-  -m, --modify=TAG     modify tag with identifier TAG\n\
+  -m, --modify=TAG     modify tag with identifier TAG (add if not present)\n\
   -v, --value=VALUE    value for added/modified tag\n\
   -d, --delete=TAG     delete tag with identifier TAG\n\
   -p, --print=TAG      print value of tag with identifier TAG\n\
@@ -54,10 +56,10 @@ Informative output:\n\
 static void
 print_help(char ** argv)
 {
-	printf("%s\n\n%s: %s [%s]... [%s]\n\n%s",
+	printf("%s\n\n%s: %s [%s] [%s]...\n\n%s",
 			_("Utility for viewing and modifying the contents of \
 IPTC metadata in images"),
-			_("Usage"), argv[0], _("OPTION"), _("FILE"),
+			_("Usage"), argv[0], _("OPTIONS"), _("FILE"),
 			_(help_str));
 }
 
@@ -288,7 +290,8 @@ print_iptc_data (IptcData * d)
 typedef enum {
 	OP_ADD,
 	OP_DELETE,
-	OP_PRINT
+	OP_PRINT,
+	OP_MODIFY
 } OpType;
 
 typedef struct _Operation {
@@ -344,29 +347,34 @@ perform_operations (IptcData * d, OpList * list, char * filename)
 				ds = iptc_data_get_next_dataset (d, ds,
 						op->record, op->tag);
 			}
-			if (!ds) {
-				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
-				return -1;
-			}
 		}
 		
-		if (op->op == OP_ADD) {
+		if (op->op == OP_ADD || op->op == OP_MODIFY) {
 			IptcDataSet * ds_add;
 			ds_add = iptc_dataset_copy (op->ds);
 			if (ds)
 				iptc_data_add_dataset_before (d, ds, ds_add);
-			else
+			else {
 				iptc_data_add_dataset (d, ds_add);
+				if (op->op == OP_MODIFY) {
+					fprintf (stderr, _("%s: Could not find dataset %d:%d, adding it\n"), filename, op->record, op->tag);
+				}
+			}
 			iptc_dataset_unref (ds_add);
 		}
-		else if (op->op == OP_DELETE) {
-			if (!ds)
-				return -1;
-			iptc_data_remove_dataset (d, ds);
+		if (op->op == OP_DELETE || op->op == OP_MODIFY) {
+			if (!ds && op->op == OP_DELETE) {
+				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
+				continue;
+			}
+			if (ds)
+				iptc_data_remove_dataset (d, ds);
 		}
-		else if (op->op == OP_PRINT) {
-			if (!ds)
-				return -1;
+		if (op->op == OP_PRINT) {
+			if (!ds) {
+				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
+				continue;
+			}
 			fwrite (ds->data, 1, ds->size, stdout);
 			printf ("\n");
 		}
@@ -566,10 +574,8 @@ main (int argc, char ** argv)
 					add_tag = 0;
 				}
 				if (modify_tag) {
-					new_operation (&oplist, OP_ADD,
+					new_operation (&oplist, OP_MODIFY,
 							record, tag, 0, ds);
-					new_operation (&oplist, OP_DELETE,
-							record, tag, 1, NULL);
 					modify_tag = 0;
 				}
 				break;
