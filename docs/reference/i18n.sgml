@@ -19,13 +19,13 @@
 	 Record 1 should be in plain ASCII, but data of the following
 	 records should follow the character set established by
 	 dataset 1:90, the "character set" dataset.  This dataset
-	 can contains control functions, according to the ISO 2022
+	 contains control functions according to the ISO 2022
 	 standard, which allow for switching between different
 	 character sets.  However, there are several problems with this
 	 approach:
 	 <itemizedlist>
 	   <listitem><para>
-	     Nearly all IPTC-aware applications written previously don't
+	     Nearly all IPTC-aware applications written previously do not
 	     follow this standard.  They usually force all characters to
 	     ASCII or use the Latin-1 character set, without identifying
 	     it in dataset 1:90.
@@ -33,7 +33,7 @@
 	   <listitem><para>
 	     The ISO 2022 standard is very complicated and lacks a free
 	     reference implementation.  In addition, the standard
-	     is rarely used since unicode provides a superior
+	     is rarely used since Unicode provides a superior
 	     alternative.
 	   </para></listitem>
 	 </itemizedlist>

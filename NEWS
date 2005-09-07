@@ -1,3 +1,22 @@
+libiptcdata 0.2.0
+=================
+Released September 7, 2005
+
+library:
+* Improved internationalization support, including helper functions
+iptc_data_get_encoding() and iptc_data_set_encoding().
+* Added iptc_data_sort() and iptc_dataset_copy() functions.
+* Mac OS X compile fixes.
+* Fixed compile warnings with gcc 4.0.
+
+iptc utility:
+* Improved internationalization support.
+* --modify command will create dataset if not already present.
+* Allows running on multiple files at once.
+* Added -l (list tags), -L (tag information), and -s (sort datasets) options
+* Improved handling of data sets containing more than 256 bytes
+
+
 libiptcdata 0.1.2
 =================
 Released May 31, 2005

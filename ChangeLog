@@ -1,5 +1,6 @@
 2005-09-07  David Moore  <dcm@acm.org>
 
+	* NEWS, configure.in: updated for release 0.2.0
 	* docs/reference: documentation updates
 
 2005-09-06  David Moore  <dcm@acm.org>

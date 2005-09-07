@@ -18,7 +18,7 @@
 	 it is free, fast, and widely available on many platforms.  It
 	 is easy to combine libiptcdata with code that already uses
 	 libjpeg to decompress a jpeg file.  The following example shows
-	 how to extract IPTC while a file is being parsed:
+	 how to extract IPTC data while a file is being parsed by libjpeg:
 	</para>
 
 	<programlisting>
@@ -37,7 +37,7 @@ if (!infile)
 cinfo.err = jpeg_std_error (&amp;jerr);
 jpeg_create_decompress (&amp;cinfo);
 jpeg_stdio_src (&amp;cinfo, infile);
-/* be sure to save the APP13, which might contain IPTC data */
+/* be sure to save the APP13 header, which might contain IPTC data */
 jpeg_save_markers (&amp;cinfo, JPEG_APP0+13, 0xffff);
 jpeg_read_header (&amp;cinfo, TRUE);
 
