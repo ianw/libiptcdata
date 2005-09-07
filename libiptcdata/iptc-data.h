@@ -33,7 +33,7 @@ typedef struct _IptcDataPrivate IptcDataPrivate;
 #include <libiptcdata/iptc-mem.h>
 #include <libiptcdata/iptc-log.h>
 
-typedef enum _IptcEncoding {
+typedef enum {
 	IPTC_ENCODING_UNKNOWN = 0,
 	IPTC_ENCODING_UNSPECIFIED = 1,
 	IPTC_ENCODING_UTF8 = 2

@@ -1,5 +1,6 @@
 2005-09-07  David Moore  <dcm@acm.org>
 
+	* iptc-data.h: compile fix
 	* NEWS, configure.in: updated for release 0.2.0
 	* docs/reference: documentation updates
 
