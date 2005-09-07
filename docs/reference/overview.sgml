@@ -67,7 +67,9 @@ if (!d) {
 	 extracts the
 	 Photoshop metadata from the APP13 header.  If your application already
 	 decodes the JPEG file, you don't need this function:  Simply store the
-	 contents of the APP13 header as you decode the JPEG.
+	 contents of the APP13 header as you decode the JPEG.  See
+	 <link linkend="iptc-libjpeg">libjpeg Interoperability</link> for
+	 an example.
 	</para>
 
 	<para>

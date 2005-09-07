@@ -3,6 +3,8 @@
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY iptc-overview SYSTEM "overview.sgml">
 <!ENTITY iptc-about SYSTEM "about.sgml">
+<!ENTITY iptc-i18n SYSTEM "i18n.sgml">
+<!ENTITY iptc-libjpeg SYSTEM "libjpeg.sgml">
 <!ENTITY version SYSTEM "version.xml">
 ]>
 <book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
@@ -55,6 +57,8 @@
 
   &iptc-about;
   &iptc-overview;
+  &iptc-libjpeg;
+  &iptc-i18n;
   <chapter>
     <title>IPTC Data Manipulation</title>
     <xi:include href="xml/iptc-data.xml"/>

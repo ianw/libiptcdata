@@ -1,3 +1,7 @@
+2005-09-07  David Moore  <dcm@acm.org>
+
+	* docs/reference: documentation updates
+
 2005-09-06  David Moore  <dcm@acm.org>
 
 	* iptc/main.c: -m option will add dataset if not present

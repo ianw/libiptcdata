@@ -449,7 +449,8 @@ iptc_tag_get_name (IptcRecord record, IptcTag tag)
  * the name, except it will be translated to the current
  * locale (if available) and may contain spaces, for example
  * "Copyright Notice".  It is appropriate for the title to appear
- * in user interfaces.
+ * in user interfaces.  The return value will be encoding using the UTF-8
+ * character set.
  *
  * Returns: a static string containing the tag title, empty string
  * if none found
@@ -480,7 +481,8 @@ iptc_tag_get_title (IptcRecord record, IptcTag tag)
  *
  * Retrieves the description of a tag, which explains the purpose
  * of the tag from the IPTC IIM specification.  It is translated
- * to the current locale if available.
+ * to the current locale if available.  The return value will
+ * be encoded using the UTF-8 character set.
  *
  * Returns: a static string containing the tag desciption, empty
  * string if none found
