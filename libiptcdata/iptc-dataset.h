@@ -28,6 +28,11 @@ extern "C" {
 typedef struct _IptcDataSet        IptcDataSet;
 typedef struct _IptcDataSetPrivate IptcDataSetPrivate;
 
+typedef enum {
+	IPTC_DONT_VALIDATE = 0,
+	IPTC_VALIDATE      = 1
+} IptcValidate;
+
 #include <libiptcdata/iptc-data.h>
 #include <libiptcdata/iptc-mem.h>
 
@@ -44,11 +49,6 @@ struct _IptcDataSet {
 
 	IptcDataSetPrivate *priv;
 };
-
-typedef enum {
-	IPTC_DONT_VALIDATE = 0,
-	IPTC_VALIDATE      = 1
-} IptcValidate;
 
 
 /* Lifecycle */

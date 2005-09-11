@@ -20,7 +20,6 @@ hooks for defining your own memory managment functions
 </para>
 
 @Param1: 
-<!-- # Unused Parameters # -->
 @Returns: 
 
 
@@ -31,7 +30,6 @@ hooks for defining your own memory managment functions
 
 @Param1: 
 @Param2: 
-<!-- # Unused Parameters # -->
 @Returns: 
 
 
@@ -83,7 +81,6 @@ hooks for defining your own memory managment functions
 
 @Param1: 
 @Param2: 
-<!-- # Unused Parameters # -->
 @Returns: 
 
 
@@ -95,7 +92,6 @@ hooks for defining your own memory managment functions
 @Param1: 
 @Param2: 
 @Param3: 
-<!-- # Unused Parameters # -->
 @Returns: 
 
 

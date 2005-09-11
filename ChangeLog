@@ -1,3 +1,12 @@
+2005-09-10  David Moore  <dcm@acm.org>
+
+	* iptc-data.[ch]: added new functions iptc_data_set_version(),
+	iptc_data_add_dataset_with_value(), and
+	iptc_data_add_dataset_with_contents().
+	* iptc/main.c: removed -s option, instead sorting the datasets
+	by default unless the --no-sort option is specified
+	* iptc/main.c: call iptc_data_set_version() before saving
+
 2005-09-07  David Moore  <dcm@acm.org>
 
 	* iptc-data.h: compile fix

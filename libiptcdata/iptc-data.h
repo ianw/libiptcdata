@@ -39,6 +39,9 @@ typedef enum {
 	IPTC_ENCODING_UTF8 = 2
 } IptcEncoding;
 
+/* The version of the spec implemented by this library */
+#define IPTC_IIM_VERSION	4
+
 struct _IptcData
 {
         IptcDataSet **datasets;
@@ -83,6 +86,13 @@ void         iptc_data_sort (IptcData *data);
 IptcEncoding iptc_data_get_encoding (IptcData *data);
 int          iptc_data_set_encoding_utf8 (IptcData *data);
 
+int          iptc_data_set_version (IptcData *data, unsigned int version);
+
+int iptc_data_add_dataset_with_value (IptcData *data, IptcRecord record,
+		IptcTag tag, unsigned int value, IptcValidate validate);
+int iptc_data_add_dataset_with_contents (IptcData *data, IptcRecord record,
+		IptcTag tag, const unsigned char * buf,
+		unsigned int size, IptcValidate validate);
 
 void iptc_data_dump  (IptcData *data, unsigned int indent);
 void iptc_data_log  (IptcData *data, IptcLog *log);

@@ -149,6 +149,14 @@ iptc_data_get_encoding
 iptc_data_set_encoding_utf8
 
 <SUBSECTION>
+IPTC_IIM_VERSION
+iptc_data_set_version
+
+<SUBSECTION>
+iptc_data_add_dataset_with_value
+iptc_data_add_dataset_with_contents
+
+<SUBSECTION>
 iptc_data_dump
 iptc_data_log
 

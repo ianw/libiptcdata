@@ -792,25 +792,159 @@ int
 iptc_data_set_encoding_utf8 (IptcData *data)
 {
 	IptcDataSet * ds;
+	int ret;
 
 	ds = iptc_data_get_dataset (data, IPTC_RECORD_OBJECT_ENV,
 			IPTC_TAG_CHARACTER_SET);
-	if (!ds) {
-		ds = iptc_dataset_new();
-		if (!ds)
-			return -1;
-		iptc_dataset_set_tag (ds, IPTC_RECORD_OBJECT_ENV,
-				IPTC_TAG_CHARACTER_SET);
-		if (iptc_data_add_dataset (data, ds) < 0) {
-			iptc_dataset_unref (ds);
-			return -1;
-		}
+	if (ds) {
+		ret = iptc_dataset_set_data (ds, utf8_invocation, 3,
+				IPTC_DONT_VALIDATE);
+		iptc_dataset_unref (ds);
+	}
+	else {
+		ret = iptc_data_add_dataset_with_contents (data,
+				IPTC_RECORD_OBJECT_ENV, IPTC_TAG_CHARACTER_SET,
+				utf8_invocation, 3, IPTC_DONT_VALIDATE);
 	}
 	
-	iptc_dataset_set_data (ds, utf8_invocation, 3,
-			IPTC_DONT_VALIDATE);
+	return ret;
+}
+
+/**
+ * iptc_data_set_version:
+ * @data: collection of datasets for which to specify the version
+ * @version: version number to write
+ *
+ * Specifies the version of the IIM specification used by this library by
+ * setting the value of datasets 1:00 and 2:00.  It is recommended to set the
+ * version number to #IPTC_IIM_VERSION, which specifies the version
+ * implemented by this library (currently 4).  If datasets 1:00 or 2:00 are
+ * not present, they will be added to the collection.  Any prior value of
+ * the datasets will be overwritten by this function.  In order to ensure
+ * compliance with the standard, this function should always be called before
+ * saving a collection of datasets.
+ *
+ * Returns: 0 on success, -1 on failure.
+ */
+int
+iptc_data_set_version (IptcData *data, unsigned int version)
+{
+	IptcDataSet * ds;
+	int ret;
+
+	ds = iptc_data_get_dataset (data, IPTC_RECORD_OBJECT_ENV,
+			IPTC_TAG_MODEL_VERSION);
+	if (ds) {
+		ret = iptc_dataset_set_value (ds, version,
+				IPTC_DONT_VALIDATE);
+		iptc_dataset_unref (ds);
+	}
+	else {
+		ret = iptc_data_add_dataset_with_value (data,
+				IPTC_RECORD_OBJECT_ENV, IPTC_TAG_MODEL_VERSION,
+				version, IPTC_DONT_VALIDATE);
+	}
+
+	if (ret < 0)
+		return -1;
+
+	ds = iptc_data_get_dataset (data, IPTC_RECORD_APP_2,
+			IPTC_TAG_RECORD_VERSION);
+	if (ds) {
+		ret = iptc_dataset_set_value (ds, version,
+				IPTC_DONT_VALIDATE);
+		iptc_dataset_unref (ds);
+	}
+	else {
+		ret = iptc_data_add_dataset_with_value (data,
+				IPTC_RECORD_APP_2, IPTC_TAG_RECORD_VERSION,
+				version, IPTC_DONT_VALIDATE);
+	}
+	return ret;
+}
+
+/**
+ * iptc_data_add_dataset_with_value:
+ * @data: collection to which the new dataset should be added
+ * @record: record number of the dataset to be added
+ * @tag: tag (dataset number) of the dataset to be added
+ * @value: value for the dataset
+ * @validate: whether or not the passed value should be validated against
+ * the IPTC specification for this dataset's tag.
+ *
+ * This is a convenience function that creates a new dataset with the given
+ * record and tag, adds it to the specified collection of datasets, and
+ * stores the given numeric value as the contents of the dataset.  It is
+ * equivalent to calling this sequence of functions: iptc_dataset_new(),
+ * iptc_dataset_set_tag(), iptc_data_add_dataset(),
+ * and iptc_dataset_set_value().
+ *
+ * Returns: -1 on error, 0 if validation failed, the number of bytes copied
+ * on success
+ */
+int
+iptc_data_add_dataset_with_value (IptcData *data, IptcRecord record,
+		IptcTag tag, unsigned int value, IptcValidate validate)
+{
+	IptcDataSet * ds;
+	int ret;
+
+	ds = iptc_dataset_new_mem (data->priv->mem);
+	if (!ds)
+		return -1;
+
+	iptc_dataset_set_tag (ds, record, tag);
+	if (iptc_data_add_dataset (data, ds) < 0) {
+		iptc_dataset_unref (ds);
+		return -1;
+	}
+	
+	ret = iptc_dataset_set_value (ds, value, validate);
 	iptc_dataset_unref (ds);
-	return 0;
+	return ret;
+}
+
+/**
+ * iptc_data_add_dataset_with_contents:
+ * @data: collection to which the new dataset should be added
+ * @record: record number of the dataset to be added
+ * @tag: tag (dataset number) of the dataset to be added
+ * @buf: buffer containing the value
+ * @size: number of bytes to copy
+ * @validate: whether or not the passed value should be validated against
+ * the IPTC specification for this dataset's tag.
+ *
+ * This is a convenience function that creates a new dataset with the given
+ * record and tag, adds it to the specified collection of datasets, and
+ * stores a copy of the given data buffer as the contents of the dataset.
+ * It is equivalent to calling this sequence of functions: iptc_dataset_new(),
+ * iptc_dataset_set_tag(), iptc_data_add_dataset(),
+ * and iptc_dataset_set_data().
+ *
+ * Returns: -1 on error, 0 if validation failed, the number of bytes copied
+ * on success
+ */
+int
+iptc_data_add_dataset_with_contents (IptcData *data, IptcRecord record,
+		IptcTag tag, const unsigned char * buf,
+		unsigned int size, IptcValidate validate)
+{
+	IptcDataSet * ds;
+	int ret;
+
+	ds = iptc_dataset_new_mem (data->priv->mem);
+	if (!ds)
+		return -1;
+
+	iptc_dataset_set_tag (ds, record, tag);
+	if (iptc_data_add_dataset (data, ds) < 0) {
+		iptc_dataset_unref (ds);
+		return -1;
+	}
+	
+	ret = iptc_dataset_set_data (ds, buf, size, validate);
+	iptc_dataset_unref (ds);
+	return ret;
 }
 
 /**

@@ -95,7 +95,7 @@ Operations:
 Options:
   -q, --quiet          produce less verbose output
   -b, --backup         backup any modified files
-  -s, --sort           sort tags before displaying or saving
+      --no-sort        do not sort tags before saving
 
 Informative output:
   -l, --list           list the names of all known tags (i.e. Caption, etc.)

@@ -245,6 +245,50 @@ iptc_data_foreach_dataset().
 @Returns: 
 
 
+<!-- ##### MACRO IPTC_IIM_VERSION ##### -->
+<para>
+The version of the IPTC IIM specification implemented by this library.
+</para>
+
+
+
+<!-- ##### FUNCTION iptc_data_set_version ##### -->
+<para>
+
+</para>
+
+@data: 
+@version: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_add_dataset_with_value ##### -->
+<para>
+
+</para>
+
+@data: 
+@record: 
+@tag: 
+@value: 
+@validate: 
+@Returns: 
+
+
+<!-- ##### FUNCTION iptc_data_add_dataset_with_contents ##### -->
+<para>
+
+</para>
+
+@data: 
+@record: 
+@tag: 
+@buf: 
+@size: 
+@validate: 
+@Returns: 
+
+
 <!-- ##### FUNCTION iptc_data_dump ##### -->
 <para>
 
