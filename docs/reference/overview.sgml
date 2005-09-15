@@ -358,17 +358,38 @@ iptc_dataset_unref (ds);
 	<title>Saving IPTC data to a JPEG file</title>
 
 	<para>
-	 Saving a <structname><link linkend="IptcData">IptcData</link></structname>
-	 object back to a JPEG file is a multi-step process to allow you to
-	 integrate it with other JPEG saving code in your application.  The first
-	 step is to convert the <structname><link linkend="IptcData">IptcData</link></structname>
-	 object into a bytestream that can be saved somewhere using the
-	 <function><link linkend="iptc-data-save">iptc_data_save</link>()</function>
-	 function.
+	 Saving an <structname><link linkend="IptcData">IptcData</link></structname>
+	 object back to a JPEG file is a multi-step process requiring several
+	 different function calls.  Although this may seem cumbersome at first,
+	 it allows you to integrate the process into any existing JPEG-saving
+	 code already written in your application.
 	</para>
 
 	<para>
-	 Next, the IPTC data block is encapsulated inside a Photoshop header using
+	 The first step is to do some simple bookkeeping to make sure
+	 that the saved data is compliant with the IPTC specification.  A
+	 call to
+	 <function><link linkend="iptc-data-set-version">iptc_data_set_version</link>()</function>
+	 identifies the version number of the specification being used by
+	 setting a special dataset intended for that purpose.
+	 Next, a call to
+	 <function><link linkend="iptc-data-set-encoding-utf8">iptc_data_set_encoding_utf8</link>()</function>
+	 identifies that stored strings have been encoding in the UTF-8
+	 character set, so other applications will interpret them correctly
+	 (Note that you must convert strings to UTF-8 before storing them
+	 in a dataset -- the library will not do it for you.).
+	 Finally, a call to
+	 <function><link linkend="iptc-data-sort">iptc_data_sort</link>()</function>
+	 sorts the datasets by tag number for better organization.
+	</para>
+
+	<para>
+	 Now, by calling
+	 <function><link linkend="iptc-data-save">iptc_data_save</link>()</function>
+	 we convert the
+	 <structname><link linkend="IptcData">IptcData</link></structname>
+	 object into a bytestream.  This IPTC data block is then encapsulated
+	 inside a Photoshop header using
 	 <function><link linkend="iptc-jpeg-ps3-save-iptc">iptc_jpeg_ps3_save_iptc</link>()</function>.
 	 This function will use an existing Photoshop header, if available, so that
 	 all unrelated portions of the Photoshop header are preserved.  If no
@@ -391,6 +412,10 @@ unsigned char * iptc_buf = NULL;
 unsigned char outbuf[256*256];
 char tmpfile[strlen(filename)+8];
 int v;
+
+iptc_data_set_version (d, IPTC_IIM_VERSION);
+iptc_data_set_encoding_utf8 (d);
+iptc_data_sort (d);
 
 if (iptc_data_save (d, &amp;iptc_buf, &amp;iptc_len) &lt; 0) {
 	fprintf (stderr, "Failed to generate IPTC bytestream\n");

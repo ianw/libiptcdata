@@ -1,3 +1,7 @@
+2005-09-15  David Moore  <dcm@acm.org>
+
+	* docs/reference: Documentation updates
+
 2005-09-14  David Moore  <dcm@acm.org>
 
 	* configure.in, iptc/main.c: Mac OS X compile fixes for libiconv
