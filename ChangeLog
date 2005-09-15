@@ -1,3 +1,7 @@
+2005-09-14  David Moore  <dcm@acm.org>
+
+	* configure.in, iptc/main.c: Mac OS X compile fixes for libiconv
+
 2005-09-10  David Moore  <dcm@acm.org>
 
 	* iptc-data.[ch]: added new functions iptc_data_set_version(),

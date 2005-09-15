@@ -12,4 +12,4 @@ iptc_SOURCES =			\
 	i18n.h
 iptc_LDADD =					\
 	-L../libiptcdata -liptcdata		\
-	$(INTLLIBS)
+	$(LTINTLLIBS) $(LTLIBICONV)

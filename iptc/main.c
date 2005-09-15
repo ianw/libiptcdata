@@ -75,9 +75,9 @@ print_version()
 static char *
 locale_to_utf8 (char * str)
 {
-	unsigned int in_len = strlen (str);
+	size_t in_len = strlen (str);
 	int out_size = strlen (str) * 4 + 1;
-	unsigned int out_left = out_size;
+	size_t out_left = out_size;
 	char * a;
 	char * outstr;
 	iconv_t ic;
@@ -91,7 +91,7 @@ locale_to_utf8 (char * str)
 		return NULL;
 	
 	a = (char *) outstr;
-	iconv (ic, &str, &in_len, &a, &out_left);
+	iconv (ic, (ICONV_CONST char **)&str, &in_len, &a, &out_left);
 	outstr[out_size - out_left] = '\0';
 	iconv_close (ic);
 
@@ -101,9 +101,9 @@ locale_to_utf8 (char * str)
 static char *
 str_to_locale (char * str, char * charset, int * len)
 {
-	unsigned int in_len = strlen (str);
+	size_t in_len = strlen (str);
 	unsigned int w_size = (in_len+1) * 4;
-	unsigned int w_left = w_size;
+	size_t w_left = w_size;
 	unsigned int w_len;
 	unsigned int out_len;
 	wchar_t * wstr;
@@ -122,7 +122,7 @@ str_to_locale (char * str, char * charset, int * len)
 		return NULL;
 	
 	a = (char *) wstr;
-	iconv (ic, &str, &in_len, &a, &w_left);
+	iconv (ic, (ICONV_CONST char **)&str, &in_len, &a, &w_left);
 	w_len = (w_size - w_left) / 4;
 	iconv_close (ic);
 
