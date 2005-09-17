@@ -1,3 +1,8 @@
+2005-09-17  David Moore  <dcm@acm.org>
+
+	* iptc/main.c: modified command syntax to allow specification of
+	dataset number (for duplicates) along with the tag name.
+
 2005-09-16  David Moore  <dcm@acm.org>
 
 	* iptc/main.c: print dataset numbers of duplicate tags

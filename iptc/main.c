@@ -370,6 +370,8 @@ perform_operations (IptcData * d, OpList * list, char * filename)
 		if (op->record) {
 			ds = iptc_data_get_dataset (d, op->record, op->tag);
 			for (j = 0; j < op->num && ds; j++) {
+				if (!ds)
+					break;
 				iptc_dataset_unref (ds);
 				ds = iptc_data_get_next_dataset (d, ds,
 						op->record, op->tag);
@@ -391,7 +393,10 @@ perform_operations (IptcData * d, OpList * list, char * filename)
 		}
 		if (op->op == OP_DELETE || op->op == OP_MODIFY) {
 			if (!ds && op->op == OP_DELETE) {
-				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
+				fprintf(stderr, _("%s: Could not find dataset %d:%d"), filename, op->record, op->tag);
+				if (op->num > 0)
+					fprintf (stderr, ":%d", op->num);
+				fprintf (stderr, "\n");
 				continue;
 			}
 			if (ds)
@@ -399,7 +404,10 @@ perform_operations (IptcData * d, OpList * list, char * filename)
 		}
 		if (op->op == OP_PRINT) {
 			if (!ds) {
-				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
+				fprintf(stderr, _("%s: Could not find dataset %d:%d"), filename, op->record, op->tag);
+				if (op->num > 0)
+					fprintf (stderr, ":%d", op->num);
+				fprintf (stderr, "\n");
 				continue;
 			}
 			fwrite (ds->data, 1, ds->size, stdout);
@@ -433,20 +441,39 @@ free_operations (OpList * list)
 }
 
 static int
-parse_tag_id (char * str, IptcRecord *r, IptcTag *t)
+parse_tag_id (char * str, IptcRecord *r, IptcTag *t, int *num)
 {
+	*num = 0;
 	if (isdigit (str[0])) {
 		char * a;
 		*r = strtoul (str, &a, 10);
 		if (a[0] != ':' || !isdigit (a[1]))
 			return -1;
-		*t = strtoul (a + 1, NULL, 10);
+		*t = strtoul (a + 1, &a, 10);
 		if (*r < 1 || *r > 9 || *t < 0 || *t > 255)
 			return -1;
+		if (a[0] == '\0')
+			return 0;
+		if (a[0] != ':' || !isdigit (a[1]))
+			return -1;
+		*num = strtoul (a + 1, NULL, 10);
 	}
 	else {
-		if (iptc_tag_find_by_name (str, r, t) < 0)
+		char * name = strdup (str);
+		char * a;
+		if ((a = strchr (name, ':'))) {
+			if (!isdigit (a[1])) {
+				free (name);
+				return -1;
+			}
+			*num = strtoul (a + 1, NULL, 10);
+			*a = '\0';
+		}
+		if (iptc_tag_find_by_name (name, r, t) < 0) {
+			free (name);
 			return -1;
+		}
+		free (name);
 	}
 	return 0;
 }
@@ -458,6 +485,7 @@ main (int argc, char ** argv)
 	int i;
 	IptcRecord record;
 	IptcTag tag;
+	int tagnum;
 	const IptcTagInfo * tag_info;
 	unsigned char * buf;
 	unsigned char * outbuf;
@@ -511,7 +539,7 @@ main (int argc, char ** argv)
 				print_tag_list ();
 				return 0;
 			case 'L':
-				if (parse_tag_id (optarg, &record, &tag) < 0) {
+				if (parse_tag_id (optarg, &record, &tag, &tagnum) < 0) {
 					fprintf(stderr, _("\"%s\" is not a known tag\n"), optarg);
 					return 1;
 				}
@@ -527,7 +555,7 @@ main (int argc, char ** argv)
 					fprintf(stderr, _("Must specify value for add/modify operation\n"));
 					return 1;
 				}
-				if (parse_tag_id (optarg, &record, &tag) < 0) {
+				if (parse_tag_id (optarg, &record, &tag, &tagnum) < 0) {
 					fprintf(stderr, _("\"%s\" is not a known tag\n"), optarg);
 					return 1;
 				}
@@ -541,12 +569,12 @@ main (int argc, char ** argv)
 				}
 				else if (c == 'd') {
 					new_operation (&oplist, OP_DELETE,
-							record, tag, 0, NULL);
+							record, tag, tagnum, NULL);
 					modified = 1;
 				}
 				else if (c == 'p') {
 					new_operation (&oplist, OP_PRINT,
-							record, tag, 0, NULL);
+							record, tag, tagnum, NULL);
 					is_quiet = 1;
 				}
 					
@@ -602,7 +630,7 @@ main (int argc, char ** argv)
 				}
 				if (modify_tag) {
 					new_operation (&oplist, OP_MODIFY,
-							record, tag, 0, ds);
+							record, tag, tagnum, ds);
 					modify_tag = 0;
 				}
 				break;
