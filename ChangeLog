@@ -1,3 +1,7 @@
+2005-09-16  David Moore  <dcm@acm.org>
+
+	* iptc/main.c: print dataset numbers of duplicate tags
+
 2005-09-15  David Moore  <dcm@acm.org>
 
 	* docs/reference: Documentation updates

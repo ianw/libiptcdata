@@ -224,15 +224,35 @@ print_tag_list ()
 }
 
 static void
+count_tag_types (IptcData * d, int * counts)
+{
+	int i, j;
+	for (i = 0; i < d->count; i++) {
+		IptcDataSet * ds = d->datasets[i];
+		counts[i] = -1;
+		for (j = i-1; j >= 0; j--) {
+			IptcDataSet * ds2 = d->datasets[j];
+			if (ds->record == ds2->record && ds->tag == ds2->tag) {
+				if (counts[j] == -1)
+					counts[j] = 0;
+				counts[i] = counts[j]+1;
+				break;
+			}
+		}
+	}
+}
+
+static void
 print_iptc_data (IptcData * d)
 {
 	int i;
 	char * charset;
+	int counts[d->count];
 
 	if (d->count) {
-		printf("%6.6s %-20.20s %-9.9s %6s  %s\n", _("Tag"), _("Name"),
+		printf(" %-8.8s %-20.20s %-9.9s %4s  %s\n", _("Tag"), _("Name"),
 				_("Type"), _("Size"), _("Value"));
-		printf(" ----- -------------------- --------- ------  -----\n");
+		printf(" -------- -------------------- --------- ----  -----\n");
 	}
 	
 	if (iptc_data_get_encoding (d) == IPTC_ENCODING_UTF8) {
@@ -244,13 +264,20 @@ print_iptc_data (IptcData * d)
 		charset = "ISO-8859-1";
 	}
 
+	count_tag_types (d, counts);
+
 	for (i=0; i < d->count; i++) {
 		IptcDataSet * e = d->datasets[i];
 		unsigned char * buf;
 		char * convbuf;
 		int len;
 
-		printf("%2d:%03d ", e->record, e->tag);
+		printf("%2d:%03d", e->record, e->tag);
+		if (counts[i] >= 0)
+			printf(":%02d ", counts[i]);
+		else
+			printf("    ");
+
 		len = 20;
 		convbuf = str_to_locale (iptc_tag_get_title (e->record, e->tag),
 				"UTF-8", &len);
@@ -261,7 +288,7 @@ print_iptc_data (IptcData * d)
 				"UTF-8", &len);
 		printf("%s%*s ", convbuf, 9 - len, "");
 		free (convbuf);
-		printf("%6d  ", e->size);
+		printf("%4d  ", e->size);
 
 		switch (iptc_dataset_get_format (e)) {
 			case IPTC_FORMAT_BYTE:
