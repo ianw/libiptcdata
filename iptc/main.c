@@ -32,7 +32,12 @@ Examples:\n\
   iptc -m Caption -v \"Foo\" *.jpg\n\
                        # set caption \"Foo\" in all jpegs of the curr. dir.\n\
   iptc -a Keywords -v \"vacation\" *.jpg\n\
-                       # add keyword \"vacation\" to all jpegs\n\
+  iptc -a 2:25 -v \"vacation\" *.jpg\n\
+                       # either command adds keyword \"vacation\" to all jpegs\n\
+  iptc -d Keywords:1 image.jpg\n\
+                       # removes keyword number 1 (the 2nd) from image.jpg\n\
+  iptc -d Keywords:all image.jpg\n\
+                       # removes all keywords from image.jpg\n\
 \n\
 Operations:\n\
   -a, --add=TAG        add new tag with identifier TAG\n\
@@ -356,69 +361,93 @@ new_operation (OpList * list, OpType op, IptcRecord record,
 }
 
 static int
+perform_one_op (IptcData * d, Operation * op, IptcDataSet * ds, char * filename)
+{
+	if (op->op == OP_ADD || op->op == OP_MODIFY) {
+		IptcDataSet * ds_add;
+		ds_add = iptc_dataset_copy (op->ds);
+		if (ds)
+			iptc_data_add_dataset_before (d, ds, ds_add);
+		else {
+			iptc_data_add_dataset (d, ds_add);
+			if (op->op == OP_MODIFY) {
+				fprintf (stderr, _("%s: Could not find dataset %d:%d, adding it\n"), filename, op->record, op->tag);
+			}
+		}
+		iptc_dataset_unref (ds_add);
+	}
+	if (op->op == OP_DELETE || op->op == OP_MODIFY) {
+		if (!ds && op->op == OP_DELETE) {
+			fprintf(stderr, _("%s: Could not find dataset %d:%d"), filename, op->record, op->tag);
+			if (op->num > 0)
+				fprintf (stderr, ":%d", op->num);
+			fprintf (stderr, "\n");
+			return -1;
+		}
+		if (ds)
+			iptc_data_remove_dataset (d, ds);
+	}
+	if (op->op == OP_PRINT) {
+		if (!ds) {
+			fprintf(stderr, _("%s: Could not find dataset %d:%d"), filename, op->record, op->tag);
+			if (op->num > 0)
+				fprintf (stderr, ":%d", op->num);
+			fprintf (stderr, "\n");
+			return -1;
+		}
+		fwrite (ds->data, 1, ds->size, stdout);
+		printf ("\n");
+	}
+	return 0;
+}
+
+static int
 perform_operations (IptcData * d, OpList * list, char * filename)
 {
-	int i, j;
+	int i, j, ret = -1;
 
-	if (!d || !list)
+	if (!d || !list || list->count == 0)
 		return 0;
 
 	for (i = 0; i < list->count; i++) {
 		Operation * op = list->ops + i;
 		IptcDataSet * ds = NULL;
 
-		if (op->record) {
+		if (op->record && op->num == -1) {
 			ds = iptc_data_get_dataset (d, op->record, op->tag);
-			for (j = 0; j < op->num && ds; j++) {
-				if (!ds)
-					break;
-				iptc_dataset_unref (ds);
-				ds = iptc_data_get_next_dataset (d, ds,
+			if (!ds) {
+				fprintf(stderr, _("%s: Could not find dataset %d:%d\n"), filename, op->record, op->tag);
+			}
+			while (ds) {
+				IptcDataSet * next_ds;
+				next_ds = iptc_data_get_next_dataset (d, ds,
 						op->record, op->tag);
+				if (perform_one_op (d, op, ds, filename) == 0)
+					ret = 0;
+				iptc_dataset_unref (ds);
+				ds = next_ds;
 			}
 		}
-		
-		if (op->op == OP_ADD || op->op == OP_MODIFY) {
-			IptcDataSet * ds_add;
-			ds_add = iptc_dataset_copy (op->ds);
-			if (ds)
-				iptc_data_add_dataset_before (d, ds, ds_add);
-			else {
-				iptc_data_add_dataset (d, ds_add);
-				if (op->op == OP_MODIFY) {
-					fprintf (stderr, _("%s: Could not find dataset %d:%d, adding it\n"), filename, op->record, op->tag);
+		else {
+			if (op->record) {
+				ds = iptc_data_get_dataset (d, op->record, op->tag);
+				for (j = 0; j < op->num && ds; j++) {
+					if (!ds)
+						break;
+					iptc_dataset_unref (ds);
+					ds = iptc_data_get_next_dataset (d, ds,
+							op->record, op->tag);
 				}
 			}
-			iptc_dataset_unref (ds_add);
-		}
-		if (op->op == OP_DELETE || op->op == OP_MODIFY) {
-			if (!ds && op->op == OP_DELETE) {
-				fprintf(stderr, _("%s: Could not find dataset %d:%d"), filename, op->record, op->tag);
-				if (op->num > 0)
-					fprintf (stderr, ":%d", op->num);
-				fprintf (stderr, "\n");
-				continue;
-			}
-			if (ds)
-				iptc_data_remove_dataset (d, ds);
-		}
-		if (op->op == OP_PRINT) {
-			if (!ds) {
-				fprintf(stderr, _("%s: Could not find dataset %d:%d"), filename, op->record, op->tag);
-				if (op->num > 0)
-					fprintf (stderr, ":%d", op->num);
-				fprintf (stderr, "\n");
-				continue;
-			}
-			fwrite (ds->data, 1, ds->size, stdout);
-			printf ("\n");
-		}
 
-		if (ds)
-			iptc_dataset_unref (ds);
+			if (perform_one_op (d, op, ds, filename) == 0)
+				ret = 0;
+			if (ds)
+				iptc_dataset_unref (ds);
+		}
 	}
 
-	return 0;
+	return ret;
 }
 
 static void
@@ -454,19 +483,27 @@ parse_tag_id (char * str, IptcRecord *r, IptcTag *t, int *num)
 			return -1;
 		if (a[0] == '\0')
 			return 0;
-		if (a[0] != ':' || !isdigit (a[1]))
+		if (a[0] != ':')
 			return -1;
-		*num = strtoul (a + 1, NULL, 10);
+		if (!strcmp (a + 1, "all"))
+			*num = -1;
+		else if (isdigit (a[1]))
+			*num = strtoul (a + 1, NULL, 10);
+		else
+			return -1;
 	}
 	else {
 		char * name = strdup (str);
 		char * a;
 		if ((a = strchr (name, ':'))) {
-			if (!isdigit (a[1])) {
+			if (!strcmp (a+1, "all"))
+				*num = -1;
+			else if (isdigit (a[1]))
+				*num = strtoul (a + 1, NULL, 10);
+			else {
 				free (name);
 				return -1;
 			}
-			*num = strtoul (a + 1, NULL, 10);
 			*a = '\0';
 		}
 		if (iptc_tag_find_by_name (name, r, t) < 0) {
@@ -500,6 +537,7 @@ main (int argc, char ** argv)
 	int add_tag = 0;
 	int modify_tag = 0;
 	OpList oplist = { 0, 0 };
+	int retval = 1;
 
 #ifdef HAVE_GETOPT_H
 	struct option longopts[] = {
@@ -698,6 +736,8 @@ main (int argc, char ** argv)
 
 		if (perform_operations (d, &oplist, filename) < 0) {
 			iptc_data_unref (d);
+			if (!is_quiet)
+				fprintf(stderr, _("%s: no changes to save\n"), filename);
 			continue;
 		}
 
@@ -768,7 +808,7 @@ main (int argc, char ** argv)
 				fprintf(stderr, "%s: %s\n", filename, _("Can't open temporary file for writing"));
 				fclose (infile);
 				iptc_data_unref (d);
-				return 1;
+				continue;
 			}
 			
 			v = iptc_jpeg_save_with_ps3 (infile, outfile, outbuf, ps3_len);
@@ -809,11 +849,13 @@ main (int argc, char ** argv)
 		
 		if (d)
 			iptc_data_unref(d);
+
+		retval = 0;
 	}
 
 	free (buf);
 	free (outbuf);
 	free_operations (&oplist);
 
-	return 0;
+	return retval;
 }

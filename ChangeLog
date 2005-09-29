@@ -1,3 +1,11 @@
+2005-09-29  David Moore  <dcm@acm.org>
+
+	* iptc/main.c: added the special dataset number "all" which means
+	all datasets of the given tag should be operated on.
+	* iptc/main.c: changed the return value of the program to be
+	success whenever at least one command succeeds, and failure if
+	no command succeeds.
+
 2005-09-17  David Moore  <dcm@acm.org>
 
 	* iptc/main.c: modified command syntax to allow specification of
