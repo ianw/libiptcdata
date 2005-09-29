@@ -1,5 +1,6 @@
 2005-09-29  David Moore  <dcm@acm.org>
 
+	* NEWS, configure.in: updated for version 0.2.1.
 	* docs/reference: added new section for the command-line utility
 	* docs/reference: updated the synopsis for the command-line utility
 	and added a description of its return values.

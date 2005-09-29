@@ -1,3 +1,30 @@
+libiptcdata 0.2.1
+=================
+Released September 29, 2005
+
+library:
+* Added function iptc_data_set_version() to make it easy to set the version
+number of the IPTC IIM spec being used.
+* Added new convenience functions iptc_data_add_dataset_with_value() and
+iptc_data_add_dataset_with_contents().
+
+iptc utility:
+* New capability to modify/delete/print specific datasets when more than one
+of the same type exists, by appending the number to the end of the tag name.
+For example, "Keywords:1" or "2:25:1" refer to keyword tag number 1 (the 2nd
+keyword tag).
+* New capability to modify/delete/print all datasets of a specific type when
+more than one exists.  For example, "Keywords:all" or "2:25:all" will
+execute the operation on all keyword tags.
+* Dataset numbers (for duplicates) are now printed when the IPTC contents
+are displayed to the user.
+* Changed the semantics of the program's return value:  Success whenever at
+least one operation succeeds and failure if no operation succeeds.
+* Whenever a file is saved, datasets are now sorted by default unless the
+--no-sort option is specified.
+* Mac OS X compile fixes.
+
+
 libiptcdata 0.2.0
 =================
 Released September 7, 2005
