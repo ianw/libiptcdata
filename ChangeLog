@@ -1,5 +1,8 @@
 2005-09-29  David Moore  <dcm@acm.org>
 
+	* docs/reference: added new section for the command-line utility
+	* docs/reference: updated the synopsis for the command-line utility
+	and added a description of its return values.
 	* iptc/main.c: added the special dataset number "all" which means
 	all datasets of the given tag should be operated on.
 	* iptc/main.c: changed the return value of the program to be
