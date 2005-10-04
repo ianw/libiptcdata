@@ -140,7 +140,7 @@ static IptcTagInfo IptcTagTable[] = {
 		"Category",
 		N_("Category"),
 		N_("Identifies the subject of the object in the opinion of the provider (Deprecated)."),
-		IPTC_FORMAT_STRING, IPTC_OPTIONAL, IPTC_REPEATABLE, 0, 3 },
+		IPTC_FORMAT_STRING, IPTC_OPTIONAL, IPTC_NOT_REPEATABLE, 0, 3 },
 	{ IPTC_RECORD_APP_2,		IPTC_TAG_SUPPL_CATEGORY,
 		"SupplCategory",
 		N_("Supplemental Category"),

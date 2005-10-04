@@ -1,3 +1,8 @@
+2005-10-04  David Moore  <dcm@acm.org>
+
+	* iptc-tag.c: Changed "Category" dataset from repeatable to
+	not-repeatable (Patch from Grigory Entin).
+
 2005-09-29  David Moore  <dcm@acm.org>
 
 	* NEWS, configure.in: updated for version 0.2.1.
