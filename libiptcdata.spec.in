@@ -54,7 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING ChangeLog NEWS README INSTALL TODO
 %{_bindir}/*
 %{_libdir}/lib*.so.*
-%{_datadir}/locale/*/LC_MESSAGES/*.mo
+# %{_datadir}/locale/*/LC_MESSAGES/*.mo
 
 %files devel
 %defattr(-,root,root)
@@ -65,5 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gtk-doc/html/libiptcdata
 
 %changelog
+* Wed Apr 12 2006 David Moore <dcm@acm.org>
+- Removed *.mo from spec file since there are no translations yet
+
 * Mon Feb 28 2005 David Moore <dcm@acm.org>
 - Initial version
