@@ -1,3 +1,8 @@
+2006-04-12  David Moore  <dcm@acm.org>
+
+	* libiptcdata.spec.in: Fixed spec file to remove errors under Fedora
+	Core 5.
+
 2005-10-04  David Moore  <dcm@acm.org>
 
 	* iptc-tag.c: Changed "Category" dataset from repeatable to
