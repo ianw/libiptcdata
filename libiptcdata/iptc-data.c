@@ -321,7 +321,7 @@ iptc_data_new_from_jpeg (const char *path)
 	int len, offset;
         unsigned int iptc_len;
 
-	infile = fopen (path, "r");
+	infile = fopen (path, "rb");
 	if (!infile)
 		return NULL;
 

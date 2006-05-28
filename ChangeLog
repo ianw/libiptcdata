@@ -1,3 +1,8 @@
+2006-05-23  David Moore  <dcm@acm.org>
+
+	* iptc-data.c: Changed fopen() to use "rb" instead of "r" for windows
+	compatability.  Noticed by Ralph Heidelberg.
+
 2006-04-12  David Moore  <dcm@acm.org>
 
 	* libiptcdata.spec.in: Fixed spec file to remove errors under Fedora
