@@ -1,3 +1,7 @@
+2006-10-24  David Moore  <dcm@acm.org>
+
+	* libiptcdata.ebuild: Added Gentoo ebuild file, courtesy of Dirk Göttel.
+
 2006-05-23  David Moore  <dcm@acm.org>
 
 	* iptc-data.c: Changed fopen() to use "rb" instead of "r" for windows
