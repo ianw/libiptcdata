@@ -1,3 +1,7 @@
+2007-01-28  David Moore  <dcm@acm.org>
+
+	* Added python wrapper, courtesy of Ian Wienand.
+
 2007-01-27  David Moore  <dcm@acm.org>
 
 	* iptc/Makefile.am, INSTALL: Compile fix for when gettext is in libintl

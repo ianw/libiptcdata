@@ -1,4 +1,8 @@
-SUBDIRS = m4 libiptcdata po iptc docs win
+if PYTHONLIB
+MAYBE_PYTHONLIB = python
+endif
+
+SUBDIRS = m4 libiptcdata po iptc docs win $(MAYBE_PYTHONLIB)
 
 EXTRA_DIST = @PACKAGE@.spec
 

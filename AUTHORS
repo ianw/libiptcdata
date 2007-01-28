@@ -1,4 +1,6 @@
 David Moore <dcm@acm.org>
 
 Contributors:
-Luka Renko <luka.renko@gmail.com>
+
+Windows Port      Luka Renko <luka.renko@gmail.com>
+Python Wrapper    Ian Wienand <ianw@ieee.org>
