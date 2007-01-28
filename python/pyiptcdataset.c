@@ -145,7 +145,7 @@ set_value(DataSetObject *self, PyObject *value, void *closure)
 		}
 		binary_val = PyString_AsString(value);
 		binary_len = strlen(binary_val);
-		ok = iptc_dataset_set_data(self->ds, binary_val, binary_len, IPTC_VALIDATE);
+		ok = iptc_dataset_set_data(self->ds, (unsigned char *) binary_val, binary_len, IPTC_VALIDATE);
 		if (ok == -1) {
 			PyErr_SetString(PyExc_TypeError,
 					"iptc_dataset_set_data failed");
@@ -268,7 +268,7 @@ to_str(DataSetObject *self)
 			iptc_dataset_get_as_str (e, buf, sizeof(buf));
 			break;
 		default:
-			iptc_dataset_get_data (e, buf, sizeof(buf));
+			iptc_dataset_get_data (e, (unsigned char *) buf, sizeof(buf));
 			break;
 	}
 
@@ -356,7 +356,7 @@ PyTypeObject DataSet_Type = {
 	0,			/*tp_as_mapping*/
 	0,			/*tp_hash*/
         0,                      /*tp_call*/
-        to_str,                 /*tp_str*/
+        (reprfunc) to_str,      /*tp_str*/
         0,                      /*tp_getattro*/
         0,                      /*tp_setattro*/
         0,                      /*tp_as_buffer*/

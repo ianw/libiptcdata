@@ -20,6 +20,8 @@
 
 #include "pyiptcdata.h"
 
+PyMODINIT_FUNC initiptcdata(void);
+
 PyDoc_STRVAR(module_doc,
 	     "Routines to query, modify and add IPTC metadata to a JPEG file\n\n"
 	     "Module for querying, modifying and adding IPTC metadata to a JPEG file\n"

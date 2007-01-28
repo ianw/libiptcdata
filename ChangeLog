@@ -1,6 +1,7 @@
 2007-01-28  David Moore  <dcm@acm.org>
 
 	* Added python wrapper, courtesy of Ian Wienand.
+	* Fixed compile warnings in python wrapper.
 
 2007-01-27  David Moore  <dcm@acm.org>
 
