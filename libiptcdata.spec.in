@@ -1,3 +1,5 @@
+%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+
 Name: @PACKAGE@
 Summary: IPTC tag library
 Version: @VERSION@
@@ -6,19 +8,36 @@ License: LGPL
 Group: Development/Libraries
 Source: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
+BuildRequires: python python-devel
 URL: http://sourceforge.net/projects/libiptcdata/
 
 %description
-libiptcdata is a library for parsing, editing, and saving IPTC data.
+libiptcdata is a library for parsing, editing, and saving IPTC data
+stored inside images.  IPTC is a standard for encoding metadata such
+as captions, titles, locations, etc. in the headers of an image file.
+libiptcdata also includes a command-line utility for modifying the
+metadata.
 
 %package devel
 Summary: The files needed for libiptcdata application development
 Group: Development/Libraries
 Requires: %{name} = %{version}
+Requires: pkgconfig
 
 %description devel
 The libiptcdata-devel package contains the libraries and include files
 that you can use to develop libiptcdata applications.
+
+%package python
+Summary: Python bindings for libiptcdata
+Group: Development/Libraries
+Requires: %{name} = %{version}
+Requires: %{_libdir}/python%(echo `python -c "import sys; print sys.version[0:3]"`)
+
+%description python
+The libiptcdata-python package contains a Python module that allows Python
+applications to use the libiptcdata API for reading and writing IPTC
+metadata in images.
 
 %prep
 %setup
@@ -29,7 +48,7 @@ CFLAGS="$RPM_OPT_FLAGS"
     --bindir=%{_bindir} --mandir=%{_mandir} \
     --localstatedir=%{_localstatedir} --libdir=%{_libdir} \
     --datadir=%{_datadir} --includedir=%{_includedir} \
-    --sysconfdir=%{_sysconfdir} --disable-gtk-doc
+    --sysconfdir=%{_sysconfdir} --disable-gtk-doc --enable-python
 make
 
 %install
@@ -64,7 +83,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libiptcdata
 %{_datadir}/gtk-doc/html/libiptcdata
 
+%files python
+%defattr(-,root,root)
+%doc python/README
+%doc python/examples/*
+%{python_sitearch}/iptcdata*
+
 %changelog
+* Sun Jan 28 2007 David Moore <dcm@acm.org>
+- Added libiptcdata-python package
+
 * Wed Apr 12 2006 David Moore <dcm@acm.org>
 - Removed *.mo from spec file since there are no translations yet
 

@@ -2,6 +2,7 @@
 
 	* Added python wrapper, courtesy of Ian Wienand.
 	* Fixed compile warnings in python wrapper.
+	* Added libiptcdata-python package to spec file.
 
 2007-01-27  David Moore  <dcm@acm.org>
 
