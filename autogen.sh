@@ -77,15 +77,17 @@ ACLOCAL_FLAGS="-I m4"
 
 rm -rf autom4te.cache
 
-$ACLOCAL $ACLOCAL_FLAGS || exit $?
 
-libtoolize --force || exit $?
 gtkdocize || exit $?
 
-autoheader || exit $?
-
-$AUTOMAKE --add-missing || exit $?
+autopoint || exit $?
+$ACLOCAL $ACLOCAL_FLAGS || exit $?
+libtoolize --force || exit $?
+$ACLOCAL $ACLOCAL_FLAGS || exit $?
 autoconf || exit $?
+autoheader || exit $?
+$AUTOMAKE --add-missing || exit $?
+
 cd $ORIGDIR || exit $?
 
 if test -z "$AUTOGEN_SUBDIR_MODE"; then
