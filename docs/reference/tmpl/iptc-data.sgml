@@ -15,6 +15,9 @@ Each of these tags is stored in an #IptcDataSet object.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT IptcData ##### -->
 <para>
 Represents the collection of datasets that make up a IPTC data block.
@@ -39,8 +42,6 @@ Represents the collection of datasets that make up a IPTC data block.
 
 @mem: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Param1: 
 
 
 <!-- ##### FUNCTION iptc_data_ref ##### -->
@@ -84,8 +85,6 @@ Represents the collection of datasets that make up a IPTC data block.
 @buf: 
 @size: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@data: 
 
 
 <!-- ##### FUNCTION iptc_data_load ##### -->
@@ -97,8 +96,6 @@ Represents the collection of datasets that make up a IPTC data block.
 @buf: 
 @size: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@d: 
 
 
 <!-- ##### FUNCTION iptc_data_save ##### -->
@@ -110,8 +107,6 @@ Represents the collection of datasets that make up a IPTC data block.
 @buf: 
 @size: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@d: 
 
 
 <!-- ##### FUNCTION iptc_data_free_buf ##### -->
@@ -121,8 +116,6 @@ Represents the collection of datasets that make up a IPTC data block.
 
 @data: 
 @buf: 
-<!-- # Unused Parameters # -->
-@d: 
 
 
 <!-- ##### FUNCTION iptc_data_get_dataset ##### -->

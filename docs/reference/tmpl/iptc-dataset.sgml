@@ -17,6 +17,9 @@ contents of the tag.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT IptcDataSet ##### -->
 <para>
 An IPTC dataset, which associates a record/tag pair with a value.
@@ -46,8 +49,6 @@ if it is not contained
 
 @mem: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Param1: 
 
 
 <!-- ##### FUNCTION iptc_dataset_copy ##### -->
@@ -101,8 +102,6 @@ if it is not contained
 @buf: 
 @size: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@val: 
 
 
 <!-- ##### FUNCTION iptc_dataset_get_value ##### -->
@@ -124,8 +123,6 @@ if it is not contained
 @month: 
 @day: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@e: 
 
 
 <!-- ##### FUNCTION iptc_dataset_get_time ##### -->
@@ -139,8 +136,6 @@ if it is not contained
 @sec: 
 @tz: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@e: 
 
 
 <!-- ##### FUNCTION iptc_dataset_set_tag ##### -->
@@ -172,8 +167,6 @@ IIM specification.
 @size: 
 @validate: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@e: 
 
 
 <!-- ##### FUNCTION iptc_dataset_set_value ##### -->
@@ -185,8 +178,6 @@ IIM specification.
 @value: 
 @validate: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@e: 
 
 
 <!-- ##### FUNCTION iptc_dataset_set_date ##### -->
@@ -200,8 +191,6 @@ IIM specification.
 @day: 
 @validate: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@e: 
 
 
 <!-- ##### FUNCTION iptc_dataset_set_time ##### -->
@@ -216,8 +205,6 @@ IIM specification.
 @tz: 
 @validate: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@e: 
 
 
 <!-- ##### FUNCTION iptc_dataset_get_as_str ##### -->
@@ -229,9 +216,6 @@ IIM specification.
 @buf: 
 @size: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@val: 
-@maxlen: 
 
 
 <!-- ##### FUNCTION iptc_dataset_dump ##### -->

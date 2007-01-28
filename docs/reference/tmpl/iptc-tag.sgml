@@ -17,6 +17,9 @@ repeatability and whether the tag is mandatory.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### ENUM IptcRecord ##### -->
 <para>
 The record number that, together with the tag number (#IptcTag),

@@ -1,3 +1,9 @@
+2007-01-27  David Moore  <dcm@acm.org>
+
+	* iptc/Makefile.am, INSTALL: Compile fix for when gettext is in libintl
+	instead of libc, as is often the case for Mac OS (reported by Mark
+	Hunte).
+
 2006-10-24  David Moore  <dcm@acm.org>
 
 	* libiptcdata.ebuild: Added Gentoo ebuild file, courtesy of Dirk Göttel.

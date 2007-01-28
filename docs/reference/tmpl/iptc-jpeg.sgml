@@ -14,6 +14,9 @@ Convenience functions for loading and saving IPTC data blocks from JPEG files.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION iptc_jpeg_read_ps3 ##### -->
 <para>
 

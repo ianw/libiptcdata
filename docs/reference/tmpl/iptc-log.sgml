@@ -14,6 +14,9 @@ Hooks for defining your own log-handling functions
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT IptcLog ##### -->
 <para>
 

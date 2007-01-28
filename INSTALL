@@ -25,7 +25,10 @@ and as root:
 
 Note: On Mac OS X, it has been reported that internationalization support
 in libiptcdata is often disabled at configure time because the libintl
-library cannot be found.  However, this can usually be remedied by pointing
-the configure script at the true location of libintl by invoking it like
-this:
+library cannot be found.  If you use a package installer such as Fink
+or DarwinPorts, you can obtain libintl by installing the gettext package and
+then running libiptcdata's configure script as:
   ./configure --with-libintl-prefix=/sw --with-libiconv-prefix=/sw
+for Fink, or:
+  ./configure --with-libintl-prefix=/opt/local --with-libiconv-prefix=/opt/local
+for DarwinPorts.
