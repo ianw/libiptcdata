@@ -46,7 +46,7 @@ if (options.title):
 # a "caption" gives the caption
 if (options.caption):
     #also want just one caption
-    print "Setting \'Caption\' to %S" % (options.caption)
+    print "Setting \'Caption\' to %s" % (options.caption)
     rs = iptcdata.find_record_by_name("Caption")
     ds = check_for_dataset(f, rs)
     if (ds == None):
