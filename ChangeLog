@@ -1,4 +1,9 @@
+2007-02-21  David Moore  <dcm@acm.org>
+
+	* docs/reference/Makefile.am: fix missing doc files in 'make dist'
+
 2007-02-08  David Moore  <dcm@acm.org>
+
 	* Fixed python typo (from Ian Wienand)
 
 2007-01-28  David Moore  <dcm@acm.org>

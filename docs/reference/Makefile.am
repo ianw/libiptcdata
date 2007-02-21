@@ -37,6 +37,9 @@ HTML_IMAGES =
 content_files = \
 	version.xml \
 	about.sgml \
+	commandline.sgml \
+	i18n.sgml \
+	libjpeg.sgml \
 	overview.sgml
 
 include $(top_srcdir)/gtk-doc.make
