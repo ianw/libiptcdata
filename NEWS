@@ -1,3 +1,11 @@
+libiptcdata 1.0.0
+=================
+Released March 21, 2007
+
+* Added python bindings, courtesy of Ian Wienand.
+* Several small bug fixes for the build process and for Windows.
+
+
 libiptcdata 0.2.1
 =================
 Released September 29, 2005

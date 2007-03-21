@@ -1,6 +1,8 @@
 2007-03-21  David Moore  <dcm@acm.org>
 
-	* win/stdint.h: updated windows stdint.h per suggestion from
+	* NEWS, configure.in: Updated for release of 1.0.0.
+	* libiptcdata.spec.in: Spec file adjusted for Fedora guidelines
+	* win/stdint.h: Updated windows stdint.h per suggestion from
 	Michael Dillon.
 
 2007-02-21  David Moore  <dcm@acm.org>
