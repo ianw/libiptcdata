@@ -16,7 +16,7 @@ under the GNU Library General Public License (GNU LGPL).
 The library implements the standard described at http://www.iptc.org/IIM
 
 The code itself was inspired by the libexif library:
-http://sourceforge.net/projects/libexif, written by Lutz Müller.
+http://sourceforge.net/projects/libexif, written by Lutz MÃ¼ller.
 Together, libexif and libiptcdata provide a complete metadata
 solution for image files.
 

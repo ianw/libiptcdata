@@ -1,3 +1,12 @@
+2007-03-23  David Moore  <dcm@acm.org>
+
+	* NEWS, configure.in: Updated for release of 1.0.1
+	* python/pyiptcdatamod.c: Fixed buffer overflow
+	* python/Makefile.am: added -avoid-version argument to libtool
+	* README: converted from ISO-8859-1 to UTF-8
+	* configure.in: fixed build on systems without Python
+	* libiptcdata.spec.in: More updates for Fedora guidelines
+
 2007-03-21  David Moore  <dcm@acm.org>
 
 	* NEWS, configure.in: Updated for release of 1.0.0.

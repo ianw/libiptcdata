@@ -1,7 +1,7 @@
 AC_PREREQ(2.50)
 AC_INIT(libiptcdata/iptc-data.h)
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(libiptcdata, 1.0.0)
+AM_INIT_AUTOMAKE(libiptcdata, 1.0.1)
 AM_MAINTAINER_MODE
 
 dnl ---------------------------------------------------------------------------
@@ -22,20 +22,24 @@ AC_SUBST(LIBIPTCDATA_CURRENT)
 LIBIPTCDATA_VERSION_INFO=$LIBIPTCDATA_CURRENT:$LIBIPTCDATA_REVISION:$LIBIPTCDATA_AGE
 AC_SUBST(LIBIPTCDATA_VERSION_INFO)
 
+AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
 
-dnl setup python devel environment
-AC_PYTHON_DEVEL
-AM_PATH_PYTHON
 
 AC_ARG_ENABLE(python,
-[  --enable-python    Build Python wrapper library],
+[  --enable-python         Build Python wrapper library],
 [case "${enableval}" in
   yes) pythonlib=true ;;
   no)  pythonlib=false ;;
   *) AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
 esac],[pythonlib=false])
 AM_CONDITIONAL([PYTHONLIB], [test x$pythonlib = xtrue])
+
+if test "x$pythonlib" = "xtrue"; then
+    dnl setup python devel environment
+    AC_PYTHON_DEVEL
+    AM_PATH_PYTHON
+fi
 
 dnl Create a stdint.h-like file containing size-specific integer definitions
 dnl that will always be available

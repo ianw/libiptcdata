@@ -72,7 +72,7 @@ open_file(PyObject *self, PyObject *args)
 		return PyErr_SetFromErrnoWithFilename(PyExc_IOError, filename);
 
 	/* read the first 2 bytes, and check it looks like a jpeg */
-	if (read(fd, &file_hdr, 4) < 4)	{
+	if (read(fd, file_hdr, 2) < 2)	{
 		close(fd);
 		return PyErr_SetFromErrnoWithFilename(PyExc_IOError, filename);
 	}
