@@ -28,8 +28,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "iptc-data.h"
-#include "iptc-jpeg.h"
+#include <libiptcdata/iptc-data.h>
+#include <libiptcdata/iptc-jpeg.h>
 
 /* buffer length for IPTC_DATA */
 #define PS3_BUFLEN (256*256)

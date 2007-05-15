@@ -1,3 +1,8 @@
+2007-05-15  Ian Wienand  <ianw@debian.org>
+
+	* python/Makefile.am, python/pyiptcdata.h : fix to use headers
+	out of build tree
+
 2007-05-15  David Moore  <dcm@acm.org>
 
 	* libiptcdata/iptc-jpeg.c: Store APP13 section closer to the start of
