@@ -153,7 +153,10 @@ save(DataObject *self, PyObject *args, PyObject *keywds)
 
 
 	/* setup our iptc header */
-	iptc_data_set_version (self->d, IPTC_IIM_VERSION);
+
+	/* The following two lines can hurt Picasa compatability, so they
+	 * are commented out. */
+	//iptc_data_set_version (self->d, IPTC_IIM_VERSION);
 	//iptc_data_set_encoding_utf8 (d);
 	iptc_data_sort (self->d);
 

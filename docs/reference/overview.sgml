@@ -366,25 +366,14 @@ iptc_dataset_unref (ds);
 	</para>
 
 	<para>
-	 The first step is to do some simple bookkeeping to make sure
-	 that the saved data is compliant with the IPTC specification.  A
-	 call to
-	 <function><link linkend="iptc-data-set-version">iptc_data_set_version</link>()</function>
-	 identifies the version number of the specification being used by
-	 setting a special dataset intended for that purpose.
-	 Next, a call to
-	 <function><link linkend="iptc-data-set-encoding-utf8">iptc_data_set_encoding_utf8</link>()</function>
-	 identifies that stored strings have been encoding in the UTF-8
-	 character set, so other applications will interpret them correctly
-	 (Note that you must convert strings to UTF-8 before storing them
-	 in a dataset -- the library will not do it for you.).
-	 Finally, a call to
+	 First, a call to
 	 <function><link linkend="iptc-data-sort">iptc_data_sort</link>()</function>
-	 sorts the datasets by tag number for better organization.
+	 sorts the datasets by tag number prior to saving.  This step
+     is optional.
 	</para>
 
 	<para>
-	 Now, by calling
+	 Next, by calling
 	 <function><link linkend="iptc-data-save">iptc_data_save</link>()</function>
 	 we convert the
 	 <structname><link linkend="IptcData">IptcData</link></structname>
@@ -413,8 +402,6 @@ unsigned char outbuf[256*256];
 char tmpfile[strlen(filename)+8];
 int v;
 
-iptc_data_set_version (d, IPTC_IIM_VERSION);
-iptc_data_set_encoding_utf8 (d);
 iptc_data_sort (d);
 
 if (iptc_data_save (d, &amp;iptc_buf, &amp;iptc_len) &lt; 0) {

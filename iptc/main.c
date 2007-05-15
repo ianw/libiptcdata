@@ -45,6 +45,8 @@ Operations:\n\
   -v, --value=VALUE    value for added/modified tag\n\
   -d, --delete=TAG     delete tag with identifier TAG\n\
   -p, --print=TAG      print value of tag with identifier TAG\n\
+      --add-version    add IPTC version number into the headers\n\
+      --add-encoding   add text encoding specification (UTF-8) into headers\n\
 \n\
 Options:\n\
   -q, --quiet          produce less verbose output\n\
@@ -530,7 +532,8 @@ main (int argc, char ** argv)
 	IptcFormat format;
 	char c;
 	int modified = 0;
-	int added_string = 0;
+	int add_encoding = 0;
+	int add_version = 0;
 	int is_quiet = 0;
 	int do_backup = 0;
 	int no_sort = 0;
@@ -553,6 +556,8 @@ main (int argc, char ** argv)
 		{ "value", required_argument, NULL, 'v' },
 		{ "help", no_argument, NULL, 'h' },
 		{ "version", no_argument, NULL, 'V' },
+		{ "add-version", no_argument, NULL, 'A' },
+		{ "add-encoding", no_argument, NULL, 'E' },
 		{ 0, 0, 0, 0 }
 	};
 #endif
@@ -585,6 +590,14 @@ main (int argc, char ** argv)
 					fprintf(stderr, _("No information about tag\n"));
 				}
 				return 0;
+			case 'A':
+				add_version = 1;
+				modified = 1;
+				break;
+			case 'E':
+				add_encoding = 1;
+				modified = 1;
+				break;
 			case 'a':
 			case 'm':
 			case 'd':
@@ -615,7 +628,7 @@ main (int argc, char ** argv)
 							record, tag, tagnum, NULL);
 					is_quiet = 1;
 				}
-					
+
 				break;
 
 			case 'v':
@@ -648,7 +661,6 @@ main (int argc, char ** argv)
 							IPTC_DONT_VALIDATE);
 					break;
 				case IPTC_FORMAT_STRING:
-					added_string = 1;
 					convbuf = locale_to_utf8 (optarg);
 					iptc_dataset_set_data (ds, (unsigned char *) convbuf,
 							strlen (convbuf),
@@ -741,11 +753,11 @@ main (int argc, char ** argv)
 			continue;
 		}
 
-		if (modified)
+		if (add_version)
 			iptc_data_set_version (d, IPTC_IIM_VERSION);
 		
 		/* Make sure we specify the text encoding for the data */
-		if (added_string) {
+		if (add_encoding) {
 			IptcEncoding enc = iptc_data_get_encoding (d);
 			if (enc == IPTC_ENCODING_UNSPECIFIED) {
 				iptc_data_set_encoding_utf8 (d);

@@ -785,6 +785,8 @@ iptc_data_get_encoding (IptcData *data)
  * for any character-based datasets in record 2 or higher.  If dataset
  * 1:90 is not present, it will be added to the collection.  Any prior
  * value of dataset 1:90 will be overwritten by this function.
+ * Note that some third-party applications (notably Picasa) will ignore
+ * all your IPTC data if this option is set.
  *
  * Returns: 0 on success, -1 on failure.
  */
@@ -820,9 +822,10 @@ iptc_data_set_encoding_utf8 (IptcData *data)
  * version number to #IPTC_IIM_VERSION, which specifies the version
  * implemented by this library (currently 4).  If datasets 1:00 or 2:00 are
  * not present, they will be added to the collection.  Any prior value of
- * the datasets will be overwritten by this function.  In order to ensure
- * compliance with the standard, this function should always be called before
- * saving a collection of datasets.
+ * the datasets will be overwritten by this function.  To ensure strict
+ * compliance with the standard, this function should be called before
+ * saving a collection of datasets.  However, in practice, some applications
+ * (notably Picasa) will ignore all your IPTC data if this option is set.
  *
  * Returns: 0 on success, -1 on failure.
  */

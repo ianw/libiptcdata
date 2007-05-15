@@ -15,6 +15,7 @@ typedef enum {
 #define JPEG_MARKER		0xff
 #define JPEG_MARKER_SOI		0xd8
 #define JPEG_MARKER_APP0	0xe0
+#define JPEG_MARKER_APP1	0xe1
 #define JPEG_MARKER_APP13	0xed
 #define JPEG_MARKER_APP15	0xef
 #define JPEG_MARKER_SOS		0xda
@@ -24,7 +25,7 @@ typedef enum {
 #define JPEG_BIM_IPTC_TYPE	0x0404
 
 static int
-iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile)
+iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile, int abort_early)
 {
 	int seek=0, i, s;
 	unsigned char buf[256];
@@ -78,6 +79,11 @@ iptc_jpeg_seek_to_ps3 (FILE * infile, FILE * outfile)
 				return 0;
 			}
 			else {
+				if (abort_early && buf[i+1] != JPEG_MARKER_APP0 &&
+						buf[i+1] != JPEG_MARKER_APP1) {
+					fseek (infile, -s+i, SEEK_CUR);
+					return 0;
+				}
 				/* Uninteresting header, skip it */
 				state = IL_JPEG_SKIP_BYTES;
 				seek = iptc_get_short(buf+i+2,
@@ -139,7 +145,7 @@ iptc_jpeg_read_ps3 (FILE * infile, unsigned char * ps3, unsigned int size)
 	if (!infile || !ps3)
 		return -1;
 
-	s = iptc_jpeg_seek_to_ps3 (infile, NULL);
+	s = iptc_jpeg_seek_to_ps3 (infile, NULL, 0);
 	if (s <= 0)
 		return s;
 	if (fseek (infile, 4, SEEK_CUR) < 0)
@@ -350,14 +356,14 @@ iptc_jpeg_save_with_ps3 (FILE * infile, FILE * outfile,
 	if (!infile || !outfile)
 		return -1;
 
-	s = iptc_jpeg_seek_to_ps3 (infile, outfile);
+	/* Copy infile to outfile until we encounter the previous PS3
+	 * block, or the right place for the new PS3 block, whichever
+	 * comes first. */
+	s = iptc_jpeg_seek_to_ps3 (infile, outfile, 1);
 	if (s < 0)
 		return -1;
 
-	if (s > 0)
-		if (fseek (infile, 4 + s, SEEK_CUR) < 0)
-			return -1;
-
+	/* Insert the new PS3 block */
 	if (ps3) {
 		unsigned char buf[4];
 		buf[0] = JPEG_MARKER;
@@ -369,6 +375,24 @@ iptc_jpeg_save_with_ps3 (FILE * infile, FILE * outfile,
 			return -1;
 	}
 
+	if (s > 0) {
+		/* Skip over the old PS3 block if we've come upon it. */
+		if (fseek (infile, 4 + s, SEEK_CUR) < 0)
+			return -1;
+	}
+	else {
+		/* Keep searching for the old PS3 block and skip over it
+		 * when we find it. */
+		s = iptc_jpeg_seek_to_ps3 (infile, outfile, 0);
+		if (s < 0)
+			return -1;
+		if (s > 0) {
+			if (fseek (infile, 4 + s, SEEK_CUR) < 0)
+				return -1;
+		}
+	}
+
+	/* Copy the remainder of the file */
 	if (iptc_jpeg_seek_to_end (infile, outfile) < 0)
 		return -1;
 
