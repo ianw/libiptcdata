@@ -1,3 +1,14 @@
+libiptcdata 1.0.2
+=================
+Released May 15, 2007
+
+* Compatability improvements for Picasa:  The IPTC version and encoding
+are no longer stored by default in saved IPTC output because these fields
+confuse Picasa.  Also, the APP13 data block is stored closer to the beginning
+of the file.
+* Minor Python compile fix from Ian Wienand.
+
+
 libiptcdata 1.0.1
 =================
 Released March 23, 2007
