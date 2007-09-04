@@ -80,6 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitearch}/*.so
 
 %changelog
+* Tue May 15 2007 David Moore <dcm@acm.org> 1.0.2-1
+- New upstream version
+
 * Fri Mar 23 2007 David Moore <dcm@acm.org> 1.0.1-1
 - New upstream version
 
