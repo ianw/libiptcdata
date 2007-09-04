@@ -1,3 +1,8 @@
+2007-09-04  David Moore  <dcm@acm.org>
+
+	* python/pyiptcdata.c: Fix for saving when /tmp is on different
+	filesystem.  Patch from Chris Mayo.
+
 2007-05-15  David Moore  <dcm@acm.org>
 
 	* NEWS, configure.in: Updated for release of 1.0.2

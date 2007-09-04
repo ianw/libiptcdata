@@ -118,7 +118,7 @@ save(DataObject *self, PyObject *args, PyObject *keywds)
 	/* before we touch anything, make sure we have not been opened */
 	check_dataobject_open(self);
 
-	char tmp_filename[] = "/tmp/pyiptcdata.XXXXXX";
+	char tmp_filename[] = "pyiptcdata.XXXXXX";
 	char *arg_filename = PyString_AsString(self->filename);
 	FILE *infile, *outfile;
 
