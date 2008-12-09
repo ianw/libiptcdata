@@ -1,3 +1,8 @@
+2008-12-08  Ian Wienand  <ianw@debian.org>
+
+	* python/pyiptcdataset.c: Don't poke around inside datastructures
+	for title/description info.
+
 2007-09-04  David Moore  <dcm@acm.org>
 
 	* python/pyiptcdata.c: Fix for saving when /tmp is on different

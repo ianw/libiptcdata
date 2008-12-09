@@ -64,7 +64,7 @@ static PyObject *
 get_title(DataSetObject *self, void *closure)
 {
 	check_valid(self, NULL);
-	return Py_BuildValue("s", self->ds->info->title);
+	return Py_BuildValue("s", iptc_tag_get_title(self->ds->record, self->ds->tag));
 }
 
 /* DESCRIPTION */
@@ -72,7 +72,7 @@ static PyObject *
 get_description(DataSetObject *self, void *closure)
 {
 	check_valid(self, NULL);
-	return Py_BuildValue("s", self->ds->info->description);
+	return Py_BuildValue("s", iptc_tag_get_description(self->ds->record, self->ds->tag));
 }
 
 /* VALUE */
