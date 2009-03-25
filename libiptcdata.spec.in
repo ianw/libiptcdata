@@ -64,7 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
 %{_bindir}/*
 %{_libdir}/lib*.so.*
-# %{_datadir}/locale/*/LC_MESSAGES/*.mo
+%{_datadir}/locale/*/LC_MESSAGES/*.mo
 
 %files devel
 %defattr(-,root,root)
@@ -80,6 +80,10 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitearch}/*.so
 
 %changelog
+* Tue Mar 24 2009 David Moore <dcm@acm.org> 1.0.3-1
+- New upstream version
+- Added translation to file list
+
 * Tue May 15 2007 David Moore <dcm@acm.org> 1.0.2-1
 - New upstream version
 

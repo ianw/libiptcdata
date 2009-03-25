@@ -1,6 +1,6 @@
 2009-03-24  David Moore  <dcm@acm.org>
 
-	* NEWS, configure.in: Updated for release of 1.0.3
+	* NEWS, configure.in, libiptcdata.spec.in: Updated for release of 1.0.3
 	* Makefile.am: Fix "make distcheck"
 	* python/pyiptcdata.c: Updated save patch from Chris Mayo.
 	* po/de.po, iptc/po/de.po: Added German translation, submitted by
