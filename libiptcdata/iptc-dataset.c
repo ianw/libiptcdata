@@ -577,23 +577,19 @@ iptc_dataset_get_time (IptcDataSet *e, int *hour, int *min, int *sec, int *tz)
 void
 iptc_dataset_dump (IptcDataSet *e, unsigned int indent)
 {
-	unsigned char buf[1024];
 	char value[1024];
-	unsigned int i;
-
-	for (i = 0; i < 2 * indent; i++)
-		buf[i] = ' ';
-	buf[i] = '\0';
+	const char *name;
 
 	if (!e)
 		return;
 
-	printf ("%sTag: %d:%d ('%s')\n", buf, e->record, e->tag,
-		iptc_tag_get_name (e->record, e->tag));
+	name = iptc_tag_get_name (e->record, e->tag);
+	printf ("%*sTag: %d:%d ('%s')\n", 2*indent, "", e->record, e->tag,
+		name ? name : "");
 /*	printf ("%s  Format: %i ('%s')\n", buf, e->format,
 		iptc_format_get_name (e->format)); */
-	printf ("%s  Size: %i\n", buf, e->size);
-	printf ("%s  Value: %s\n", buf, iptc_dataset_get_as_str (e, value, sizeof(value)));
+	printf ("%*s  Size: %i\n", 2*indent, "", e->size);
+	printf ("%*s  Value: %s\n", 2*indent, "", iptc_dataset_get_as_str (e, value, sizeof(value)));
 }
 
 #define TAG_ID(r,t)	(((r) << 8) | (t))
