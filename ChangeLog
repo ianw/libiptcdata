@@ -1,5 +1,7 @@
 2009-03-24  David Moore  <dcm@acm.org>
 
+	* po/de.po, iptc/po/de.po: Added German translation, submitted by
+	Chris Leick.
 	* libiptcdata/iptc-dataset.c: Check for NULL tag name in
 	iptc_dataset_dump.  From Roger Hakansson.
 

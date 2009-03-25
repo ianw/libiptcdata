@@ -48,7 +48,7 @@ AC_NEED_STDINT_H(libiptcdata/_stdint.h)
 dnl ---------------------------------------------------------------------------
 dnl i18n support
 dnl ---------------------------------------------------------------------------
-ALL_LINGUAS=""
+ALL_LINGUAS="de"
 
 dnl The gettext domain of the command-line utility
 IPTC_GETTEXT_PACKAGE=iptc
