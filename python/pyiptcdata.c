@@ -28,6 +28,8 @@ if (data_obj->state == CLOSED) {						\
 	 return NULL;								\
 }
 
+#define TMP_TEMPLATE "pyiptcdata.XXXXXX"
+
 /* allocate a new data object, with a blank list for dataset objects */
 DataObject *
 newDataObject(PyObject *arg)
@@ -118,38 +120,59 @@ save(DataObject *self, PyObject *args, PyObject *keywds)
 	/* before we touch anything, make sure we have not been opened */
 	check_dataobject_open(self);
 
-	char tmp_filename[] = "pyiptcdata.XXXXXX";
 	char *arg_filename = PyString_AsString(self->filename);
-	FILE *infile, *outfile;
 
 	static char *kwlist[] = {"filename", NULL};
 	if (!PyArg_ParseTupleAndKeywords(args, keywds, "|s", kwlist,
-					 &arg_filename))
+					&arg_filename))
 		return NULL;
 
+	/* build temporary filename template with same directory */
+	int file_len = strlen(arg_filename);
+	char * tmp_filename = calloc(1, sizeof(TMP_TEMPLATE) + file_len + 1);
+	if (tmp_filename == NULL)
+		return NULL;
+	char * basename = strrchr(arg_filename, '/');
+	if (basename) {
+		int path_len = file_len - strlen(basename) + 1;
+		strncpy(tmp_filename, arg_filename, path_len);
+	}
+	strcat(tmp_filename, TMP_TEMPLATE);
+
+	FILE *infile, *outfile;
+	int outfile_fd;
+
 	/* open up the old file. */
-	infile = fopen (PyString_AsString(self->filename), "r");
-	if (!infile)
+	infile = fopen (arg_filename, "r");
+	if (!infile) {
+		free(tmp_filename);
 		return PyErr_SetFromErrnoWithFilename(PyExc_IOError,
-						      PyString_AsString(self->filename));
+						PyString_AsString(self->filename));
+	}
 
 	/* create a new temporary output file */
-	if (!mktemp((char*)tmp_filename))
+	outfile_fd = mkstemp(tmp_filename);
+	if (!outfile_fd) {
+		fclose(infile);
+		free(tmp_filename);
 		return PyErr_SetFromErrno(PyExc_IOError);
+	}
 
-	/* open exculsivley to avoid race */
-	outfile = fopen(tmp_filename, "wx");
+	/* open stream for temporary file */
+	outfile = fdopen(outfile_fd, "wx");
 	if (!outfile) {
 		fclose(infile);
-		return PyErr_SetFromErrnoWithFilename(PyExc_IOError,
-						      tmp_filename);
+		free(tmp_filename);
+		return PyErr_SetFromErrno(PyExc_IOError);
 	}
 
 	/* read in old PS3 data.  Other areas will therefore be
 	 * retained */
 	old_ps3_len = iptc_jpeg_read_ps3(infile, old_ps3, PS3_BUFLEN);
-	if (old_ps3_len < 0)
+	if (old_ps3_len < 0) {
+		free(tmp_filename);
 		return NULL;
+	}
 
 
 	/* setup our iptc header */
@@ -161,12 +184,14 @@ save(DataObject *self, PyObject *args, PyObject *keywds)
 	iptc_data_sort (self->d);
 
 	/* save our IPTC data to a new stream */
-	if (iptc_data_save(self->d, &iptc_buf, &iptc_len) < 0)
+	if (iptc_data_save(self->d, &iptc_buf, &iptc_len) < 0) {
+		free(tmp_filename);
 		return NULL;
+	}
 
 	/* now save that stream into a photoshop header */
 	new_ps3_len = iptc_jpeg_ps3_save_iptc(old_ps3, old_ps3_len,
-					  iptc_buf, iptc_len, new_ps3, PS3_BUFLEN);
+					iptc_buf, iptc_len, new_ps3, PS3_BUFLEN);
 
 	/* free up the data stream */
 	iptc_data_free_buf(self->d, iptc_buf);
@@ -174,21 +199,22 @@ save(DataObject *self, PyObject *args, PyObject *keywds)
 	/* now save this header into the actual jpeg. */
 	rewind(infile);
 	if (iptc_jpeg_save_with_ps3 (infile, outfile, new_ps3, new_ps3_len) < 0) {
+		free(tmp_filename);
 		fprintf (stderr, "Failed to save image\n");
 		return NULL;
-	}
-
-	/* rename to the new image */
-	if (rename (tmp_filename, arg_filename) < 0) {
-		fclose(infile);
-		fclose(outfile);
-		return PyErr_SetFromErrnoWithFilename(PyExc_IOError,
-						      arg_filename);
 	}
 
 	fclose (infile);
 	fclose (outfile);
 
+	/* rename to the new image */
+	if (rename (tmp_filename, arg_filename) < 0) {
+		free(tmp_filename);
+		return PyErr_SetFromErrnoWithFilename(PyExc_IOError,
+						arg_filename);
+	}
+
+	free(tmp_filename);
 	Py_RETURN_NONE;
 }
 
