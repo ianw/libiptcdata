@@ -1,3 +1,14 @@
+libiptcdata 1.0.3
+=================
+Released Mar 24, 2009
+
+* Fix for python saving so it does not fail when /tmp is a different
+filesystem.  From Chris Mayo.
+* Fix python crash on unknown datasets.  From Ian Wienand.
+* Clean up iptc_dataset_dump output.  From Roger Hakansson.
+* Added German translation by Chris Leick.
+
+
 libiptcdata 1.0.2
 =================
 Released May 15, 2007
