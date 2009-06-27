@@ -29,7 +29,7 @@
       <holder>David Moore</holder>
     </copyright>
 
-    <legalnotice>
+    <legalnotice id="legalnotice">
       <para>Permission is granted to copy, distribute and/or modify
       this document under the terms of the <citetitle>GNU Free
       Documentation License</citetitle>, Version 1.1 or any later
@@ -61,19 +61,19 @@
   &iptc-overview;
   &iptc-libjpeg;
   &iptc-i18n;
-  <chapter>
+  <chapter id="ch01">
     <title>IPTC Data Manipulation</title>
     <xi:include href="xml/iptc-data.xml"/>
     <xi:include href="xml/iptc-dataset.xml"/>
     <xi:include href="xml/iptc-tag.xml"/>
   </chapter>
 
-  <chapter>
+  <chapter id="ch02">
     <title>Format-specific Functions</title>
     <xi:include href="xml/iptc-jpeg.xml"/>
   </chapter>
 
-  <chapter>
+  <chapter id="ch03">
     <title>Helper Functions</title>
     <xi:include href="xml/iptc-utils.xml"/>
     <xi:include href="xml/iptc-mem.xml"/>

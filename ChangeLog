@@ -1,5 +1,6 @@
 2009-06-27  David Moore  <dcm@acm.org>
 
+	* docs/reference/libiptcdata-docs.sgml: Fix multilib -devel rpm conflict
 	* iptc/po/it.po: Additional Italian translation from Milo Casagrande.
 
 2009-06-10  David Moore  <dcm@acm.org>
