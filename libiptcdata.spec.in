@@ -6,10 +6,13 @@ Release: 1%{?dist}
 Summary: IPTC tag library
 
 Group: Development/Libraries
-License: LGPL
+License: LGPLv2+
 URL: http://libiptcdata.sourceforge.net/
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires: gettext
+BuildRequires: libtool
+BuildRequires: gtk-doc
 
 %description
 libiptcdata is a library for parsing, editing, and saving IPTC data
@@ -23,6 +26,7 @@ Summary: Headers and libraries for libiptcdata application development
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
+Requires: gtk-doc
 
 %description devel
 The libiptcdata-devel package contains the libraries and include files
@@ -80,9 +84,27 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitearch}/*.so
 
 %changelog
-* Tue Mar 24 2009 David Moore <dcm@acm.org> 1.0.3-1
+* Sun Apr 12 2009 David Moore <dcm@acm.org> 1.0.3-3
+- Added 'BuildRequires: gtk-doc'
+
+* Sun Apr 12 2009 David Moore <dcm@acm.org> 1.0.3-2
+- Added 'Requires: gtk-doc' and 'BuildRequires: libtool' and gettext
+
+* Sun Apr 12 2009 David Moore <dcm@acm.org> 1.0.3-1
 - New upstream version
 - Added translation to file list
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 1.0.2-4
+- Rebuild for Python 2.6
+
+* Thu May 29 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1.0.2-3
+- fix license tag
+
+* Mon Feb 18 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1.0.2-2
+- Autorebuild for GCC 4.3
 
 * Tue May 15 2007 David Moore <dcm@acm.org> 1.0.2-1
 - New upstream version

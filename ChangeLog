@@ -1,3 +1,7 @@
+2009-07-05  David Moore  <dcm@acm.org>
+
+	* NEWS, configure.in, libiptcdata.spec.in: Updated for release of 1.0.4
+
 2009-06-27  David Moore  <dcm@acm.org>
 
 	* docs/reference/libiptcdata-docs.sgml: Fix multilib -devel rpm conflict
