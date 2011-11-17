@@ -1,3 +1,7 @@
+2011-11-16  David Moore  <david.moore@gmail.com>
+
+	* Updated .spec file and autogen.sh for newer versions of build tools
+
 2009-07-05  David Moore  <dcm@acm.org>
 
 	* NEWS, configure.in, libiptcdata.spec.in: Updated for release of 1.0.4

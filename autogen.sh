@@ -14,16 +14,11 @@ DIE=0
 
 have_libtool=false
 if libtoolize --version < /dev/null > /dev/null 2>&1 ; then
-	libtool_version=`libtoolize --version | sed 's/^[^0-9]*\([0-9.][0-9.]*\).*/\1/'`
-	case $libtool_version in
-	    1.4*|1.5*)
-		have_libtool=true
-		;;
-	esac
+	have_libtool=true
 fi
 if $have_libtool ; then : ; else
 	echo
-	echo "You must have libtool 1.4 installed to compile $PROJECT."
+	echo "You must have libtool installed to compile $PROJECT."
 	echo "Install the appropriate package for your distribution,"
 	echo "or get the source tarball at http://ftp.gnu.org/gnu/libtool/"
 	DIE=1
