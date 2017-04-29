@@ -342,7 +342,6 @@ PyTypeObject DataSet_Type = {
 	/* The ob_type field must be initialized in the module init function
 	 * to be portable to Windows without using C++. */
 	PyVarObject_HEAD_INIT(NULL, 0)
-	0,			/*ob_size*/
 	"iptcdatamodule.DataSet", /*tp_name*/
 	sizeof(DataSetObject),	/*tp_basicsize*/
 	0,			/*tp_itemsize*/
