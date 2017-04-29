@@ -1,5 +1,5 @@
 Python wrapper for libiptcdata
- - Ian Wienand <ianw@ieee.org>
+ - Ian Wienand <ian@wienand.org>
 
 OVERVIEW
 ========
@@ -19,8 +19,13 @@ FILES
 
  * pyiptcdatamod.c : module implementation
  * pyiptcdata.c    : iptcdata.Data object implementation
- * pyiptcdataset.c : iptcdata.DataSet object implementation 
+ * pyiptcdataset.c : iptcdata.DataSet object implementation
  * examples/*.py   : some example/test programs using the library
+
+For simplicity, python3 has been forked and modified from the stable
+python2 sources.  When building via automake, the top-level files will
+include the correct version.  setup.py is included also for building
+via setuptools.
 
 NOTES
 =====
