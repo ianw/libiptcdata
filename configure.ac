@@ -1,5 +1,5 @@
 AC_PREREQ(2.50)
-AC_INIT(libiptcdata, 1.0.4)
+AC_INIT(libiptcdata, 1.0.5)
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE

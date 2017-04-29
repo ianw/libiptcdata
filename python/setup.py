@@ -13,8 +13,8 @@ iptc = Extension('iptcdata', sources=['python%s/pyiptcdata.c' % (v),
                  depends=['python%s/pyiptcdata.h' % (v)])
 
 setup (name = 'iptcdata',
-       version = '1.0.4',
-       description = 'iptcdata',
+       version = '1.0.5',
+       description = 'A library for manipulating the IPTC metadata',
        author = 'Ian Wienand',
        author_email = 'ian@wienand.org',
        url = 'https://github.com/ianw/libiptcdata',
