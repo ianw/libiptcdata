@@ -1,1 +1,2 @@
 include python3/pyiptcdata.h
+include python2/pyiptcdata.h

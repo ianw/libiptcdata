@@ -1,10 +1,16 @@
+import sys
+
 from setuptools import setup, Extension
 
-iptc = Extension('iptcdata', sources=['python3/pyiptcdata.c',
-                                      'python3/pyiptcdatamod.c',
-                                      'python3/pyiptcdataset.c'],
+v = '2'
+if (sys.version_info > (3, 0)):
+    v = '3'
+
+iptc = Extension('iptcdata', sources=['python%s/pyiptcdata.c' % (v),
+                                      'python%s/pyiptcdatamod.c' % (v),
+                                      'python%s/pyiptcdataset.c' % (v)],
                  libraries=['iptcdata'],
-                 depends=['python3/pyiptcdata.h'])
+                 depends=['python%s/pyiptcdata.h' % (v)])
 
 setup (name = 'iptcdata',
        version = '1.0.4',
@@ -20,10 +26,5 @@ viewing, modifying, and saving this metadata.  The library is licensed
 under the GNU Library General Public License (GNU LGPL).
 
 The library implements the standard described at http://www.iptc.org/IIM
-
-The code itself was inspired by the libexif library:
-http://sourceforge.net/projects/libexif, written by Lutz Müller.
-Together, libexif and libiptcdata provide a complete metadata
-solution for image files.
        ''',
        ext_modules = [iptc])
