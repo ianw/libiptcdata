@@ -1,3 +1,6 @@
+compile
+depcomp
+*~
 autom4te.cache
 configure.scan
 *.tar.gz
@@ -20,3 +23,5 @@ ltmain.sh
 missing
 mkinstalldirs
 stamp-h1
+gtk-doc.m4
+gtk-doc.make
