@@ -75,8 +75,8 @@ dnl Check for headers (Mac OSX often doesn't have them)
 AC_CHECK_HEADERS([getopt.h wchar.h iconv.h])
 
 
-GTK_DOC_CHECK([1.0])
-
+GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
+AC_CONFIG_MACRO_DIR(m4)
 
 dnl ---------------------------------------------------------------------------
 dnl Warnings

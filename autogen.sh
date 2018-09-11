@@ -82,6 +82,7 @@ $ACLOCAL $ACLOCAL_FLAGS || exit $?
 autoconf || exit $?
 autoheader || exit $?
 $AUTOMAKE --add-missing || exit $?
+gtkdocize || exit $?
 
 cd $ORIGDIR || exit $?
 

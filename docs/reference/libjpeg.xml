@@ -10,7 +10,7 @@
 	<refpurpose>an example of using libiptcdata together with libjpeg</refpurpose>
 </refnamediv>
 
-<refsect1 id="i18n">
+<refsect1 id="jpeg-reading">
 	<title>Reading IPTC data from a file parsed with libjpeg</title>
 
 	<para>

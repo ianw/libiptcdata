@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY iptc-overview SYSTEM "overview.sgml">
-<!ENTITY iptc-about SYSTEM "about.sgml">
-<!ENTITY iptc-commandline SYSTEM "commandline.sgml">
-<!ENTITY iptc-i18n SYSTEM "i18n.sgml">
-<!ENTITY iptc-libjpeg SYSTEM "libjpeg.sgml">
+<!ENTITY iptc-overview SYSTEM "overview.xml">
+<!ENTITY iptc-about SYSTEM "about.xml">
+<!ENTITY iptc-commandline SYSTEM "commandline.xml">
+<!ENTITY iptc-i18n SYSTEM "i18n.xml">
+<!ENTITY iptc-libjpeg SYSTEM "libjpeg.xml">
 <!ENTITY version SYSTEM "version.xml">
 ]>
 <book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
