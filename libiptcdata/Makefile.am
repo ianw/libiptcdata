@@ -1,4 +1,4 @@
-INCLUDES =              				\
+AM_CPPFLAGS =              				\
 	-DLIBIPTCDATA_LOCALEDIR=\""$(datadir)/locale"\"	\
 	-I$(top_srcdir)/libiptcdata			\
 	-I$(top_srcdir)
