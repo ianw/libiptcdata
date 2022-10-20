@@ -1,0 +1,809 @@
+# Georgian translation for libiptcdata
+# Copyright (C) 2022 David Moore
+# This file is distributed under the same license as the libiptcdata package.
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libiptcdata\n"
+"Report-Msgid-Bugs-To: dcm@acm.org\n"
+"POT-Creation-Date: 2022-09-22 22:23+0200\n"
+"PO-Revision-Date: 2022-10-20 17:16+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: libiptcdata/iptc-tag.c:31
+msgid "Model Version"
+msgstr "მოდელის ვერსია"
+
+#: libiptcdata/iptc-tag.c:32
+msgid "Version of IIM part 1."
+msgstr "IIM-ის პირველი ნაწილის ვერსია."
+
+#: libiptcdata/iptc-tag.c:36
+msgid "Destination"
+msgstr "დანიშნულება"
+
+#: libiptcdata/iptc-tag.c:37
+msgid "Routing information."
+msgstr "რაუტინგის ინფორმაცია."
+
+#: libiptcdata/iptc-tag.c:41
+msgid "File Format"
+msgstr "ფაილის ფორმატი"
+
+#: libiptcdata/iptc-tag.c:42
+msgid "File format of the data described by this metadata."
+msgstr "ამ მეტამონაცემების მიერ აღწერილი მონაცემების ფაილის ფრმატი."
+
+#: libiptcdata/iptc-tag.c:46
+msgid "File Version"
+msgstr "ფაილის ვერსია"
+
+#: libiptcdata/iptc-tag.c:47
+msgid "Version of the file format."
+msgstr "ფაილის ფრმატის ვერსია."
+
+#: libiptcdata/iptc-tag.c:51
+msgid "Service Identifier"
+msgstr "სერვისის იდენტიფიკატრი"
+
+#: libiptcdata/iptc-tag.c:52
+msgid "Identifies the provider and product."
+msgstr "განსაზღვრავს მომწოდებელს და პროდუქტს."
+
+#: libiptcdata/iptc-tag.c:56
+msgid "Envelope Number"
+msgstr "კონვერტის ნომერი"
+
+#: libiptcdata/iptc-tag.c:57
+msgid "A number unique for the date in 1:70 and the service ID in 1:30."
+msgstr "რიცხვი, უნიკალური თარიღისთვის 1:70-ში და სერვისის ID 1:30-ში."
+
+#: libiptcdata/iptc-tag.c:61
+msgid "Product I.D."
+msgstr "პროდუქტის I.D."
+
+#: libiptcdata/iptc-tag.c:62
+msgid "Allows a provider to identify subsets of its overall service."
+msgstr ""
+"უფლებას აძლევს მომწოდებელს, თავისი სრული სერვისის ქვესეტები აღმოაჩინოს."
+
+#: libiptcdata/iptc-tag.c:66
+msgid "Envelope Priority"
+msgstr "კონვერტის პრიორიტეტი"
+
+#: libiptcdata/iptc-tag.c:67
+msgid ""
+"Specifies the envelope handling priority and not the editorial urgency.  '1' "
+"for most urgent, '5' for normal, and '8' for least urgent.  '9' is user-"
+"defined."
+msgstr ""
+"მიუთითებს კონვერტის დამუშავების პრიორიტეტს და არა რედაქტირების "
+"სასწრაფოობას.   \"1\" ყველაზე სასწრაფო, \"5\" ნორმალური და \"8\" არც ისე "
+"სასწრაფო.   \"9\" მომხმარებლის მიერაა მითითებული."
+
+#: libiptcdata/iptc-tag.c:71
+msgid "Date Sent"
+msgstr "გამოგზავნის თარიღი"
+
+#: libiptcdata/iptc-tag.c:72
+msgid "The day the service sent the material."
+msgstr "დღე, როცა სერვისმა მასალა გამოაგზავნა."
+
+#: libiptcdata/iptc-tag.c:76
+msgid "Time Sent"
+msgstr "გამგზავნის დრო"
+
+#: libiptcdata/iptc-tag.c:77
+msgid "The time the service sent the material."
+msgstr "დრო, როცა სერვისმა მასალა გამოაგზავნა."
+
+#: libiptcdata/iptc-tag.c:81
+msgid "Coded Character Set"
+msgstr "კოდირებული სიმბოლოთა ნაკრები"
+
+#: libiptcdata/iptc-tag.c:82
+msgid ""
+"Control functions used for the announcement, invocation or designation of "
+"coded character sets."
+msgstr ""
+"კოდირებული სიმბოლოების ნაკრებების გამოცხადებაში, ჩაწოდებაში ან დანიშვნაში "
+"გამოყენებული საკონტროლო ფუნქციები."
+
+#: libiptcdata/iptc-tag.c:86
+msgid "Unique Name of Object"
+msgstr "ობიექტის უნიკალური სახელი"
+
+#: libiptcdata/iptc-tag.c:87
+msgid ""
+"An eternal, globally unique identification for the object, independent of "
+"provider and for any media form."
+msgstr ""
+"სამუდამო, გლობალურად უნიკალური იდენტიფიკატორი ობიექტისთვის. დამოუკიდებელი "
+"მომწოდებლისგან და ყველა მედიის ფორმისგან."
+
+#: libiptcdata/iptc-tag.c:91
+msgid "ARM Identifier"
+msgstr "ARM იდენტიფიკატორი"
+
+#: libiptcdata/iptc-tag.c:92
+msgid "Identifies the Abstract Relationship Method (ARM)."
+msgstr "აბსტრაქტული ურთიერთობის მეთოდის (ARM) იდენტიფიკაცია."
+
+#: libiptcdata/iptc-tag.c:96
+msgid "ARM Version"
+msgstr "ARM ვერსია"
+
+#: libiptcdata/iptc-tag.c:97
+msgid "Identifies the version of the Abstract Relationship Method (ARM)."
+msgstr "აბსტრაქტული ურთიერთობის მეთოდის (ARM) ვერსიის იდენტიფიკაცია."
+
+#: libiptcdata/iptc-tag.c:101
+msgid "Record Version"
+msgstr "ჩანაწერის ვერსია"
+
+#: libiptcdata/iptc-tag.c:102
+msgid "Identifies the version of the IIM, Part 2"
+msgstr "IIM-ის ვერსიის იდენტიფიკაცია, მეორე ნაწილი"
+
+#: libiptcdata/iptc-tag.c:106
+msgid "Object Type Reference"
+msgstr "ობიექტის ტიპის ბმა"
+
+#: libiptcdata/iptc-tag.c:107
+msgid "Distinguishes between different types of objects within the IIM."
+msgstr "IIM-ში ობიექტების სხვადასხვა ტიპების გარჩევა."
+
+#: libiptcdata/iptc-tag.c:111
+msgid "Object Attribute Reference"
+msgstr "ობიექტის ატრიბუტების მიბმა"
+
+#: libiptcdata/iptc-tag.c:112
+msgid "Defines the nature of the object independent of the subject."
+msgstr "აღწერს ობიექტის ბუნებას თემისგან დამოუკიდებლად."
+
+#: libiptcdata/iptc-tag.c:116
+msgid "Object Name"
+msgstr "ობიექტის სახელი"
+
+#: libiptcdata/iptc-tag.c:117
+msgid "A shorthand reference for the object."
+msgstr "სტენოგრაფიის მიბმა ობიექტისთვის."
+
+#: libiptcdata/iptc-tag.c:121
+msgid "Edit Status"
+msgstr "სტატუსის ჩასწორება"
+
+#: libiptcdata/iptc-tag.c:122
+msgid "Status of the object, according to the practice of the provider."
+msgstr "ობიექტის სტატუსი მომწოდებლის პრაქტიკის მიხედვით."
+
+#: libiptcdata/iptc-tag.c:126
+msgid "Editorial Update"
+msgstr "რედაქტორის განახლება"
+
+#: libiptcdata/iptc-tag.c:127
+msgid ""
+"Indicates the type of update this object provides to a previous object.  The "
+"link to the previous object is made using the ARM.  '01' indicates an "
+"additional language."
+msgstr ""
+"მიუთითებს განახლების ტიპზე, რომელსაც ეს ობიექტი წინა ობიექტს მიაწოდებს.  "
+"წინა ობიექტამდე შეერთება ARM-ის საშუალებით ხდება.  '01' დამატებით ენას "
+"აღნიშნავს."
+
+#: libiptcdata/iptc-tag.c:131
+msgid "Urgency"
+msgstr "სასწრაფოობა"
+
+#: libiptcdata/iptc-tag.c:132
+msgid ""
+"Specifies the editorial urgency of content and not necessarily the envelope "
+"handling priority.  '1' is most urgent, '5' normal, and '8' least urgent."
+msgstr ""
+"მიუთითებს კონვერტის დამუშავების პრიორიტეტს და არა რედაქტირების "
+"სასწრაფოობას.   \"1\" ყველაზე სასწრაფო, \"5\" ნორმალური და \"8\" არც ისე "
+"სასწრაფო."
+
+#: libiptcdata/iptc-tag.c:136
+msgid "Subject Reference"
+msgstr "სათაურის ბმა"
+
+#: libiptcdata/iptc-tag.c:137
+msgid ""
+"A structured definition of the subject matter.  It must contain an IPR, an 8 "
+"digit Subject Reference Number and an optional Subject Name, Subject Matter "
+"Name, and Subject Detail Name each separated by a colon (:)."
+msgstr ""
+"ობიექტის რაობის სტრუქტურული აღწერა.  ის უნდა შეიცავდეს IPR-ს, 8-ციფრიან ველს "
+"Subject Reference Number, არასავალდებულო ველებს: Subject Name, Subject "
+"Matter Name, and Subject Detail Name, გამოყოფილს ორიწერტილით (:)."
+
+#: libiptcdata/iptc-tag.c:141
+msgid "Category"
+msgstr "კატეგორია"
+
+#: libiptcdata/iptc-tag.c:142
+msgid ""
+"Identifies the subject of the object in the opinion of the provider "
+"(Deprecated)."
+msgstr ""
+"მომწოდებლის შეხედულებაში ობიექტის სათაურის იდენტიფიკაცია (მოძველებულია)."
+
+#: libiptcdata/iptc-tag.c:146
+msgid "Supplemental Category"
+msgstr "დამატებითი კატეგორია"
+
+#: libiptcdata/iptc-tag.c:147
+msgid "Further refines the subject of the object (Deprecated)."
+msgstr "ობიექტის თემის შემდგომი გაუმჯობესება (მოძველებულია)."
+
+#: libiptcdata/iptc-tag.c:151
+msgid "Fixture Identifier"
+msgstr "ჩამჭერის იდენტიფიკატორი"
+
+#: libiptcdata/iptc-tag.c:152
+msgid ""
+"Identifies objects that recur often and predictably, enabling users to "
+"immediately find or recall such an object."
+msgstr ""
+"ახდენს ხშირად და გეგმიურად მომხდარ ობიექტების იდენტიფიკაციას, რითიც "
+"საშუალებას აძლევს მომხმარებლებს, მომენტალურად დაიბრუნონ ან იპოვონ ასეთი "
+"ობიექტი."
+
+#: libiptcdata/iptc-tag.c:156
+msgid "Keywords"
+msgstr "საკვანძო სიტყვები"
+
+#: libiptcdata/iptc-tag.c:157
+msgid "Used to indicate specific information retrieval words."
+msgstr "გამოიყენება სპეციფიკური გამოთხოვის სიტყვების მოსანიშნად."
+
+#: libiptcdata/iptc-tag.c:161
+msgid "Content Location Code"
+msgstr "შემცველობის მდებარეობის კოდი"
+
+#: libiptcdata/iptc-tag.c:162
+msgid ""
+"Indicates the code of a country/geographical location referenced by the "
+"content of the object."
+msgstr ""
+"შეიცავს ობიექტის შემცველობის მიერ მითითებული ქვეყნის/გეოგრაფიული მდებარეობის "
+"კოდს."
+
+#: libiptcdata/iptc-tag.c:166
+msgid "Content Location Name"
+msgstr "შემცველობის მდებარეობის სახელი"
+
+#: libiptcdata/iptc-tag.c:167
+msgid ""
+"A full, publishable name of a country/geographical location referenced by "
+"the content of the object."
+msgstr ""
+"ობიექტის შემცველობის მიერ მითითებული ქვეყნის/გეოგრაფიული მდებარეობის სრული, "
+"გამოცემადი სახელი."
+
+#: libiptcdata/iptc-tag.c:171
+msgid "Release Date"
+msgstr "რელიზის თარიღი"
+
+#: libiptcdata/iptc-tag.c:172
+msgid ""
+"Designates the earliest date the provider intends the object to be used."
+msgstr ""
+"აღნიშნავს უახლოეს თარიღს, როცა მომწოდებელი მოელის,რომ ობიექტი გამოყენებული "
+"იქნება."
+
+#: libiptcdata/iptc-tag.c:176
+msgid "Release Time"
+msgstr "გათავისუფლების დრო"
+
+#: libiptcdata/iptc-tag.c:177
+msgid ""
+"Designates the earliest time the provider intends the object to be used."
+msgstr ""
+"აღნიშნავს უახლოეს დრო, როცა მომწოდებელი მოელის,რომ ობიექტი გამოყენებული "
+"იქნება."
+
+#: libiptcdata/iptc-tag.c:181
+msgid "Expiration Date"
+msgstr "_ვადა"
+
+#: libiptcdata/iptc-tag.c:182
+msgid "Designates the latest date the provider intends the object to be used."
+msgstr ""
+"აღნიშნავს უშორეს თარიღს, როცა მომწოდებელი მოელის,რომ ობიექტი გამოყენებული "
+"იქნება."
+
+#: libiptcdata/iptc-tag.c:186
+msgid "Expiration Time"
+msgstr "ვადა"
+
+#: libiptcdata/iptc-tag.c:187
+msgid "Designates the latest time the provider intends the object to be used."
+msgstr ""
+"აღნიშნავს უშორეს დროს, როცა მომწოდებელი მოელის,რომ ობიექტი გამოყენებული "
+"იქნება."
+
+#: libiptcdata/iptc-tag.c:191
+msgid "Special Instructions"
+msgstr "სპეციალური ინსტრუქციები"
+
+#: libiptcdata/iptc-tag.c:192
+msgid "Other editorial instructions concerning the use of the object."
+msgstr "რედაქტორის დამატებითი ინსტრუქციები ობიექტის მოხმარების შესახებ."
+
+#: libiptcdata/iptc-tag.c:196
+msgid "Action Advised"
+msgstr "ნარჩევი ქმედება"
+
+#: libiptcdata/iptc-tag.c:197
+msgid ""
+"The type of action that this object provides to a previous object.  '01' "
+"Object Kill, '02' Object Replace, '03' Object Append, '04' Object Reference."
+msgstr ""
+"ქმედების ტიპი, რომელსაც ეს ობიექტი წინა ობიექტს მიაწოდებს.  '01' ობიექტის "
+"მოკვლა, '02' ობიექტის ჩანაცვლება, '03' ობიექტის ბოლოში მიწერა, '04' ობიექტზე "
+"მინიშნება."
+
+#: libiptcdata/iptc-tag.c:201
+msgid "Reference Service"
+msgstr "რეგისტრაციის სერვისი"
+
+#: libiptcdata/iptc-tag.c:202
+msgid ""
+"The Service Identifier of a prior envelope to which the current object "
+"refers."
+msgstr ""
+"იმ წინა კონვერტის სერვისის იდენტიფიკატორი, რომელზეც მიმდინარე ობიექტი "
+"მიანიშნებს."
+
+#: libiptcdata/iptc-tag.c:206
+msgid "Reference Date"
+msgstr "რეგისტრაციის თარიღი"
+
+#: libiptcdata/iptc-tag.c:207
+msgid "The date of a prior envelope to which the current object refers."
+msgstr "წინა კონვერტის თარიღი, რომელზეც მიმდინარე ობიექტი მიუთითებს."
+
+#: libiptcdata/iptc-tag.c:211
+msgid "Reference Number"
+msgstr "სარეგისტრაციო ნომერი"
+
+#: libiptcdata/iptc-tag.c:212
+msgid ""
+"The Envelope Number of a prior envelope to which the current object refers."
+msgstr "წინა კონვერტის ნომერი, რომელზეც მიმდინარე ობიექტი მიუთითებს."
+
+#: libiptcdata/iptc-tag.c:216
+msgid "Date Created"
+msgstr "შექმნის თარიღი"
+
+#: libiptcdata/iptc-tag.c:217
+msgid ""
+"The date the intellectual content of the object was created rather than the "
+"date of the creation of the physical representation."
+msgstr ""
+"ობიექტის ინტელექტუალური შემცველობის შექმნის თარიღი, ფიზიკური წარმოდგენის "
+"შექმნის თარიღის მაგიერ."
+
+#: libiptcdata/iptc-tag.c:221
+msgid "Time Created"
+msgstr "შექმნის დრო"
+
+#: libiptcdata/iptc-tag.c:222
+msgid ""
+"The time the intellectual content of the object was created rather than the "
+"date of the creation of the physical representation."
+msgstr ""
+"ობიექტის ინტელექტუალური შემცველობის შექმნის დრო, ფიზიკური წარმოდგენის "
+"შექმნის თარიღის მაგიერ."
+
+#: libiptcdata/iptc-tag.c:226
+msgid "Digital Creation Date"
+msgstr "ციფრული შექმნის თარიღი"
+
+#: libiptcdata/iptc-tag.c:227
+msgid "The date the digital representation of the object was created."
+msgstr "ამ ობიექტის ციფრული წარმოდგენის შექმნის თარიღი."
+
+#: libiptcdata/iptc-tag.c:231
+msgid "Digital Creation Time"
+msgstr "ციფრული შექმნის დრო"
+
+#: libiptcdata/iptc-tag.c:232
+msgid "The time the digital representation of the object was created."
+msgstr "ამ ობიექტის ციფრული წარმოდგენის შექმნის დრო."
+
+#: libiptcdata/iptc-tag.c:236
+msgid "Originating Program"
+msgstr "დამწყები პროგრამა"
+
+#: libiptcdata/iptc-tag.c:237
+msgid "The type of program used to originate the object."
+msgstr "ობიექტის შემოსატანად გამოყენებული პროგრამის ტიპი."
+
+#: libiptcdata/iptc-tag.c:241
+msgid "Program Version"
+msgstr "პროგრამის ვერსია"
+
+#: libiptcdata/iptc-tag.c:242
+msgid "The version of the originating program."
+msgstr "შემოტანის პროგრამის ვერსია."
+
+#: libiptcdata/iptc-tag.c:246
+msgid "Object Cycle"
+msgstr "ობიექტის ციკლი"
+
+#: libiptcdata/iptc-tag.c:247
+msgid "Where 'a' is morning, 'b' is evening, 'b' is both."
+msgstr "სადაც 'a' დილაა, 'b' კი საღამო. 'b' ორივეა."
+
+#: libiptcdata/iptc-tag.c:251
+msgid "By-line"
+msgstr "ვისგან"
+
+#: libiptcdata/iptc-tag.c:252
+msgid ""
+"Name of the creator of the object, e.g. writer, photographer or graphic "
+"artist."
+msgstr "ობიექტის შემქმნელის სახელი. მაგ: მწერალი, ფოტოგრაფი ან გრაფიკოსი."
+
+#: libiptcdata/iptc-tag.c:256
+msgid "By-line Title"
+msgstr "ვისგან - წოდება"
+
+#: libiptcdata/iptc-tag.c:257
+msgid "Title of the creator or creators of the object."
+msgstr "ობიექტის შემქმნელის წოდება."
+
+#: libiptcdata/iptc-tag.c:261
+msgid "City"
+msgstr "ქალაქი"
+
+#: libiptcdata/iptc-tag.c:262
+msgid "City of object origin."
+msgstr "ობიექტის წარმოშობის ქალაქი."
+
+#: libiptcdata/iptc-tag.c:266
+msgid "Sub-location"
+msgstr "ქვემდებარეობა"
+
+#: libiptcdata/iptc-tag.c:267
+msgid "The location within a city from which the object originates."
+msgstr "ადგილი ქალაქში, საიდანაც ეს ობიექტია წარმოშობით."
+
+#: libiptcdata/iptc-tag.c:271
+msgid "Province/State"
+msgstr "რეგიონი/მხარე"
+
+#: libiptcdata/iptc-tag.c:272
+msgid "The Province/State where the object originates."
+msgstr "პროვინცია/შტატი, საიდანაც ეს ობიექტია წარმოშობით."
+
+#: libiptcdata/iptc-tag.c:276
+msgid "Country Code"
+msgstr "ქვეყნის კოდი"
+
+#: libiptcdata/iptc-tag.c:277
+msgid "The code of the country/primary location where the object was created."
+msgstr "ქვეყნის/ძირითადი მდებარეობის კოდი, სადაც ეს ობიექტი შეიქმნა."
+
+#: libiptcdata/iptc-tag.c:281
+msgid "Country Name"
+msgstr "ქვეყნის სახელი"
+
+#: libiptcdata/iptc-tag.c:282
+msgid "The name of the country/primary location where the object was created."
+msgstr "ქვეყნის/ძირითადი მდებარეობის სახელი, სადაც ეს ობიექტი შეიქმნა."
+
+#: libiptcdata/iptc-tag.c:286
+msgid "Original Transmission Reference"
+msgstr "საწყისი გადაბმის მიბმა"
+
+#: libiptcdata/iptc-tag.c:287
+msgid "A code representing the location of original transmission."
+msgstr "საწყისი გადაცემის მდებარეობის გადმომცემი კოდი."
+
+#: libiptcdata/iptc-tag.c:291
+msgid "Headline"
+msgstr "სათაური"
+
+#: libiptcdata/iptc-tag.c:292
+msgid "A publishable entry providing a synopsis of the contents of the object."
+msgstr ""
+"გამოცემადი ჩანაწერი, ობიექტის შემცველობის რომელიც მოკლე შინაარსს გადმოსცემს."
+
+#: libiptcdata/iptc-tag.c:296
+msgid "Credit"
+msgstr "კრედიტი"
+
+#: libiptcdata/iptc-tag.c:297
+msgid ""
+"Identifies the provider of the object, not necessarily the owner/creator."
+msgstr ""
+"ობიექტის მომწოდებლის იდენტიფიკაცია, რომელიც მფლობელს/შემქმნელს აუცილებლად "
+"*არ* აღნიშნავს."
+
+#: libiptcdata/iptc-tag.c:301
+msgid "Source"
+msgstr "წყარო"
+
+#: libiptcdata/iptc-tag.c:302
+msgid "The original owner of the intellectual content of the object."
+msgstr "ობიექტის ინტელექტუალური შემცველობის საწყისი მფლობელი."
+
+#: libiptcdata/iptc-tag.c:306
+msgid "Copyright Notice"
+msgstr "მონაცემების საავტორო უფლებები"
+
+#: libiptcdata/iptc-tag.c:307
+msgid "Any necessary copyright notice."
+msgstr "ყველა საჭირო მონაცემების საავტორო უფლებები."
+
+#: libiptcdata/iptc-tag.c:311
+msgid "Contact"
+msgstr "კონტაქტი"
+
+#: libiptcdata/iptc-tag.c:312
+msgid ""
+"The person or organization which can provide further background information "
+"on the object."
+msgstr ""
+"ფიზიკური პირი ან ორგანიზაცია, რომელსაც ობიექტის შესახებ დამატებითი "
+"ინფორმაციის მოწოდება შეუძლია."
+
+#: libiptcdata/iptc-tag.c:316
+msgid "Caption/Abstract"
+msgstr "წარწერა/აბსტრაქცია"
+
+#: libiptcdata/iptc-tag.c:317
+msgid "A textual description of the data"
+msgstr "მონაცემების ტექსტური აღწერა"
+
+#: libiptcdata/iptc-tag.c:321
+msgid "Writer/Editor"
+msgstr "დამწერი/რედაქტორი"
+
+#: libiptcdata/iptc-tag.c:322
+msgid ""
+"The name of the person involved in the writing, editing or correcting the "
+"object or caption/abstract"
+msgstr ""
+"წარწერის/აბსტრაქციის ან ობიექტის დაწერაში, ჩასწორებაში ან შესწორებაში "
+"ჩარეული პირის სახელი"
+
+#: libiptcdata/iptc-tag.c:326
+msgid "Rasterized Caption"
+msgstr "რასტერიზებული წარწერა"
+
+#: libiptcdata/iptc-tag.c:327
+msgid ""
+"Contains rasterized object description and is used where characters that "
+"have not been coded are required for the caption."
+msgstr ""
+"შეიცავს რასტერიზებულ ობიექტის აღწერას და გამოიყენება იქ, სადაც წარწერისთვის "
+"საჭირო სიმბოლოები კოდირებული არაა."
+
+#: libiptcdata/iptc-tag.c:331
+msgid "Image Type"
+msgstr "გამოსახულების ტიპი"
+
+#: libiptcdata/iptc-tag.c:332
+msgid "Indicates the data format of the image object."
+msgstr "გამოხატავს გამოსახულების ობიექტის მონაცემების ფორმატს."
+
+#: libiptcdata/iptc-tag.c:336
+msgid "Image Orientation"
+msgstr "გამოსახულების ორიენტაცია"
+
+#: libiptcdata/iptc-tag.c:337
+msgid ""
+"The layout of the image area: 'P' for portrait, 'L' for landscape, and 'S' "
+"for square."
+msgstr ""
+"გამოსახულების ფართობის განლაგება: 'P' პორტრეტისთვის, 'L' ლანდშაფტისთვის და "
+"'S' ოთხკუთხედისთვის."
+
+#: libiptcdata/iptc-tag.c:341
+msgid "Language Identifier"
+msgstr "ენის იდენტიფიკატორი"
+
+#: libiptcdata/iptc-tag.c:342
+msgid ""
+"The major national language of the object, according to the 2-letter codes "
+"of ISO 639:1988."
+msgstr ""
+"ობიექტის მთავარი ნაციონალური ენა, ISO 639:1988 -ის მიხედვით, 2 სიმბოლო."
+
+#: libiptcdata/iptc-tag.c:346
+msgid "Audio Type"
+msgstr "აუდიოს ტიპი"
+
+#: libiptcdata/iptc-tag.c:347
+msgid ""
+"The number of channels and type of audio (music, text, etc.) in the object."
+msgstr "არხების რაოდენობა და აუდიოს ტიპი (მუსიკა, ტექსტი და ა.შ.) ობიექტში."
+
+#: libiptcdata/iptc-tag.c:351
+msgid "Audio Sampling Rate"
+msgstr "ხმის სემპლინგის სიჩქარე"
+
+#: libiptcdata/iptc-tag.c:352
+msgid "The sampling rate in Hz of the audio data."
+msgstr "აუდიო მონაცემების სემპლინგის სიხშირე, ჰერცებში."
+
+#: libiptcdata/iptc-tag.c:356
+msgid "Audio Sampling Resolution"
+msgstr "ხმის სემპლინგის გაფართოება"
+
+#: libiptcdata/iptc-tag.c:357
+msgid "The number of bits in each audio sample."
+msgstr "ბიტები თითოეულ აუდიო სემპლში."
+
+#: libiptcdata/iptc-tag.c:361
+msgid "Audio Duration"
+msgstr "ხმის ხანგრძლივობა"
+
+#: libiptcdata/iptc-tag.c:362
+msgid "The running time of the audio data in the form HHMMSS."
+msgstr "აუდიო მონაცემებს გაშვების დრო სთწთწმ ფორმატში."
+
+#: libiptcdata/iptc-tag.c:366
+msgid "Audio Outcue"
+msgstr "ხმის მონაცემები დასასრულის შემდეგ"
+
+#: libiptcdata/iptc-tag.c:367
+msgid "The content at the end of the audio data."
+msgstr "შემცველობა ხმის მონაცემების დასრულების შემდეგ."
+
+#: libiptcdata/iptc-tag.c:371
+msgid "Preview File Format"
+msgstr "გადახედვის ფაილის ფორმატი"
+
+#: libiptcdata/iptc-tag.c:372
+msgid ""
+"Binary value indicating the file format of the object preview data in "
+"dataset 2:202."
+msgstr ""
+"ბინარული მნიშვნელობა, რომელიც ობიეტის მინიატურის მონაცემების (მონაცემების "
+"სეტში 2:202) არსებული ფაილის ფორმატს შეიცავს."
+
+#: libiptcdata/iptc-tag.c:376
+msgid "Preview File Format Version"
+msgstr "გადახედვის ფაილის ფორმატის ვერსია"
+
+#: libiptcdata/iptc-tag.c:377
+msgid "The version of the preview file format specified in 2:200."
+msgstr "მინიატურის ფაილის ფორმატის ვერსია 2:200-შია მითითებული."
+
+#: libiptcdata/iptc-tag.c:381
+msgid "Preview Data"
+msgstr "გადახედვის მონაცემები"
+
+#: libiptcdata/iptc-tag.c:382
+msgid "The object preview data"
+msgstr "ობიექტის გადახედვის მონაცემები"
+
+#: libiptcdata/iptc-tag.c:386
+msgid "Size Mode"
+msgstr "ზომის რეჟიმი"
+
+#: libiptcdata/iptc-tag.c:387
+msgid "Set to 0 if the size of the object is known and 1 if not known."
+msgstr "დააყენეთ 0, თუ ობიექტის ზომა ცნობილია და 1, თუ ის უცნობია."
+
+#: libiptcdata/iptc-tag.c:391
+msgid "Max Subfile Size"
+msgstr "ქვეფაილის მაქსიმალური ზომა"
+
+#: libiptcdata/iptc-tag.c:392
+msgid ""
+"The maximum size for a subfile dataset (8:10) containing a portion of the "
+"object data."
+msgstr ""
+"ობიექტის მონაცემების შემცველი ქვეფაილის მონაცემების სეტის (8:10) მაქსიმალური "
+"ზომა."
+
+#: libiptcdata/iptc-tag.c:396
+msgid "Object Size Announced"
+msgstr "ობიექტის ზომა გამოცხადებულია"
+
+#: libiptcdata/iptc-tag.c:397
+msgid "The total size of the object data if it is known."
+msgstr "ობიექტის მონაცემების სრული ზომა, თუ ის ცნობილია."
+
+#: libiptcdata/iptc-tag.c:401
+msgid "Maximum Object Size"
+msgstr "ობიექტის მაქსიმალური ზომა"
+
+#: libiptcdata/iptc-tag.c:402
+msgid "The largest possible size of the object if the size is not known."
+msgstr "ობიექტის უდიდესი შესაძლო ზომა, თუ მისი ზომა უცნობია."
+
+#: libiptcdata/iptc-tag.c:406
+msgid "Subfile"
+msgstr "ქვეფაილი"
+
+#: libiptcdata/iptc-tag.c:407
+msgid ""
+"The object data itself.  Subfiles must be sequential so that the subfiles "
+"may be reassembled."
+msgstr ""
+"თვით ობიექტის მონაცემი. ქვეფაილები მიმდევრობით უნდა იყოს დალაგებული, რომ "
+"შესაძლებელი იყოს მათი თავიდან აწყობა."
+
+#: libiptcdata/iptc-tag.c:411
+msgid "Confirmed Data Size"
+msgstr "მონაცემების დადასტურებული ზომა"
+
+#: libiptcdata/iptc-tag.c:412
+msgid "Total size of the object data."
+msgstr "ობიექტის მონაცემების სრული ზომა."
+
+#: libiptcdata/iptc-tag.c:585
+msgid "Binary"
+msgstr "ბინარული"
+
+#: libiptcdata/iptc-tag.c:587
+msgid "Byte"
+msgstr "ბაიტი"
+
+#: libiptcdata/iptc-tag.c:589
+msgid "Short"
+msgstr "მოკლე"
+
+#: libiptcdata/iptc-tag.c:591
+msgid "Long"
+msgstr "გრძელი"
+
+#: libiptcdata/iptc-tag.c:593
+msgid "String"
+msgstr "სტრიქონი"
+
+#: libiptcdata/iptc-tag.c:595
+msgid "NumString"
+msgstr "რიცხვისტრიქონი"
+
+#: libiptcdata/iptc-tag.c:597
+msgid "Date"
+msgstr "თარიღი"
+
+#: libiptcdata/iptc-tag.c:599
+msgid "Time"
+msgstr "დრო"
+
+#: libiptcdata/iptc-tag.c:601
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: libiptcdata/iptc-log.c:41
+msgid "Debugging information"
+msgstr "გამართვის ინფორმაცია"
+
+#: libiptcdata/iptc-log.c:42
+msgid "Debugging information is available."
+msgstr "გამართვის ინფორმაცია ხელმისაწვდომია."
+
+#: libiptcdata/iptc-log.c:43
+msgid "Not enough memory"
+msgstr "მეხსიერება საკმარისი არ არის"
+
+#: libiptcdata/iptc-log.c:44
+msgid "The system cannot provide enough memory."
+msgstr "სისტემას მეხსიერების საკმარისი რადენობის მოწოდება არ შეუძლია."
+
+#: libiptcdata/iptc-log.c:45
+msgid "Corrupt data"
+msgstr "დაზიანებული მონაცემები"
+
+#: libiptcdata/iptc-log.c:46
+msgid "The data provided does not follow the specification."
+msgstr "მოწოდებული მონაცემები სპეციფიკაციას არ მიყვება."
